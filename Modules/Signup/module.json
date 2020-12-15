@@ -1,0 +1,13 @@
+{
+    "name": "Signup",
+    "alias": "signup",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Signup\\Providers\\SignupServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
