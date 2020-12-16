@@ -18,6 +18,8 @@ Route::prefix('signup')->group(function() {
   //  Route::get('create', 'SignupController@create');
 
     Route::resource('/', 'SignupController');
+
+    Route::get('/account-signup/{token}', 'SignupController@accountsignup')->name('account.signup');
   //Route::resource('photos', 'PhotoController');Method Modules\Signup\Http\Controllers\SignupController::create@index does not exist.
 
 

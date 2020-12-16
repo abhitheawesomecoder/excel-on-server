@@ -7,9 +7,16 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\Signup\Http\Forms\AddUserForm;
+use Modules\Signup\Emails\UserSignupEmail;
+use Illuminate\Support\Facades\Mail;
+use App\User;
 
 class SignupController extends Controller
 {
+    public function accountsignup()
+    {
+      return "test";
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -39,7 +46,15 @@ class SignupController extends Controller
      */
     public function store(Request $request)
     {
-        print_r($request->email);
+        $token = now()->timestamp;
+        $link = route('account.signup',$token);
+        Mail::to("iswitchremote@gmail.com")->send(new UserSignupEmail($link));
+
+        // save it in database
+        // 
+        //print_r($timestamp);
+
+        print_r($link);
     }
 
     /**

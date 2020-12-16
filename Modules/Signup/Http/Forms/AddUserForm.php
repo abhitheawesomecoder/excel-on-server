@@ -10,7 +10,7 @@ class AddUserForm extends Form
     {
         $this->add('email', 'email');
 
-        $this->add('languages', 'select', [
+        $this->add('User type', 'select', [
             'choices' => ['1' => 'Super Admin', '2' => 'Staff', '3' => 'Contractor'],
             'selected' => '1',
             'empty_value' => '=== Select type ==='
