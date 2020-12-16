@@ -25,7 +25,8 @@ class SignupController extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {   $form = $formBuilder->create(AddUserForm::class, [
-            'method' => 'POST'
+            'method' => 'POST',
+            'url' => route('store')
         ]);
 
         return view('signup::create', compact('form'));
@@ -38,7 +39,7 @@ class SignupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        print_r($request->email);
     }
 
     /**
