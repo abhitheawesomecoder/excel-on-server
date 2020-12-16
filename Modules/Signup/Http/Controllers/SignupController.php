@@ -5,6 +5,8 @@ namespace Modules\Signup\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Kris\LaravelFormBuilder\FormBuilder;
+use Modules\Signup\Http\Forms\AddUserForm;
 
 class SignupController extends Controller
 {
@@ -21,9 +23,12 @@ class SignupController extends Controller
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create()
-    {
-        return view('signup::create');
+    public function create(FormBuilder $formBuilder)
+    {   $form = $formBuilder->create(AddUserForm::class, [
+            'method' => 'POST'
+        ]);
+
+        return view('signup::create', compact('form'));
     }
 
     /**
