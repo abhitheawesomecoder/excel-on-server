@@ -11,7 +11,8 @@ class Signup extends Model
 
     public $table = 'signups';
 
-    protected $fillable = ['email','token','role_id'];
+    //protected $fillable = ['email','token','role_id'];
+    protected $fillable = [];
 
     protected static function newFactory()
     {

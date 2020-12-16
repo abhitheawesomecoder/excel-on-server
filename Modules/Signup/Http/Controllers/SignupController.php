@@ -9,11 +9,15 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\Signup\Http\Forms\AddUserForm;
 use Modules\Signup\Emails\UserSignupEmail;
 use Illuminate\Support\Facades\Mail;
-use App\User;
+use Modules\Signup\Entities\Signup;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use App\Forms\PostForm;
 
 class SignupController extends Controller
-{
-    public function accountsignup()
+{   
+    use FormBuilderTrait;
+
+    public function signin()
     {
       return "test";
     }
@@ -31,7 +35,8 @@ class SignupController extends Controller
      * @return Renderable
      */
     public function create(FormBuilder $formBuilder)
-    {   $form = $formBuilder->create(AddUserForm::class, [
+    {   
+        $form = $formBuilder->create(AddUserForm::class, [
             'method' => 'POST',
             'url' => route('store')
         ]);
@@ -46,12 +51,30 @@ class SignupController extends Controller
      */
     public function store(Request $request)
     {
-        $token = now()->timestamp;
-        $link = route('account.signup',$token);
-        Mail::to("iswitchremote@gmail.com")->send(new UserSignupEmail($link));
+        $form = $this->form(PostForm::class);
 
-        // save it in database
-        // 
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        $token = now()->timestamp;
+
+        $newSignupRequest = new Signup;
+        $newSignupRequest->email = $request->email;
+        $newSignupRequest->token = $token;
+        $newSignupRequest->role_id = $request->Type;
+        //$newSignupRequest->save();
+
+        $link = route('signin',$token);
+        Mail::to($request->email)->send(new UserSignupEmail($link));
+
+        // save it in database - done
+        // signup form
+        // crud of signup requests for super admin
+        // do one user signup and disable main registration
+        // closed system user registration should be there
+        // link should expire after specific time
+        // crud for all all users with role and permission
         //print_r($timestamp);
 
         print_r($link);
