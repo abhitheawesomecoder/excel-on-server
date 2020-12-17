@@ -20,6 +20,8 @@ Route::prefix('signup')->group(function() {
     Route::resource('/', 'SignupController');
 
     Route::get('/signin/{token}', 'SignupController@signin')->name('signin');
+
+    Route::post('/signin/save', 'SignupController@save')->name('user.save');
   //Route::resource('photos', 'PhotoController');Method Modules\Signup\Http\Controllers\SignupController::create@index does not exist.
 
 

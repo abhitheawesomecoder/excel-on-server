@@ -7,19 +7,24 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\Signup\Http\Forms\AddUserForm;
+use Modules\Signup\Http\Forms\UserSignupForm;
 use Modules\Signup\Emails\UserSignupEmail;
 use Illuminate\Support\Facades\Mail;
 use Modules\Signup\Entities\Signup;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use App\Forms\PostForm;
 
 class SignupController extends Controller
 {   
     use FormBuilderTrait;
 
-    public function signin()
+    public function signin(FormBuilder $formBuilder)
     {
-      return "test";
+      $form = $formBuilder->create(UserSignupForm::class, [
+            'method' => 'POST',
+            'url' => route('user.save')
+        ]);
+
+        return view('signup::create', compact('form'));
     }
     /**
      * Display a listing of the resource.
@@ -41,7 +46,18 @@ class SignupController extends Controller
             'url' => route('store')
         ]);
 
-        return view('signup::create', compact('form'));
+        //return view('signup::create', compact('form'));
+    }
+    public function save(Request $request)
+    {
+        $form = $this->form(UserSignupForm::class);
+
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        echo "test";
+        exit();
     }
 
     /**
@@ -51,7 +67,7 @@ class SignupController extends Controller
      */
     public function store(Request $request)
     {
-        $form = $this->form(PostForm::class);
+        $form = $this->form(AddUserForm::class);
 
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
