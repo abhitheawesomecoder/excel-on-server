@@ -177,6 +177,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Eusonlito\LaravelPacker\PackerServiceProvider::class,
     ],
 
     /*
@@ -229,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Packer'    => Eusonlito\LaravelPacker\Facade::class,
     ],
 
 ];
