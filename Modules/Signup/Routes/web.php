@@ -13,6 +13,7 @@
 //Route::group(['prefix'=>'signup','as'=>'signup.', 'namespace' => 'Modules\Signup\Http\Controllers'], function()
 //{
 Route::prefix('signup')->group(function() {
+	
     //Route::get('/', 'SignupController@index');
     //Route::post('store', 'SignupController@store');
   //  Route::get('create', 'SignupController@create');

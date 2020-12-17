@@ -12,6 +12,8 @@ use Modules\Signup\Emails\UserSignupEmail;
 use Illuminate\Support\Facades\Mail;
 use Modules\Signup\Entities\Signup;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Yajra\DataTables\DataTables;
+use App\User;
 
 class SignupController extends Controller
 {   
@@ -30,8 +32,35 @@ class SignupController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
-    {
+    public function index(Request $request)
+    {   
+            if ($request->ajax()) {
+
+            $data = User::latest()->get();
+
+            return Datatables::of($data)
+
+                    ->addIndexColumn()
+
+                    ->addColumn('action', function($row){
+
+   
+
+                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+
+     
+
+                            return $btn;
+
+                    })
+
+                    ->rawColumns(['action'])
+
+                    ->make(true);
+
+        }   
+
+        //return view('users');
         return view('signup::index');
     }
 
@@ -55,6 +84,7 @@ class SignupController extends Controller
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
+        // $user->assignRole('writer');
 
         echo "test";
         exit();
