@@ -14,6 +14,9 @@ use Modules\Signup\Entities\Signup;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Signup\DataTables\SignupDataTable;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 //use Yajra\DataTables\DataTables;
 //use Modules\Signup\DataTables\UsersDataTable;
 use App\User;
@@ -115,12 +118,14 @@ class SignupController extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
-        $signup = Signup::where('token',$request->user_token)->first();
+        $signup = Signup::where('token',$request->signup_token)->first();
 
         $newUser = new User;
+        $newUser->name = $request->first_name;
+        $newUser->first_name = $request->first_name;
+        $newUser->last_name = $request->last_name;
+        $newUser->password = Hash::make($request->password);
         $newUser->email = $signup->email;
-        $newUser->token = $token;
-        $newUser->role_id = $request->Type;
         $newUser->save();
 
         $role = Role::find($signup->role_id);
@@ -128,6 +133,8 @@ class SignupController extends Controller
         $newUser->assignRole($role->name);
 
         Auth::login($newUser);
+
+        DB::table('signups')->where('token', $request->signup_token)->delete();
 
         return redirect()->route('home');
     }
@@ -206,6 +213,6 @@ class SignupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //DB::table('signups')->where('token', $request->signup_token)->delete();
     }
 }
