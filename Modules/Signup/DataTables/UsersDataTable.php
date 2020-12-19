@@ -19,10 +19,18 @@ class UsersDataTable extends DataTable
      * @return \Yajra\DataTables\DataTableAbstract
      */
     public function dataTable($query)
-    {
+    {   
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'users.action');
+            ->addColumn('action', '<div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Action <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="javascript:void(0);">Edit</a></li>
+                                        <li><a href="javascript:void(0);">Delete</a></li>
+                                    </ul>
+                                </div>');
     }
 
     /**

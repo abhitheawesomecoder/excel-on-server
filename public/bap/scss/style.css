@@ -7939,7 +7939,7 @@ fieldset[disabled] .form-control {
 .dataTables_wrapper {
   position: relative;
   width: 100%;
-  overflow-x: auto !important; }
+  /* overflow-x: auto !important; */}
   .dataTables_wrapper select {
     border: none;
     border-bottom: 1px solid #ddd;
