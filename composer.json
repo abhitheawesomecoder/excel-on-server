@@ -16,7 +16,7 @@
         "laravel/tinker": "^1.0",
         "nwidart/laravel-modules": "^8.2",
         "spatie/laravel-permission": "3.17.0",
-        "yajra/laravel-datatables-oracle": "^9.15"
+        "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

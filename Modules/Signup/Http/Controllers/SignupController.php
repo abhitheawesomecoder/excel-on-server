@@ -12,7 +12,8 @@ use Modules\Signup\Emails\UserSignupEmail;
 use Illuminate\Support\Facades\Mail;
 use Modules\Signup\Entities\Signup;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Yajra\DataTables\DataTables;
+//use Yajra\DataTables\DataTables;
+use Modules\Signup\DataTables\UsersDataTable;
 use App\User;
 
 class SignupController extends Controller
@@ -32,7 +33,13 @@ class SignupController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index(Request $request)
+    public function index(UsersDataTable $dataTable)
+    {   
+        //print_r($dataTable);
+        //exit();
+        return $dataTable->render('signup::index');
+    }
+    public function index_(Request $request)
     {   
             if ($request->ajax()) {
 

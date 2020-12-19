@@ -1,80 +1,132 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<html lang="{{ app()->getLocale() }}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- Favicon-->
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="icon" href="{{ asset('bap/images/favicon.png') }}" type="image/png">
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <link href="{{ asset('bap/plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet"
+          type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
+    <script type="text/javascript" src="{{ asset('bap/plugins/jquery/jquery.min.js')}}"></script>
+
+        <!-- Css -->
+        {!!  Packer::css([
+            asset('/bap/plugins/bootstrap/css/bootstrap.css'),
+            asset('/bap/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css'),
+            asset('/bap/plugins/node-waves/waves.css'),
+            asset('/bap/plugins/animate-css/animate.css'),
+            asset('/bap/plugins/bootstrap-select/css/bootstrap-select.css'),
+            asset('/bap/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css'),
+            asset('/bap/plugins/jquery-datatable/extensions/responsive/css/responsive.dataTables.css'),
+            asset('/bap/scss/style.css'),
+            asset('/bap/plugins/offlinejs/offline-theme-chrome.css'),
+            asset('/bap/plugins/offlinejs/offline-language-english.css'),
+            asset('/bap/plugins/select2-4.0.3/dist/css/select2.min.css'),
+            asset('/bap/plugins/select2-4.0.3/dist/css/select2-bootstrap.css'),
+            asset('/bap/plugins/select2-4.0.3/dist/css/pmd-select2.css'),
+            asset('/bap/plugins/bootstrap-daterangepicker/daterangepicker.css'),
+            asset('/bap/plugins/bootstrap-datetimepicker/dist/css/bootstrap-datetimepicker.min.css'),
+            asset('/bap/plugins/jquery-datatable/yadcf/jquery.dataTables.yadcf.css'),
+            asset('/bap/plugins/bootstrap-fileinput/css/fileinput.min.css'),
+            asset('/bap/plugins/jquery-comments/css/jquery-comments.css'),
+            ],
+            asset('/storage/cache/css/main.css')
+        ) !!}
+
+    @stack('css')
+
+
+    @include('partial.header_js')
+
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+<body class="theme-blue">
 
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="preloader">
+            <div class="spinner-layer pl-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
                 </div>
             </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+        </div>
+        <p>Please wait...</p>
     </div>
+</div>
+<!-- #END# Page Loader -->
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+<!-- #END# Overlay For Sidebars -->
+
+@include('partial.search-bar')
+@include('partial.top-bar')
+<section>
+
+
+    @include('partial.left-sidebar')
+
+    @include('partial.right-sidebar')
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+
+<div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+<div class="header">
+                            <h2></h2></div>
+        
+
+        @yield('content')
+</div></div></div>
+    </div>
+</section>
+
+
+@include('partial.bottom_js')
+<script src="http://localhost/lar8/public/vendor/datatables/buttons.server-side.js"></script>
+@stack('scripts')
+
+<div class="modal fade" id="genericModal" tabindex="-1" role="dialog" aria-hidden="true" style="z-index: 10080!important;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="largeModalLabel"></h4>
+            </div>
+
+            <div class="modal-body ">
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">ppp</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 </body>
 </html>
