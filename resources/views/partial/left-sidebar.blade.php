@@ -40,9 +40,9 @@
             <i class="material-icons">apps</i>
             <span>Signup</span>
         
-    </a></li><li><a href="" title="Settings" class="">
-            <i class="material-icons">settings</i>
-            <span>Settings</span>
+    </a></li><li><a href="{{ route('users..index') }}" title="Settings" class="">
+            <i class="material-icons">apps</i>
+            <span>Users</span>
         
     </a></li></ul>
         

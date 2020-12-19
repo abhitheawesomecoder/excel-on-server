@@ -126,7 +126,7 @@ class SignupController extends Controller
         $newSignupRequest->email = $request->email;
         $newSignupRequest->token = $token;
         $newSignupRequest->role_id = $request->Type;
-        //$newSignupRequest->save();
+        $newSignupRequest->save();
 
         $link = route('signin',$token);
         Mail::to($request->email)->send(new UserSignupEmail($link));
