@@ -17,7 +17,7 @@ use Modules\Signup\DataTables\UsersDataTable;
 use App\User;
 
 class SignupController extends Controller
-{   
+{
     use FormBuilderTrait;
 
     /**
@@ -44,13 +44,13 @@ class SignupController extends Controller
      * @return Renderable
      */
     public function index(UsersDataTable $dataTable)
-    {   
+    {
         //print_r($dataTable);
         //exit();
         return $dataTable->render('signup::index');
     }
     public function index_(Request $request)
-    {   
+    {
             if ($request->ajax()) {
 
             $data = User::latest()->get();
@@ -61,11 +61,11 @@ class SignupController extends Controller
 
                     ->addColumn('action', function($row){
 
-   
+
 
                            $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
-     
+
 
                             return $btn;
 
@@ -75,7 +75,7 @@ class SignupController extends Controller
 
                     ->make(true);
 
-        }   
+        }
 
         //return view('users');
         return view('signup::index');
@@ -86,7 +86,7 @@ class SignupController extends Controller
      * @return Renderable
      */
     public function create(FormBuilder $formBuilder)
-    {   
+    {
         $form = $formBuilder->create(AddUserForm::class, [
             'method' => 'POST',
             'url' => route('store')
@@ -140,7 +140,7 @@ class SignupController extends Controller
         // crud for all all users with role and permission
         //print_r($timestamp);
 
-        print_r($link);
+        return redirect()->route('index');
     }
 
     /**

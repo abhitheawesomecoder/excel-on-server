@@ -8,16 +8,6 @@ use Illuminate\Database\Eloquent\Factory;
 class SignupServiceProvider extends ServiceProvider
 {
     /**
-     * @var string $moduleName
-     */
-    protected $moduleName = 'Signup';
-
-    /**
-     * @var string $moduleNameLower
-     */
-    protected $moduleNameLower = 'signup';
-
-    /**
      * Boot the application events.
      *
      * @return void
@@ -27,7 +17,8 @@ class SignupServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+        $this->registerFactories();
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     /**
@@ -48,10 +39,10 @@ class SignupServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
+            __DIR__.'/../Config/config.php' => config_path('signup.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            __DIR__.'/../Config/config.php', 'signup'
         );
     }
 
@@ -62,15 +53,17 @@ class SignupServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
+        $viewPath = resource_path('views/modules/signup');
 
-        $sourcePath = module_path($this->moduleName, 'Resources/views');
+        $sourcePath = __DIR__.'/../Resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
-        ], ['views', $this->moduleNameLower . '-module-views']);
+        ],'views');
 
-        $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
+        $this->loadViewsFrom(array_merge(array_map(function ($path) {
+            return $path . '/modules/signup';
+        }, \Config::get('view.paths')), [$sourcePath]), 'signup');
     }
 
     /**
@@ -80,12 +73,24 @@ class SignupServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/' . $this->moduleNameLower);
+        $langPath = resource_path('lang/modules/signup');
 
         if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
+            $this->loadTranslationsFrom($langPath, 'signup');
         } else {
-            $this->loadTranslationsFrom(module_path($this->moduleName, 'Resources/lang'), $this->moduleNameLower);
+            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'signup');
+        }
+    }
+
+    /**
+     * Register an additional directory of factories.
+     *
+     * @return void
+     */
+    public function registerFactories()
+    {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
+            app(Factory::class)->load(__DIR__ . '/../Database/factories');
         }
     }
 
@@ -97,16 +102,5 @@ class SignupServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
-    }
-
-    private function getPublishableViewPaths(): array
-    {
-        $paths = [];
-        foreach (\Config::get('view.paths') as $path) {
-            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
-                $paths[] = $path . '/modules/' . $this->moduleNameLower;
-            }
-        }
-        return $paths;
     }
 }
