@@ -92,7 +92,7 @@ class SignupController extends Controller
             'url' => route('store')
         ]);
 
-        //return view('signup::create', compact('form'));
+        return view('signup::create', compact('form'));
     }
     public function save(Request $request)
     {

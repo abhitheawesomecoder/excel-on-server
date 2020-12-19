@@ -24,6 +24,11 @@ Route::prefix('signup')->group(function() {
 
     Route::post('/signin/save', 'SignupController@save')->name('user.save');
   //Route::resource('photos', 'PhotoController');Method Modules\Signup\Http\Controllers\SignupController::create@index does not exist.
-
+// Create Staff
+// List Create Request
+// Mail Sent to Staff
+// Register Staff
+// List Staff and Other Users
+// set things as per access control
 
 });

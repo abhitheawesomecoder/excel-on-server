@@ -15,6 +15,6 @@ class AddUserForm extends Form
             'selected' => '1'
         ]);
 
-        $this->add('submit', 'submit', ['label' => 'Send']);
+        $this->add('submit', 'submit', ['label' => 'Send','attr' => ['class' => 'btn btn-primary m-t-15 waves-effect']]);
     }
 }
