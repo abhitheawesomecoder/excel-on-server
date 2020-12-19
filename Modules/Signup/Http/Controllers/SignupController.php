@@ -17,8 +17,6 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-//use Yajra\DataTables\DataTables;
-//use Modules\Signup\DataTables\UsersDataTable;
 use App\User;
 
 class SignupController extends Controller
@@ -212,7 +210,8 @@ class SignupController extends Controller
      * @return Renderable
      */
     public function destroy($id)
-    {
+    {   
+        //if(Auth::user()->hasRole('Super Admin')
         //DB::table('signups')->where('token', $request->signup_token)->delete();
     }
 }
