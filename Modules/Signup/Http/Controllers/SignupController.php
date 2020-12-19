@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Modules\Signup\Entities\Signup;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Signup\DataTables\SignupDataTable;
+use Spatie\Permission\Models\Role;
 //use Yajra\DataTables\DataTables;
 //use Modules\Signup\DataTables\UsersDataTable;
 use App\User;
@@ -28,17 +29,28 @@ class SignupController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['signin','save']]);
     }
 
     public function signin(FormBuilder $formBuilder)
-    {
-      $form = $formBuilder->create(UserSignupForm::class, [
-            'method' => 'POST',
-            'url' => route('user.save')
-        ]);
+    { 
+      $link = url()->full();
+      $link_array = explode('/',$link);
+      $token = end($link_array);
 
-        return view('signup::create', compact('form'));
+      $signup = Signup::where('token',$token)->first();
+
+      if($signup)
+      {
+          $form = $formBuilder->create(UserSignupForm::class, [
+                'method' => 'POST',
+                'url' => route('user.save')
+            ],['token' => $signup->token ]);
+
+            return view('signup::create',compact('form'));
+       }
+       else
+        return redirect()->back()->withInput();
     }
     /**
      * Display a listing of the resource.
@@ -102,10 +114,22 @@ class SignupController extends Controller
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
-        // $user->assignRole('writer');
 
-        echo "test";
-        exit();
+        $signup = Signup::where('token',$request->user_token)->first();
+
+        $newUser = new User;
+        $newUser->email = $signup->email;
+        $newUser->token = $token;
+        $newUser->role_id = $request->Type;
+        $newUser->save();
+
+        $role = Role::find($signup->role_id);
+
+        $newUser->assignRole($role->name);
+
+        Auth::login($newUser);
+
+        return redirect()->route('home');
     }
 
     /**

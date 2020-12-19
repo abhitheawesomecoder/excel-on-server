@@ -82,8 +82,13 @@
 @include('partial.top-bar')
 <section>
 
-
+  @if(Auth::check())
     @include('partial.left-sidebar')
+  @else
+    @include('partial.left-sidebar-noauth')
+  @endif
+
+    
 
     @include('partial.right-sidebar')
 </section>
