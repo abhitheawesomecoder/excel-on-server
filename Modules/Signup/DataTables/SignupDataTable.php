@@ -3,14 +3,14 @@
 namespace Modules\Signup\DataTables;
 
 
-use App\User;
+use Modules\Signup\Entities\Signup;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Html\Editor\Editor;
 
-class UsersDataTable extends DataTable
+class SignupDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -39,7 +39,7 @@ class UsersDataTable extends DataTable
      * @param \App\App\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(User $model)
+    public function query(Signup $model)
     {
         return $model->newQuery();
     }
@@ -52,7 +52,7 @@ class UsersDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('users-table')
+                    ->setTableId('signup-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -79,11 +79,9 @@ class UsersDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('name'),
             Column::make('email'),
+            Column::make('role_id'),
             Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 
@@ -94,6 +92,6 @@ class UsersDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Users_' . date('YmdHis');
+        return 'Signup_' . date('YmdHis');
     }
 }
