@@ -27,9 +27,11 @@ Route::prefix('signup')->group(function() {
 // Create Staff - done
 // List Create Request - done
 // Mail Sent to Staff - done
-// Register Staff
+// Register Staff - done
 // List Staff and Other Users - done
 // Delete Request users
 // set things as per access control
+// expire link
+// edit user 
 
 });

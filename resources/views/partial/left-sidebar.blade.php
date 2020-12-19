@@ -32,19 +32,30 @@
     <div class="menu">
 
         <a href="javascript:void(0);" class="bars"></a>
-            <ul class="list"><li class="header">MAIN NAVIGATION</li><li><a href="{{ route('home') }}" title="Home" class="">
+
+    <ul class="list">
+
+    <li class="header">MAIN NAVIGATION</li>
+
+    <li><a href="{{ route('home') }}" title="Home" class="">
             <i class="material-icons">apps</i>
             <span>Home</span>
-        
-    </a></li><li><a href="{{ route('index') }}" title="Company" class="">
+        </a>
+    </li>
+@role('Super Admin')
+    <li><a href="{{ route('index') }}" title="Company" class="">
             <i class="material-icons">apps</i>
-            <span>Signup</span>
-        
-    </a></li><li><a href="{{ route('users..index') }}" title="Settings" class="">
+            <span>Signups</span>
+        </a>
+    </li>
+@endrole
+    <li><a href="{{ route('users..index') }}" title="Settings" class="">
             <i class="material-icons">apps</i>
             <span>Users</span>
-        
-    </a></li></ul>
+        </a>
+    </li>
+
+    </ul>
         
 
     </div>
