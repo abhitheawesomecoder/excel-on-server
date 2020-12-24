@@ -11,9 +11,6 @@
 |
 */
 
-Route::prefix('users')->group(function() {
-    //Route::get('/', 'UsersController@index');
-    Route::resource('/', 'UsersController',['as' => 'users']);
-    
-    Route::get('/delete/{id}', 'UsersController@destroy');
+Route::prefix('jobs')->group(function() {
+    Route::get('/', 'JobsController@index');
 });

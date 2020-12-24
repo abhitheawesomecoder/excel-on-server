@@ -1,27 +1,20 @@
 <?php
 
-namespace Modules\Users\Http\Controllers;
+namespace Modules\Jobs\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Users\DataTables\UsersDataTable;
 
-class UsersController extends Controller
-{   
-    //use FormBuilderTrait;
-    
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+class JobsController extends Controller
+{
     /**
      * Display a listing of the resource.
      * @return Response
      */
-    public function index(UsersDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('users::index');
+        return view('jobs::index');
     }
 
     /**
@@ -30,7 +23,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('users::create');
+        return view('jobs::create');
     }
 
     /**
@@ -50,7 +43,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        return view('users::show');
+        return view('jobs::show');
     }
 
     /**
@@ -60,7 +53,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        return view('users::edit');
+        return view('jobs::edit');
     }
 
     /**
@@ -81,11 +74,6 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        // user with id 1 cannot be deleted
-        if($id != 1){
-            exit();
-        }
-        return redirect()->back();
-
+        //
     }
 }

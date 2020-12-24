@@ -1,36 +1,50 @@
 <?php
 
-namespace Modules\Users\Http\Controllers;
+namespace Modules\Clients\Http\Controllers;
 
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Modules\Clients\Http\Forms\AddClientForm;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Users\DataTables\UsersDataTable;
+use Illuminate\Support\Facades\DB;
 
-class UsersController extends Controller
-{   
-    //use FormBuilderTrait;
-    
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+class ClientsController extends Controller
+{
+    use FormBuilderTrait;
+
     /**
      * Display a listing of the resource.
      * @return Response
      */
-    public function index(UsersDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('users::index');
+        return view('clients::index');
     }
 
     /**
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
-    {
-        return view('users::create');
+    public function create(FormBuilder $formBuilder)
+    {   
+        $users = DB::table('users')
+            ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->where('model_has_roles.role_id', 2)
+            ->select('users.id', 'users.first_name', 'users.last_name')
+            ->get();
+        $staff = array();
+        foreach($users as $user) {
+            $staff[$user->id] = $user->first_name." ".$user->last_name;
+        }
+
+        $form = $formBuilder->create(AddClientForm::class, [
+            'method' => 'POST',
+            'url' => route('clients..store')
+        ],['staff' => $staff ]);
+
+        return view('signup::create', compact('form'));
     }
 
     /**
@@ -50,7 +64,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        return view('users::show');
+        return view('clients::show');
     }
 
     /**
@@ -60,7 +74,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        return view('users::edit');
+        return view('clients::edit');
     }
 
     /**
@@ -81,11 +95,6 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        // user with id 1 cannot be deleted
-        if($id != 1){
-            exit();
-        }
-        return redirect()->back();
-
+        //
     }
 }
