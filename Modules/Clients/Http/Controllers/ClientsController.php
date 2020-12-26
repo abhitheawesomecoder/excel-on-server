@@ -14,6 +14,73 @@ class ClientsController extends Controller
 {
     use FormBuilderTrait;
 
+        protected $showFields = [
+
+        'basic_information' => [
+
+            'account_number' => [
+                'type' => 'text',
+            ],
+
+            'client_name' => [
+                'type' => 'text'
+            ],
+
+            'assigned_to' => [
+                'type' => 'select',
+            ]
+        ],
+
+
+        'contact_information' => [
+
+            'first_name' => [
+                'type' => 'text',
+            ],
+
+
+            'last_name' => [
+                'type' => 'text',
+            ],
+
+
+            'title' => [
+                'type' => 'text',
+            ],
+
+
+            'email' => [
+                'type' => 'email',
+            ],
+
+
+            'phone_no' => [
+                'type' => 'text',
+            ],
+
+            'address1' => [
+                'type' => 'text',
+            ],
+
+
+            'address2' => [
+                'type' => 'text',
+            ],
+
+
+            'city' => [
+                'type' => 'email',
+            ],
+
+
+            'postcode' => [
+                'type' => 'text',
+            ]
+
+        ]
+
+    ];
+
     /**
      * Display a listing of the resource.
      * @return Response
@@ -41,10 +108,11 @@ class ClientsController extends Controller
 
         $form = $formBuilder->create(AddClientForm::class, [
             'method' => 'POST',
-            'url' => route('clients..store')
+            'url' => route('clients..store'),
+            'id' => 'module_form'
         ],['staff' => $staff ]);
-
-        return view('signup::create', compact('form'));
+        
+        return view('clients::create', compact('form'))->with('show_fields', $this->showFields);;
     }
 
     /**
