@@ -12,15 +12,7 @@ class AddClientForm extends Form
     	$this->add('account_number', 'text', ['rules' => 'required']);
 
     	$this->add('client_name', 'text', ['rules' => 'required']);
-    	/*
-					$this->add('owned_by', 'select', [
-                    'choices' => FormHelper::assignedToChoises(),
-                    'attr' => ['class' => 'select2 pmd-select2 form-control'],
-                    'label' => trans('core::core.form.assigned_to'),
-                    'empty_value' => trans('core::core.empty_select'),
-                    'selected' => FormHelper::assignSelectedFromModel($this->model)
-                    ]);
-    	*/
+
     	$this->add('assigned_to', 'select', [
             'choices' => $this->getData('staff'),
             'attr' => ['class' => 'select2 pmd-select2 form-control'],

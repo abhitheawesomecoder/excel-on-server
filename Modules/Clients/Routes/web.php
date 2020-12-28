@@ -10,7 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::prefix('clients')->group(function() {
-    Route::resource('/', 'ClientsController',['as' => 'clients']);
-});
+    
+
+    //Route::get('/{id}/edit#', 'ClientsController',['as' => 'clients']);
+});*/
+Route::resource('clients', 'ClientsController');

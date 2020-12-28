@@ -177,6 +177,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
         Eusonlito\LaravelPacker\PackerServiceProvider::class,
+        Bnb\Laravel\Attachments\AttachmentsServiceProvider::class,
     ],
 
     /*
