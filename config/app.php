@@ -178,6 +178,8 @@ return [
         Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
         Eusonlito\LaravelPacker\PackerServiceProvider::class,
         Bnb\Laravel\Attachments\AttachmentsServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        Cog\Laravel\Ownership\Providers\OwnershipServiceProvider::class,
     ],
 
     /*

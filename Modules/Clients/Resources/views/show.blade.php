@@ -30,6 +30,7 @@
         <ul class="nav nav-tabs tab-nav-right tabs-left" role="tablist">
             <li role="presentation" class="active"><a href="#home" data-toggle="tab">HOME</a></li>
             <li role="presentation"><a href="#contacts" data-toggle="tab">Contacts</a></li>
+            <li role="presentation"><a href="#tab_comments" data-toggle="tab"><i class="material-icons">chat</i>Comments</a></li>
             <li role="presentation"><a href="#profile" data-toggle="tab"><i class="material-icons">attach_file</i>Attachments</a></li>
             <li role="presentation"><a href="#messages" data-toggle="tab">MESSAGES</a></li>
             
@@ -72,6 +73,12 @@
                                         pro. Et eos nusquam accumsan, vide mentitum fabellas ne est, eu munere gubergren
                                         sadipscing mel.
                                     </p>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane fade" id="tab_comments">
+                                     <div class="col-lg-12 col-md-12">
+                                            @include('core::comments')
+                                     </div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="profile">
                                      <div class="col-lg-12 col-md-12">

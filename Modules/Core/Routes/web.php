@@ -16,6 +16,22 @@ Route::prefix('core')->group(function() {
 });
 
 	/**
+     * Comments Extension
+     */
+
+    Route::post('extensions/comments/post-comment', ['as'=>'core.ext.comments.post-comment','uses'=>'CommentsController@postComment']);
+
+    Route::get('extensions/comments/get-users', ['as'=>'core.ext.comments.get-uses','uses'=>'CommentsController@getUsers']);
+
+    Route::post('extensions/comments/get-comments', ['as'=>'core.ext.comments.get-comments','uses'=>'CommentsController@getComments']);
+
+    Route::post('extensions/comments/upvote', ['as'=>'core.ext.comments.get-comments','uses'=>'CommentsController@upvoteComment']);
+
+    Route::put('extensions/comments/update-comment', ['as'=>'core.ext.comments.update-comment','uses'=>'CommentsController@updateComment']);
+
+    Route::delete('extensions/comments/delete-comment', ['as'=>'core.ext.comments.update-comment','uses'=>'CommentsController@deleteComment']);
+
+	/**
      * Attachments Extension
      */
 
