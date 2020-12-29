@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\Platform\Core\Http\Controllers;
+namespace Modules\Core\Http\Controllers;
 
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Cog\Contracts\Ownership\Ownable;
-use Modules\Platform\Core\Helper\UserHelper;
-use Modules\Platform\User\Repositories\UserRepository;
-use Modules\Platform\Core\Repositories\CommentsRepository;
+//use Modules\Core\Helper\UserHelper;
+use Modules\Users\Repositories\UserRepository;
+use Modules\Core\Repositories\CommentsRepository;
 
 class CommentsController extends AppBaseController
 {
@@ -70,7 +70,7 @@ class CommentsController extends AppBaseController
                 'id' => $user->id,
                 'fullname' => $user->name,
                 'email' => $user->email,
-                'profile_picture_url' => UserHelper::getUserProfileImage($user->id)
+                'profile_picture_url' => asset('/bap/images/user.png')
             ];
         }
 

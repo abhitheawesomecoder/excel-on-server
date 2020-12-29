@@ -56,7 +56,7 @@ var BAP_Platform = {
      *
      * @param entityId
      */
-    commentsExtension: function (entityId, entityClass) {
+    commentsExtension: function (entityId, entityClass, entityUrl) {
 
         $('#entity-comments-container').comments({
 
@@ -104,7 +104,7 @@ var BAP_Platform = {
 
                 $.ajax({
                     type: 'POST',
-                    url: '/core/extensions/comments/get-comments',
+                    url: entityUrl+'core/extensions/comments/get-comments',
                     data: {entityId: entityId, entityClass: entityClass},
                     success: function (commentsArray) {
                         success(commentsArray)
@@ -122,7 +122,7 @@ var BAP_Platform = {
             getUsers: function (success, error) {
                 $.ajax({
                     type: 'get',
-                    url: '/core/extensions/comments/get-users',
+                    url: entityUrl+'core/extensions/comments/get-users',
                     success: function (userArray) {
                         success(userArray)
                     },
@@ -147,7 +147,7 @@ var BAP_Platform = {
 
                 $.ajax({
                     type: 'POST',
-                    url: '/core/extensions/comments/post-comment',
+                    url: entityUrl+'core/extensions/comments/post-comment',
                     data: {comment: commentJSON, entityId: entityId, entityClass: entityClass, path: window.location.pathname},
                     success: function (comment) {
                         success(comment)
@@ -173,7 +173,7 @@ var BAP_Platform = {
 
                 $.ajax({
                     type: 'put',
-                    url: '/core/extensions/comments/update-comment',
+                    url: entityUrl+'core/extensions/comments/update-comment',
                     data: {comment: commentJSON, entityId: entityId, entityClass: entityClass},
                     success: function (comment) {
                         success(comment)
@@ -199,7 +199,7 @@ var BAP_Platform = {
 
                 $.ajax({
                     type: 'delete',
-                    url: '/core/extensions/comments/delete-comment',
+                    url: entityUrl+'core/extensions/comments/delete-comment',
                     data: {comment: commentJSON, entityId: entityId, entityClass: entityClass},
                     success: success,
                     error: error
@@ -223,7 +223,7 @@ var BAP_Platform = {
 
                 $.ajax({
                     type: 'POST',
-                    url: '/core/extensions/comments/upvote',
+                    url: entityUrl+'core/extensions/comments/upvote',
                     data: {commentId: commentJSON.id},
                     success: function () {
                         success(commentJSON)

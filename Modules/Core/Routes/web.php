@@ -12,8 +12,7 @@
 */
 
 Route::prefix('core')->group(function() {
-    Route::get('/', 'CoreController@index');
-});
+    
 
 	/**
      * Comments Extension
@@ -30,6 +29,8 @@ Route::prefix('core')->group(function() {
     Route::put('extensions/comments/update-comment', ['as'=>'core.ext.comments.update-comment','uses'=>'CommentsController@updateComment']);
 
     Route::delete('extensions/comments/delete-comment', ['as'=>'core.ext.comments.update-comment','uses'=>'CommentsController@deleteComment']);
+//  Route::get('/', 'CoreController@index');
+});
 
 	/**
      * Attachments Extension
