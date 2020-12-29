@@ -19,3 +19,12 @@ Route::prefix('clients')->group(function() {
 Route::resource('clients', 'ClientsController');
 
 Route::resource('stores', 'StoresController');
+
+Route::prefix('clients')->group(function() {
+
+
+	Route::get('/{id}/stores/create', 'StoresController@create',['as' => 'stores.create']);
+
+	Route::post('/api/getaddress', 'ClientsController@getaddress');
+
+});

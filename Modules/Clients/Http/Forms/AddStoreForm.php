@@ -8,6 +8,8 @@ class AddStoreForm extends Form
 {
     public function buildForm()
     {   
+        $this->add('client_id', 'hidden', ['default_value' => $this->getData('client_id')]);
+
     	$this->add('store_id', 'text', ['rules' => 'required']);
 
     	$this->add('store_name', 'text', ['rules' => 'required']);

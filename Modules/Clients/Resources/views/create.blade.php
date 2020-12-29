@@ -51,3 +51,54 @@
 </div>   
 </div>
 @endsection
+
+@push('scripts')
+   @if(isset($appjs))
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //BAP_Platform.copyAddress('{{ asset("/") }}');
+            //copy code below to above function
+            const client_id = $("input[name='client_id']").val();
+            const entityUrl = '{{ asset("/") }}';
+            $('#address_same_as_client').change(function() {
+
+
+            if($(this).is(":checked")) {
+                //var returnVal = confirm("Are you sure?");
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                // get information of address from client and populate 
+                $.ajax({
+                    type: 'POST',
+                    url: entityUrl+'clients/api/getaddress',
+                    data: {clientId: client_id},
+                    success: function (contact) {
+                        //success(commentsArray)
+                         $('#address1').val(contact.address1);
+                         $('#address2').val(contact.address2);
+                         $('#city').val(contact.city);
+                         $('#postcode').val(contact.postcode);
+                    }
+                });
+
+                
+            }else{
+
+                $('#address1').val('');
+                $('#address2').val('');
+                $('#city').val('');
+                $('#postcode').val('');
+                //alert("unchecked");
+
+
+            }
+                    
+        });
+
+        });
+    </script>
+   @endif
+@endpush

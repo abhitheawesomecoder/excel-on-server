@@ -49,8 +49,26 @@ var BAP_Platform = {
 
     },
 
+    copyAddress: function (entityUrl) {
+
+            $('#address_same_as_client').change(function() {
 
 
+            if($(this).is(":checked")) {
+                var returnVal = confirm("Are you sure?");
+
+                
+            }else{
+
+
+                alert("unchecked");
+
+
+            }
+                    
+        });
+
+    },
     /**
      * Comments Extension function
      *

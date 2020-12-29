@@ -98,6 +98,38 @@ class ClientsController extends Controller
         return $dataTable->render('signup::index');
         //return view('clients::index');
     }
+    public function getaddress(Request $request)
+    {
+        $user = \Auth::user();
+
+        $clientId = $request->get('clientId');
+
+        $contact = Contact::where('client_id',$clientId)->first();
+
+
+
+        /*$entityClass = $request->get('entityClass');
+        $entityId = $request->get('entityId');
+
+        $entityClass = str_replace('&quot;', '', $entityClass);
+
+
+        $entity = app($entityClass)->find($entityId);
+
+
+        $comments = $this->commentsRepository->findWhere([
+            'commentable_type' => $entityClass,
+            'commentable_id' => $entity->id
+        ]);
+
+        $resultComments = [];
+
+        foreach ($comments as $comment) {
+            $resultComments[] = $this->commentsRepository->convertCommentToPluginResult($comment);
+        }*/
+
+        return \Response::json($contact);
+    }
 
     /**
      * Show the form for creating a new resource.

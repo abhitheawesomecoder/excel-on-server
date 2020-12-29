@@ -27,13 +27,14 @@ class StoresController extends Controller
 
             'store_name' => [
                 'type' => 'text'
+            ],
+
+            'address_same_as_client' => [
+                'type' => 'checkbox'
             ]
         ],
 
         'address' => [
-            'address_same_as_client' => [
-                'type' => 'checkbox'
-            ],
 
             'address1' => [
                 'type' => 'text',
@@ -101,16 +102,17 @@ class StoresController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create(FormBuilder $formBuilder)
+    public function create($id, FormBuilder $formBuilder)
     {   
         $form = $formBuilder->create(AddStoreForm::class, [
             'method' => 'POST',
             'url' => route('stores.store'),
             'id' => 'module_form'
-        ]);
+        ],['client_id' => $id ]);
         
         return view('clients::create', compact('form'))
-               ->with('show_fields', $this->showFields);
+               ->with('show_fields', $this->showFields)
+               ->with('appjs',true);
 
         // first complete saving data
         // then route to Add contact 2, then 3, then 4 and so on 
@@ -150,7 +152,13 @@ class StoresController extends Controller
         $newContact->phone_no = $request->phone_no;
         $newContact->store_id = $newStore->id;
         $newContact->save();
-        
+
+        // list store
+        // list client contact
+        // list store contact
+        // add client contact seperately
+        // add store contact seperately
+
     }
 
     /**
