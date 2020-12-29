@@ -19,6 +19,7 @@ class CreateStorecontactsTable extends Migration
             $table->string('title');
             $table->string('email');
             $table->string('phone_no');
+            $table->unsignedBigInteger('store_id');
             $table->timestamps();
         });
     }

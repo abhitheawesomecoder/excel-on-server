@@ -17,3 +17,5 @@ Route::prefix('clients')->group(function() {
     //Route::get('/{id}/edit#', 'ClientsController',['as' => 'clients']);
 });*/
 Route::resource('clients', 'ClientsController');
+
+Route::resource('stores', 'StoresController');

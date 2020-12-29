@@ -4,16 +4,16 @@ namespace Modules\Clients\Http\Controllers;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Modules\Clients\Http\Forms\AddClientForm;
-use Modules\Clients\DataTables\ClientDataTable;
+use Modules\Clients\Http\Forms\AddStoreForm;
+//use Modules\Clients\DataTables\StoreDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Modules\Clients\Entities\Client;
-use Modules\Clients\Entities\Contact;
+use Modules\Clients\Entities\Store;
+use Modules\Clients\Entities\Storecontact;
 
-class ClientsController extends Controller
+class StoresController extends Controller
 {
     use FormBuilderTrait;
 
@@ -21,44 +21,18 @@ class ClientsController extends Controller
 
         'basic_information' => [
 
-            'account_number' => [
+            'store_id' => [
                 'type' => 'text',
             ],
 
-            'client_name' => [
+            'store_name' => [
                 'type' => 'text'
-            ],
-
-            'assigned_to' => [
-                'type' => 'select',
             ]
         ],
 
-
-        'contact_information' => [
-
-            'first_name' => [
-                'type' => 'text',
-            ],
-
-
-            'last_name' => [
-                'type' => 'text',
-            ],
-
-
-            'title' => [
-                'type' => 'text',
-            ],
-
-
-            'email' => [
-                'type' => 'email',
-            ],
-
-
-            'phone_no' => [
-                'type' => 'text',
+        'address' => [
+            'address_same_as_client' => [
+                'type' => 'checkbox'
             ],
 
             'address1' => [
@@ -80,6 +54,30 @@ class ClientsController extends Controller
                 'type' => 'text',
             ]
 
+        ],
+
+
+        'contact_information' => [
+
+            'name' => [
+                'type' => 'text',
+            ],
+
+
+            'title' => [
+                'type' => 'text',
+            ],
+
+
+            'email' => [
+                'type' => 'email',
+            ],
+
+
+            'phone_no' => [
+                'type' => 'text',
+            ]
+
         ]
 
     ];
@@ -93,7 +91,7 @@ class ClientsController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index(ClientDataTable $dataTable)
+    public function index(StoreDataTable $dataTable)
     {   
         return $dataTable->render('signup::index');
         //return view('clients::index');
@@ -104,22 +102,12 @@ class ClientsController extends Controller
      * @return Response
      */
     public function create(FormBuilder $formBuilder)
-    {   //return redirect()->route('clients..edit',1);
-        $users = DB::table('users')
-            ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-            ->where('model_has_roles.role_id', 2)
-            ->select('users.id', 'users.first_name', 'users.last_name')
-            ->get();
-        $staff = array();
-        foreach($users as $user) {
-            $staff[$user->id] = $user->first_name." ".$user->last_name;
-        }
-
-        $form = $formBuilder->create(AddClientForm::class, [
+    {   
+        $form = $formBuilder->create(AddStoreForm::class, [
             'method' => 'POST',
-            'url' => route('clients.store'),
+            'url' => route('stores.store'),
             'id' => 'module_form'
-        ],['staff' => $staff ]);
+        ]);
         
         return view('clients::create', compact('form'))
                ->with('show_fields', $this->showFields);
@@ -139,29 +127,28 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        $form = $this->form(AddClientForm::class);
+        $form = $this->form(AddStoreForm::class);
 
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
-        $newClient = new Client;
-        $newClient->account_number = $request->account_number;
-        $newClient->client_name = $request->client_name;
-        $newClient->assigned_to = $request->assigned_to;
-        $newClient->save();
+        $newStore = new Store;
+        $newStore->store_id = $request->store_id;
+        $newStore->store_name = $request->store_name;
+        $newStore->address1 = $request->address1;
+        $newStore->address2 = $request->address2;
+        $newStore->city = $request->city;
+        $newStore->postcode = $request->postcode;
+        $newStore->client_id = $request->client_id;
+        $newStore->save();
 
-        $newContact = new Contact;
-        $newContact->first_name = $request->first_name;
-        $newContact->last_name = $request->last_name;
+        $newContact = new Storecontact;
+        $newContact->name = $request->name;
         $newContact->title = $request->title;
         $newContact->email = $request->email;
         $newContact->phone_no = $request->phone_no;
-        $newContact->address1 = $request->address1;
-        $newContact->address2 = $request->address2;
-        $newContact->city = $request->city;
-        $newContact->postcode = $request->postcode;
-        $newContact->client_id = $newClient->id;
+        $newContact->store_id = $newStore->id;
         $newContact->save();
         
     }
@@ -183,7 +170,7 @@ class ClientsController extends Controller
      */
     public function edit($id, FormBuilder $formBuilder)
     {   
-        $client = Client::find($id);
+        /*$client = Client::find($id);
         
         $users = DB::table('users')
             ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
@@ -203,7 +190,7 @@ class ClientsController extends Controller
         
         return view('clients::show', compact('form'))
                ->with('show_fields', $this->showFields)
-               ->with('entity', $client);
+               ->with('entity', $client);*/
     }
 
     /**
