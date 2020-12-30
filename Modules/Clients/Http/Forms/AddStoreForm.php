@@ -13,7 +13,8 @@ class AddStoreForm extends Form
     	$this->add('store_id', 'text', ['rules' => 'required']);
 
     	$this->add('store_name', 'text', ['rules' => 'required']);
-
+        
+        if($this->getData('address_same_fill'))
         $this->add('address_same_as_client', 'checkbox', [
             'value' => 0,
             'checked' => false

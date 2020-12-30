@@ -5,7 +5,7 @@ namespace Modules\Clients\Http\Controllers;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Clients\Http\Forms\AddStoreForm;
-//use Modules\Clients\DataTables\StoreDataTable;
+use Modules\Clients\DataTables\StorecontactDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -108,7 +108,7 @@ class StoresController extends Controller
             'method' => 'POST',
             'url' => route('stores.store'),
             'id' => 'module_form'
-        ],['client_id' => $id ]);
+        ],['client_id' => $id, 'address_same_fill' => true ]);
         
         return view('clients::create', compact('form'))
                ->with('show_fields', $this->showFields)
@@ -176,29 +176,25 @@ class StoresController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id, FormBuilder $formBuilder)
-    {   
-        $client = Client::find($id);
-        
-        $users = DB::table('users')
-            ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-            ->where('model_has_roles.role_id', 2)
-            ->select('users.id', 'users.first_name', 'users.last_name')
-            ->get();
-        $staff = array();
-        foreach($users as $user) {
-            $staff[$user->id] = $user->first_name." ".$user->last_name;
+    public function edit($id, FormBuilder $formBuilder, StorecontactDataTable $tableObj)
+    {   if (request()->ajax()) {
+            return $tableObj->render('core::datatable');
         }
+        $store = Store::find($id);
 
-        $form = $formBuilder->create(AddClientForm::class, [
+        $form = $formBuilder->create(AddStoreForm::class, [
             'method' => 'POST',
-            'url' => route('clients.store'),
+            'url' => route('stores.store'),
             'id' => 'module_form'
-        ],['staff' => $staff ]);
+        ],['address_same_fill' => false ]);
         
-        return view('clients::show', compact('form'))
+        unset($this->showFields['basic_information']['address_same_as_client']);
+
+        $dataTable = $tableObj->html();
+        
+        return view('clients::storeedit', compact('form'))
                ->with('show_fields', $this->showFields)
-               ->with('entity', $client);
+               ->with(compact('dataTable'));
     }
 
     /**
