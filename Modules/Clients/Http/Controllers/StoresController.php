@@ -153,8 +153,8 @@ class StoresController extends Controller
         $newContact->store_id = $newStore->id;
         $newContact->save();
 
-        // list store
-        // list client contact
+        // list store - partially done
+        // list client contact - partially done
         // list store contact
         // add client contact seperately
         // add store contact seperately
@@ -178,7 +178,7 @@ class StoresController extends Controller
      */
     public function edit($id, FormBuilder $formBuilder)
     {   
-        /*$client = Client::find($id);
+        $client = Client::find($id);
         
         $users = DB::table('users')
             ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
@@ -198,7 +198,7 @@ class StoresController extends Controller
         
         return view('clients::show', compact('form'))
                ->with('show_fields', $this->showFields)
-               ->with('entity', $client);*/
+               ->with('entity', $client);
     }
 
     /**

@@ -7,8 +7,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Clients\Http\Forms\AddClientForm;
 use Modules\Clients\DataTables\ClientDataTable;
 use Modules\Clients\DataTables\StoreDataTable;
-use DataTables;
-use Modules\Clients\Entities\Store;
+use Modules\Clients\DataTables\ContactDataTable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -216,10 +215,16 @@ class ClientsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id, FormBuilder $formBuilder, StoreDataTable $tableObj)
+    public function edit($id, FormBuilder $formBuilder, StoreDataTable $tableObj,ContactDataTable $contactTableObj)
     {   
         if (request()->ajax()) {
-            return $tableObj->render('core::datatable');
+    
+          switch (request()->columns[1]['data']) {
+              case 'store_id':
+                  return $tableObj->render('core::datatable');
+              default:
+                  return $contactTableObj->render('core::datatable');
+          }
         }
 
         $client = Client::find($id);
@@ -241,11 +246,14 @@ class ClientsController extends Controller
         ],['staff' => $staff ]);
 
         $dataTable = $tableObj->html();
+
+        $contactTable = $contactTableObj->html();
         
         return view('clients::show', compact('form'))
                ->with('show_fields', $this->showFields)
                ->with('entity', $client)
-               ->with(compact('dataTable'));
+               ->with(compact('dataTable'))
+               ->with(compact('contactTable'));
     }
 
     /**

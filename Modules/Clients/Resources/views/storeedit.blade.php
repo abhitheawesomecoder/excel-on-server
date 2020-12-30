@@ -66,25 +66,17 @@
                                         
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="tab_contacts">
-                                     <div class="col-lg-12 col-md-12">
-                                            @include('core::datatable',['datatable' => $contactTable])
-                                     </div>
+                                     
                                 </div>
 
                                 <div role="tabpanel" class="tab-pane fade" id="tab_comments">
-                                     <div class="col-lg-12 col-md-12">
-                                            @include('core::comments')
-                                     </div>
+                                     >
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="profile">
-                                     <div class="col-lg-12 col-md-12">
-                                            @include('attachments')
-                                     </div>
+                                     
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="tab_stores">
-                                    <div class="col-lg-12 col-md-12">
-                                            @include('core::datatable',['datatable' => $dataTable])
-                                     </div>
+                                    
                                 </div>
                                 
                             </div>
