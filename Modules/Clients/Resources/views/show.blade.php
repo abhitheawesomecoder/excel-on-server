@@ -29,10 +29,10 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs tab-nav-right tabs-left" role="tablist">
             <li role="presentation" class="active"><a href="#home" data-toggle="tab">HOME</a></li>
-            <li role="presentation"><a href="#contacts" data-toggle="tab">Contacts</a></li>
+            <li role="presentation"><a href="#tab_contacts" data-toggle="tab"><i class="material-icons">contacts</i>Contacts</a></li>
             <li role="presentation"><a href="#tab_comments" data-toggle="tab"><i class="material-icons">chat</i>Comments</a></li>
             <li role="presentation"><a href="#profile" data-toggle="tab"><i class="material-icons">attach_file</i>Attachments</a></li>
-            <li role="presentation"><a href="#messages" data-toggle="tab">MESSAGES</a></li>
+            <li role="presentation"><a href="#tab_stores" data-toggle="tab"><i class="material-icons">store</i>Stores</a></li>
             
         </ul>
     </div>
@@ -65,7 +65,7 @@
 {!! form_end($form, $renderRest = true) !!}
                                         
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="contacts">
+                                <div role="tabpanel" class="tab-pane fade" id="tab_contacts">
                                     <b>Message Content</b>
                                     <p>
                                         Lorem ipsum dolor sit amet, ut duo atqui exerci dicunt, ius impedit mediocritatem an. Pri ut tation electram moderatius.
@@ -85,14 +85,10 @@
                                             @include('attachments')
                                      </div>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="messages">
-                                    <b>Message Content</b>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, ut duo atqui exerci dicunt, ius impedit mediocritatem an. Pri ut tation electram moderatius.
-                                        Per te suavitate democritum. Duis nemore probatus ne quo, ad liber essent aliquid
-                                        pro. Et eos nusquam accumsan, vide mentitum fabellas ne est, eu munere gubergren
-                                        sadipscing mel.
-                                    </p>
+                                <div role="tabpanel" class="tab-pane fade" id="tab_stores">
+                                    <div class="col-lg-12 col-md-12">
+                                            @include('core::datatable',['datatable' => $dataTable])
+                                     </div>
                                 </div>
                                 
                             </div>

@@ -6,6 +6,9 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Clients\Http\Forms\AddClientForm;
 use Modules\Clients\DataTables\ClientDataTable;
+use Modules\Clients\DataTables\StoreDataTable;
+use DataTables;
+use Modules\Clients\Entities\Store;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -213,8 +216,12 @@ class ClientsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id, FormBuilder $formBuilder)
+    public function edit($id, FormBuilder $formBuilder, StoreDataTable $tableObj)
     {   
+        if (request()->ajax()) {
+            return $tableObj->render('core::datatable');
+        }
+
         $client = Client::find($id);
         
         $users = DB::table('users')
@@ -232,10 +239,13 @@ class ClientsController extends Controller
             'url' => route('clients.store'),
             'id' => 'module_form'
         ],['staff' => $staff ]);
+
+        $dataTable = $tableObj->html();
         
         return view('clients::show', compact('form'))
                ->with('show_fields', $this->showFields)
-               ->with('entity', $client);
+               ->with('entity', $client)
+               ->with(compact('dataTable'));
     }
 
     /**
