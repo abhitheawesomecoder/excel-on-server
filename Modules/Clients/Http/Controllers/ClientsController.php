@@ -132,6 +132,17 @@ class ClientsController extends Controller
 
         return \Response::json($contact);
     }
+    public function contactcreate($id, FormBuilder $formBuilder){
+
+        $form = $formBuilder->create(AddClientForm::class, [
+            'method' => 'POST',
+            'url' => route('clients.store'),
+            'id' => 'module_form'
+        ],['client_form' => false ]);
+        unset($this->showFields['basic_information']);
+        return view('clients::create', compact('form'))
+               ->with('show_fields', $this->showFields);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -153,7 +164,7 @@ class ClientsController extends Controller
             'method' => 'POST',
             'url' => route('clients.store'),
             'id' => 'module_form'
-        ],['staff' => $staff ]);
+        ],['staff' => $staff,'client_form' => true ]);
         
         return view('clients::create', compact('form'))
                ->with('show_fields', $this->showFields);

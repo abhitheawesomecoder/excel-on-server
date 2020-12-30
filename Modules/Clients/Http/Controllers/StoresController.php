@@ -97,6 +97,18 @@ class StoresController extends Controller
         return $dataTable->render('signup::index');
         //return view('clients::index');
     }
+    public function contactcreate($id, FormBuilder $formBuilder){
+
+        $form = $formBuilder->create(AddStoreForm::class, [
+            'method' => 'POST',
+            'url' => route('stores.store'),
+            'id' => 'module_form'
+        ],['store_form' => false]);
+        unset($this->showFields['basic_information']);
+        unset($this->showFields['address']);
+        return view('clients::create', compact('form'))
+               ->with('show_fields', $this->showFields);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -108,7 +120,7 @@ class StoresController extends Controller
             'method' => 'POST',
             'url' => route('stores.store'),
             'id' => 'module_form'
-        ],['client_id' => $id, 'address_same_fill' => true ]);
+        ],['client_id' => $id, 'address_same_fill' => true , 'store_form' => true]);
         
         return view('clients::create', compact('form'))
                ->with('show_fields', $this->showFields)
@@ -155,9 +167,11 @@ class StoresController extends Controller
 
         // list store - partially done
         // list client contact - partially done
-        // list store contact
-        // add client contact seperately
-        // add store contact seperately
+        // list store contact - partially done
+        // add client contact seperately - partially done
+        // add store contact seperately - partially done
+
+        // complete store contact completely
 
     }
 

@@ -7,17 +7,18 @@ use Kris\LaravelFormBuilder\Form;
 class AddClientForm extends Form
 {
     public function buildForm()
-    {   
-    	//'attr' => ['class' => 'select2 pmd-select2 form-control'],
-    	$this->add('account_number', 'text', ['rules' => 'required']);
+    {   if($this->getData('client_form')){
+        	//'attr' => ['class' => 'select2 pmd-select2 form-control'],
+        	$this->add('account_number', 'text', ['rules' => 'required']);
 
-    	$this->add('client_name', 'text', ['rules' => 'required']);
+        	$this->add('client_name', 'text', ['rules' => 'required']);
 
-    	$this->add('assigned_to', 'select', [
-            'choices' => $this->getData('staff'),
-            'attr' => ['class' => 'select2 pmd-select2 form-control'],
-            'selected' => '1'
-        ]);
+        	$this->add('assigned_to', 'select', [
+                'choices' => $this->getData('staff'),
+                'attr' => ['class' => 'select2 pmd-select2 form-control'],
+                'selected' => '1'
+            ]);
+        }
 
     	$this->add('first_name', 'text', ['rules' => 'required']);
 

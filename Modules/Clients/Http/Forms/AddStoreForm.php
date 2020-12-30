@@ -7,7 +7,7 @@ use Kris\LaravelFormBuilder\Form;
 class AddStoreForm extends Form
 {
     public function buildForm()
-    {   
+    {   if($this->getData('store_form')){
         $this->add('client_id', 'hidden', ['default_value' => $this->getData('client_id')]);
 
     	$this->add('store_id', 'text', ['rules' => 'required']);
@@ -27,7 +27,7 @@ class AddStoreForm extends Form
         $this->add('city', 'text', ['rules' => 'required']);
 
         $this->add('postcode', 'text', ['rules' => 'required|min:6|numeric']);
-
+        }
         $this->add('name', 'text', ['rules' => 'required']);
 
         $this->add('title', 'text', ['rules' => 'required']);

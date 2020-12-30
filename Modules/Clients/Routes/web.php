@@ -25,8 +25,14 @@ Route::prefix('clients')->group(function() {
 
 	Route::get('/{id}/stores/create', 'StoresController@create',['as' => 'stores.create']);
 
+	Route::get('/{id}/contacts/create', 'ClientsController@contactcreate',['as' => 'contacts.create']);
+
 	//Route::get('/{id}/stores/create', 'StoresController@create',['as' => 'stores.create']);
 
 	Route::post('/api/getaddress', 'ClientsController@getaddress');
 
+});
+
+Route::prefix('stores')->group(function() {
+	Route::get('/{id}/contacts/create', 'StoresController@contactcreate',['as' => 'storecontacts.create']);
 });
