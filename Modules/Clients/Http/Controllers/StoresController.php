@@ -12,6 +12,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Modules\Clients\Entities\Store;
 use Modules\Clients\Entities\Storecontact;
+use Redirect;
 
 class StoresController extends Controller
 {
@@ -101,13 +102,15 @@ class StoresController extends Controller
 
         $form = $formBuilder->create(AddStoreForm::class, [
             'method' => 'POST',
-            'url' => route('stores.store'),
+            'url' => route('store-contacts.store'),
             'id' => 'module_form'
         ],['store_form' => false]);
         unset($this->showFields['basic_information']);
         unset($this->showFields['address']);
         return view('clients::create', compact('form'))
                ->with('show_fields', $this->showFields);
+        //return redirect()->route('login');
+        //return Redirect::to(route('stores.edit',$id).'#tab_contacts');
     }
 
     /**
@@ -171,7 +174,7 @@ class StoresController extends Controller
         // add client contact seperately - partially done
         // add store contact seperately - partially done
 
-        // complete store contact completely
+        // complete store contact completely - crud
 
     }
 
@@ -200,7 +203,7 @@ class StoresController extends Controller
             'method' => 'POST',
             'url' => route('stores.store'),
             'id' => 'module_form'
-        ],['address_same_fill' => false ]);
+        ],['address_same_fill' => false, 'store_form' => true ]);
         
         unset($this->showFields['basic_information']['address_same_as_client']);
 

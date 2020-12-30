@@ -20,6 +20,10 @@ Route::resource('clients', 'ClientsController');
 
 Route::resource('stores', 'StoresController');
 
+Route::resource('contacts', 'ContactsController');
+
+Route::resource('store-contacts', 'StorecontactsController');
+
 Route::prefix('clients')->group(function() {
 
 
