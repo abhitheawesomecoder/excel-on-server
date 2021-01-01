@@ -19,7 +19,7 @@ class AddClientForm extends Form
                 'selected' => '1'
             ]);
         }
-
+        if($this->getData('client_edit_form')){
     	$this->add('first_name', 'text', ['rules' => 'required']);
 
         $this->add('last_name', 'text', ['rules' => 'required']);
@@ -37,7 +37,7 @@ class AddClientForm extends Form
         $this->add('city', 'text', ['rules' => 'required']);
 
         $this->add('postcode', 'text', ['rules' => 'required|min:6|numeric']);
-
+        }
         $this->add('submit', 'submit', ['label' => 'Submit','attr' => ['class' => 'btn btn-primary m-t-15 waves-effect']]);
 
     }

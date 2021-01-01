@@ -27,9 +27,9 @@ Route::resource('store-contacts', 'StorecontactsController');
 Route::prefix('clients')->group(function() {
 
 
-	Route::get('/{id}/stores/create', 'StoresController@create',['as' => 'stores.create']);
+	Route::get('/{id}/stores/create', 'StoresController@create')->name('storescreate');
 
-	Route::get('/{id}/contacts/create', 'ClientsController@contactcreate',['as' => 'contacts.create']);
+	Route::get('/{id}/contacts/create', 'ClientsController@contactcreate')->name('contactscreate');
 
 	//Route::get('/{id}/stores/create', 'StoresController@create',['as' => 'stores.create']);
 
@@ -38,5 +38,6 @@ Route::prefix('clients')->group(function() {
 });
 
 Route::prefix('stores')->group(function() {
-	Route::get('/{id}/contacts/create', 'StoresController@contactcreate',['as' => 'storecontacts.create']);
+   Route::get('/{id}/contacts/create', 'StoresController@contactcreate')->name('storecontacts.create');
+   /*Route::get('/{store_id}/contacts/{contact_id}/edit', 'StoresController@contactedit')->name('storecontacts.edit');*/
 });

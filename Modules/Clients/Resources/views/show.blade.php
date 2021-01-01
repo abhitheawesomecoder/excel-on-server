@@ -9,7 +9,7 @@
                         </div>
 
                         <div class="header-text">
-                            Signup - Mail                            <small>Send Mail for user signup</small>
+                            @lang($title)<small>@lang($subtitle)</small>
                         </div>
                     </h2>
                 </div>
@@ -28,7 +28,7 @@
     <div class="col-lg-2 col-md-2 col-sm-2">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs tab-nav-right tabs-left" role="tablist">
-            <li role="presentation" class="active"><a href="#home" data-toggle="tab">HOME</a></li>
+            <li role="presentation" class="active"><a href="#tab_details" data-toggle="tab"><i class="material-icons">folder</i>Details</a></li>
             <li role="presentation"><a href="#tab_contacts" data-toggle="tab"><i class="material-icons">contacts</i>Contacts</a></li>
             <li role="presentation"><a href="#tab_comments" data-toggle="tab"><i class="material-icons">chat</i>Comments</a></li>
             <li role="presentation"><a href="#profile" data-toggle="tab"><i class="material-icons">attach_file</i>Attachments</a></li>
@@ -39,7 +39,7 @@
                             <div class="col-lg-10 col-md-10 col-sm-10">
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade in active" id="home">
+                                <div role="tabpanel" class="tab-pane fade in active" id="tab_details">
                                         
                                     {!! form_start($form) !!}    
 @foreach($show_fields as $panelName => $panel)
@@ -67,7 +67,7 @@
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="tab_contacts">
                                      <div class="col-lg-12 col-md-12">
-                                            @include('core::datatable',['datatable' => $contactTable])
+                                            @include('core::datatable',['datatable' => $contactTable,'view' => 'contact'])
                                      </div>
                                 </div>
 
@@ -83,7 +83,7 @@
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="tab_stores">
                                     <div class="col-lg-12 col-md-12">
-                                            @include('core::datatable',['datatable' => $dataTable])
+                                            @include('core::datatable',['datatable' => $dataTable,'view' => 'store'])
                                      </div>
                                 </div>
                                 

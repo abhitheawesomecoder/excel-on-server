@@ -9,7 +9,7 @@
                         </div>
 
                         <div class="header-text">
-                            Signup - Mail                            <small>Send Mail for user signup</small>
+                            @lang($title)<small>@lang($subtitle)</small>
                         </div>
                     </h2>
                 </div>
@@ -58,7 +58,7 @@
         $(document).ready(function () {
             //BAP_Platform.copyAddress('{{ asset("/") }}');
             //copy code below to above function
-            const client_id = $("input[name='client_id']").val();
+            const client_id = $("input[name='_id']").val();
             const entityUrl = '{{ asset("/") }}';
             $('#address_same_as_client').change(function() {
 

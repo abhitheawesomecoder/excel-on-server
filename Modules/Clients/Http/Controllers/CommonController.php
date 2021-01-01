@@ -2,20 +2,18 @@
 
 namespace Modules\Clients\Http\Controllers;
 
-use Redirect;
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Modules\Clients\Http\Forms\AddStoreForm;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Modules\Clients\Http\Forms\AddStoreForm;
-use Modules\Clients\Entities\Storecontact;
-use Kris\LaravelFormBuilder\FormBuilder;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-class StorecontactsController extends Controller
+class CommonController extends Controller
 {   
     use FormBuilderTrait;
 
-    protected $showFields = [
+    protected $showFieldsStore = [
 
         'basic_information' => [
 
@@ -80,10 +78,24 @@ class StorecontactsController extends Controller
         ]
 
     ];
+
     /**
      * Display a listing of the resource.
      * @return Response
      */
+    public function contactcreate($id, FormBuilder $formBuilder){
+
+        $form = $formBuilder->create(AddStoreForm::class, [
+            'method' => 'POST',
+            'url' => route('store-contacts.store'),
+            'id' => 'module_form'
+        ],['_id' => $id,'store_form' => false]);
+        unset($this->showFieldsStore['basic_information']);
+        unset($this->showFieldsStore['address']);
+        return view('clients::create', compact('form'))
+               ->with('show_fields', $this->showFieldsStore);
+    }
+
     public function index()
     {
         return view('clients::index');
@@ -105,22 +117,7 @@ class StorecontactsController extends Controller
      */
     public function store(Request $request)
     {
-        $form = $this->form(AddStoreForm::class);
-
-        if (!$form->isValid()) {
-            return redirect()->back()->withErrors($form->getErrors())->withInput();
-        }
-        $id = $request->_id;
-        $newContact = new Storecontact;
-        $newContact->name = $request->name;
-        $newContact->title = $request->title;
-        $newContact->email = $request->email;
-        $newContact->phone_no = $request->phone_no;
-        $newContact->store_id = $id;
-        $newContact->save();
-
-        return Redirect::to(route('stores.edit',$id).'#tab_contacts');
-
+        //
     }
 
     /**
@@ -138,21 +135,9 @@ class StorecontactsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id, FormBuilder $formBuilder)
-    {   $model = Storecontact::find($id);
-        $title  = 'core.storecontact.update.title';
-        $subtitle = 'core.storecontact.update.subtitle';
-        $form = $formBuilder->create(AddStoreForm::class, [
-            'method' => 'PATCH',
-            'url' => route('store-contacts.update',$id),
-            'id' => 'module_form',
-            'model' => $model,
-        ],['_id' => $id,'store_form' => false, 'store_edit_form' => true ]);
-        unset($this->showFields['basic_information']);
-        unset($this->showFields['address']);
-        return view('clients::create', compact('form'))
-               ->with('show_fields', $this->showFields)
-               ->with(compact('title','subtitle'));
+    public function edit($id)
+    {
+        return view('clients::edit');
     }
 
     /**

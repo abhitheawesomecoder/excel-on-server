@@ -133,15 +133,18 @@ class ClientsController extends Controller
         return \Response::json($contact);
     }
     public function contactcreate($id, FormBuilder $formBuilder){
-
+//http://localhost/excel/public/clients/1/contacts/create
         $form = $formBuilder->create(AddClientForm::class, [
             'method' => 'POST',
             'url' => route('clients.store'),
             'id' => 'module_form'
-        ],['client_form' => false ]);
+        ],['client_form' => false, 'client_edit_form' => true ]);
+        $title  = 'core.clientcontact.create.title';
+        $subtitle = 'core.clientcontact.create.subtitle';
         unset($this->showFields['basic_information']);
         return view('clients::create', compact('form'))
-               ->with('show_fields', $this->showFields);
+               ->with('show_fields', $this->showFields)
+               ->with(compact('title','subtitle'));
     }
 
     /**
@@ -159,7 +162,8 @@ class ClientsController extends Controller
         foreach($users as $user) {
             $staff[$user->id] = $user->first_name." ".$user->last_name;
         }
-
+        $title  = 'core.client.create.title';
+        $subtitle = 'core.client.create.subtitle';
         $form = $formBuilder->create(AddClientForm::class, [
             'method' => 'POST',
             'url' => route('clients.store'),
@@ -167,7 +171,8 @@ class ClientsController extends Controller
         ],['staff' => $staff,'client_form' => true ]);
         
         return view('clients::create', compact('form'))
-               ->with('show_fields', $this->showFields);
+               ->with('show_fields', $this->showFields)
+               ->with(compact('title','subtitle'));
 
         // first complete saving data
         // then route to Add contact 2, then 3, then 4 and so on 
@@ -227,7 +232,7 @@ class ClientsController extends Controller
      * @return Response
      */
     public function edit($id, FormBuilder $formBuilder, StoreDataTable $tableObj,ContactDataTable $contactTableObj)
-    {   
+    {   //http://localhost/excel/public/clients/1/edit
         if (request()->ajax()) {
     
           switch (request()->columns[1]['data']) {
@@ -239,7 +244,8 @@ class ClientsController extends Controller
         }
 
         $client = Client::find($id);
-        
+        $title  = 'core.client.update.title';
+        $subtitle = 'core.client.update.subtitle';
         $users = DB::table('users')
             ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
             ->where('model_has_roles.role_id', 2)
@@ -253,8 +259,11 @@ class ClientsController extends Controller
         $form = $formBuilder->create(AddClientForm::class, [
             'method' => 'POST',
             'url' => route('clients.store'),
-            'id' => 'module_form'
-        ],['staff' => $staff ]);
+            'id' => 'module_form',
+            'model' => $client
+        ],['staff' => $staff,'client_form' => true, 'client_edit_form' => false ]);
+
+        unset($this->showFields['contact_information']);
 
         $dataTable = $tableObj->html();
 
@@ -264,7 +273,8 @@ class ClientsController extends Controller
                ->with('show_fields', $this->showFields)
                ->with('entity', $client)
                ->with(compact('dataTable'))
-               ->with(compact('contactTable'));
+               ->with(compact('contactTable'))
+               ->with(compact('title','subtitle'));
     }
 
     /**

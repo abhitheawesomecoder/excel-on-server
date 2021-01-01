@@ -12,7 +12,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Modules\Clients\Entities\Store;
 use Modules\Clients\Entities\Storecontact;
-use Redirect;
 
 class StoresController extends Controller
 {
@@ -99,16 +98,23 @@ class StoresController extends Controller
         //return view('clients::index');
     }
     public function contactcreate($id, FormBuilder $formBuilder){
-
+//http://localhost/excel/public/stores/1/edit#tab_contacts
+//http://localhost/excel/public/stores/1/contacts/create
+//https://datatables.net/reference/option/buttons.buttons.action
+        // in all datatable view attach a url for hidden field
+        // buttonserverjs change to pickup value of above hidden field
+        $title  = 'core.storecontact.create.title';
+        $subtitle = 'core.storecontact.create.subtitle';
         $form = $formBuilder->create(AddStoreForm::class, [
             'method' => 'POST',
             'url' => route('store-contacts.store'),
             'id' => 'module_form'
-        ],['store_form' => false]);
+        ],['_id' => $id,'store_form' => false, 'store_edit_form' => true]);
         unset($this->showFields['basic_information']);
         unset($this->showFields['address']);
         return view('clients::create', compact('form'))
-               ->with('show_fields', $this->showFields);
+               ->with('show_fields', $this->showFields)
+               ->with(compact('title','subtitle'));
         //return redirect()->route('login');
         //return Redirect::to(route('stores.edit',$id).'#tab_contacts');
     }
@@ -118,16 +124,22 @@ class StoresController extends Controller
      * @return Response
      */
     public function create($id, FormBuilder $formBuilder)
-    {   
+    {   //http://localhost/excel/public/clients/1/stores/create
+        //echo $id;
+        //exit();
         $form = $formBuilder->create(AddStoreForm::class, [
             'method' => 'POST',
             'url' => route('stores.store'),
             'id' => 'module_form'
-        ],['client_id' => $id, 'address_same_fill' => true , 'store_form' => true]);
+        ],['_id' => $id, 'address_same_fill' => true , 'store_form' => true, 'store_edit_form' => true]);
+
+        $title  = 'core.store.create.title';
+        $subtitle = 'core.store.create.subtitle';
         
         return view('clients::create', compact('form'))
                ->with('show_fields', $this->showFields)
-               ->with('appjs',true);
+               ->with('appjs',true)
+               ->with(compact('title','subtitle'));
 
         // first complete saving data
         // then route to Add contact 2, then 3, then 4 and so on 
@@ -194,24 +206,33 @@ class StoresController extends Controller
      * @return Response
      */
     public function edit($id, FormBuilder $formBuilder, StorecontactDataTable $tableObj)
-    {   if (request()->ajax()) {
+    {   //$editUrl = route('store-contacts.index');
+        //echo $editUrl;
+        //exit();
+        
+        if (request()->ajax()) {
             return $tableObj->render('core::datatable');
         }
-        $store = Store::find($id);
+        $model = Store::find($id);
+        $title  = 'core.store.update.title';
+        $subtitle = 'core.store.update.subtitle';
+        //$store = Store::find($id);
 
         $form = $formBuilder->create(AddStoreForm::class, [
             'method' => 'POST',
             'url' => route('stores.store'),
-            'id' => 'module_form'
-        ],['address_same_fill' => false, 'store_form' => true ]);
+            'id' => 'module_form',
+            'model' => $model
+        ],['address_same_fill' => false, 'store_form' => true, 'store_edit_form' => false ]);
         
         unset($this->showFields['basic_information']['address_same_as_client']);
-
+        unset($this->showFields['contact_information']);
         $dataTable = $tableObj->html();
         
         return view('clients::storeedit', compact('form'))
                ->with('show_fields', $this->showFields)
-               ->with(compact('dataTable'));
+               ->with(compact('dataTable'))
+               ->with(compact('title','subtitle'));
     }
 
     /**
