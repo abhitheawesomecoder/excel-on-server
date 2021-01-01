@@ -168,7 +168,7 @@ class ClientsController extends Controller
             'method' => 'POST',
             'url' => route('clients.store'),
             'id' => 'module_form'
-        ],['staff' => $staff,'client_form' => true ]);
+        ],['staff' => $staff,'client_form' => true, 'client_edit_form' => true ]);
         
         return view('clients::create', compact('form'))
                ->with('show_fields', $this->showFields)

@@ -43,15 +43,20 @@
         </a>
     </li>
 @role('Super Admin')
-    <li><a href="{{ route('index') }}" title="Company" class="">
+    <li><a href="{{ route('index') }}" title="Signups" class="">
             <i class="material-icons">apps</i>
             <span>Signups</span>
         </a>
     </li>
 @endrole
-    <li><a href="{{ route('users..index') }}" title="Settings" class="">
+    <li><a href="{{ route('users..index') }}" title="Users" class="">
             <i class="material-icons">apps</i>
             <span>Users</span>
+        </a>
+    </li>
+    <li><a href="{{ route('clients.index') }}" title="Clients" class="">
+            <i class="material-icons">apps</i>
+            <span>Clients</span>
         </a>
     </li>
 
