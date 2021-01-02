@@ -219,8 +219,8 @@ class StoresController extends Controller
         //$store = Store::find($id);
 
         $form = $formBuilder->create(AddStoreForm::class, [
-            'method' => 'POST',
-            'url' => route('stores.store'),
+            'method' => 'PATCH',
+            'url' => route('stores.update',$model),
             'id' => 'module_form',
             'model' => $model
         ],['address_same_fill' => false, 'store_form' => true, 'store_edit_form' => false ]);

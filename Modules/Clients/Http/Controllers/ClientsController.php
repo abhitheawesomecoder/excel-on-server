@@ -275,8 +275,8 @@ class ClientsController extends Controller
         }
 
         $form = $formBuilder->create(AddClientForm::class, [
-            'method' => 'POST',
-            'url' => route('clients.store'),
+            'method' => 'PATCH',
+            'url' => route('clients.update',$client),
             'id' => 'module_form',
             'model' => $client
         ],['staff' => $staff,'client_form' => true, 'client_edit_form' => false ]);
