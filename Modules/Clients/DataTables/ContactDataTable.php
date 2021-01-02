@@ -19,7 +19,7 @@ class ContactDataTable extends DataTable
      * @return \Yajra\DataTables\DataTableAbstract
      */
     public function dataTable($query)
-    {   
+    {   $editUrl = route('contacts.index');
         return datatables()
             ->eloquent($query)
             ->addColumn('action', '<div class="btn-group">
@@ -27,7 +27,7 @@ class ContactDataTable extends DataTable
                                         Action <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0);">Edit</a></li>
+                                        <li><a href="'.$editUrl.'/{{$id}}/edit">Edit</a></li>
                                         <li><a href="javascript:void(0);">Delete</a></li>
                                     </ul>
                                 </div>');

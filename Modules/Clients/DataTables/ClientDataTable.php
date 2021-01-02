@@ -42,7 +42,22 @@ class ClientDataTable extends DataTable
      */
     public function query(Client $model)
     {
-        return $model->newQuery();
+        //return $model->newQuery();
+        $query = $model->newQuery();
+        $newQuery = $query->select([
+                'clients.id as id',
+                'clients.account_number as account_number',
+                'clients.client_name as client_name',
+                'users.name as assigned_to',
+                'contacts.email as email',
+                'contacts.phone_no as phone_no',
+            ])
+            //->leftJoin('contacts', 'contacts.client_id', '=', 'clients.id')
+            //->leftjoin('contacts', 'contacts.assigned_to', '=', 'users.id')
+            ->leftJoin('users', 'clients.assigned_to', '=', 'users.id')
+            ->leftjoin('contacts', 'contacts.client_id', '=', 'clients.id');
+            
+        return $query;
     }
 
     /**
@@ -77,7 +92,10 @@ class ClientDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('account_number'),
-            Column::make('client_name')
+            Column::make('client_name'),
+            Column::make('assigned_to'),
+            Column::make('email'),
+            Column::make('phone_no')
         ];
     }
 

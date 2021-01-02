@@ -33,7 +33,15 @@ return [
          'update' => ['title' => 'Client Contact', 
                      'subtitle' => 'Update Client Contact'
          ]
-    ]
+    ],
+    'contact' => [
+        'create' => ['title' => 'Contact', 
+                     'subtitle' => 'Add Contact'
+         ],
+         'update' => ['title' => 'Contact', 
+                     'subtitle' => 'Update Contact'
+         ]
+    ],
 
 
 ];

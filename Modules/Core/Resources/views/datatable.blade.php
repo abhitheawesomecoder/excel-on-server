@@ -6,7 +6,7 @@
 {!! $datatable->scripts() !!}
 
 @endpush
-
+@if(isset($view))
 @push('scripts')
     <script type="text/javascript">
     	if('{{$view}}' == 'contact'){
@@ -40,3 +40,4 @@
     }
     </script>
 @endpush
+@endif

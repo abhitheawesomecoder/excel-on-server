@@ -99,6 +99,24 @@ class ClientsController extends Controller
     {   
         return $dataTable->render('signup::index');
         //return view('clients::index');
+
+        //return $model->newQuery();
+        //$query = $model->newQuery();
+        //$newQuery = $query->select([
+        /*$query = Client::query()
+                ->select([
+                'clients.account_number as account_number',
+                'clients.client_name as client_name',
+                'users.name as assigned_to',
+                'contacts.email as email',
+                'contacts.phone_no as phone_no',
+            ])
+            ->leftJoin('users', 'clients.assigned_to', '=', 'users.id')
+            ->leftjoin('contacts', 'contacts.client_id', '=', 'clients.id')
+            ->get();
+
+        echo $query;
+        exit();*/
     }
     public function getaddress(Request $request)
     {

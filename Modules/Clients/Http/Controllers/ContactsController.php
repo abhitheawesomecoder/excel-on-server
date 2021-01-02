@@ -2,12 +2,83 @@
 
 namespace Modules\Clients\Http\Controllers;
 
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Modules\Clients\Http\Forms\AddClientForm;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Clients\Entities\Contact;
 
 class ContactsController extends Controller
 {
+    use FormBuilderTrait;
+    protected $showFields = [
+
+        'basic_information' => [
+
+            'account_number' => [
+                'type' => 'text',
+            ],
+
+            'client_name' => [
+                'type' => 'text'
+            ],
+
+            'assigned_to' => [
+                'type' => 'select',
+            ]
+        ],
+
+
+        'contact_information' => [
+
+            'first_name' => [
+                'type' => 'text',
+            ],
+
+
+            'last_name' => [
+                'type' => 'text',
+            ],
+
+
+            'title' => [
+                'type' => 'text',
+            ],
+
+
+            'email' => [
+                'type' => 'email',
+            ],
+
+
+            'phone_no' => [
+                'type' => 'text',
+            ],
+
+            'address1' => [
+                'type' => 'text',
+            ],
+
+
+            'address2' => [
+                'type' => 'text',
+            ],
+
+
+            'city' => [
+                'type' => 'text',
+            ],
+
+
+            'postcode' => [
+                'type' => 'text',
+            ]
+
+        ]
+
+    ];
     /**
      * Display a listing of the resource.
      * @return Response
@@ -51,9 +122,24 @@ class ContactsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id)
-    {
-        return view('clients::edit');
+    public function edit($id, FormBuilder $formBuilder)
+    {   
+        $contact = Contact::find($id);
+        $title  = 'core.contact.update.title';
+        $subtitle = 'core.contact.update.subtitle';
+
+        $form = $formBuilder->create(AddClientForm::class, [
+            'method' => 'PATCH',
+            'url' => route('contacts.update',$contact),
+            'id' => 'module_form',
+            'model' => $contact
+        ],['client_form' => false, 'client_edit_form' => true ]);
+        
+        unset($this->showFields['basic_information']);
+
+        return view('clients::contactedit', compact('form'))
+               ->with('show_fields', $this->showFields)
+               ->with(compact('title','subtitle'));
     }
 
     /**
