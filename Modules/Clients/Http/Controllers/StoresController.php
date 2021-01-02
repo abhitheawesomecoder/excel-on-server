@@ -6,6 +6,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Clients\Http\Forms\AddStoreForm;
 use Modules\Clients\DataTables\StorecontactDataTable;
+use Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -207,7 +208,7 @@ class StoresController extends Controller
      */
     public function edit($id, FormBuilder $formBuilder, StorecontactDataTable $tableObj)
     {   //$editUrl = route('store-contacts.index');
-        //echo $editUrl;
+        ///echo $id;
         //exit();
         
         if (request()->ajax()) {
@@ -243,7 +244,15 @@ class StoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $stores = Store::find($id);
+        $stores->store_id = $request->store_id;
+        $stores->store_name = $request->store_name;
+        $stores->address1 = $request->address1;
+        $stores->address2 = $request->address2;
+        $stores->city = $request->city;
+        $stores->postcode = $request->postcode;
+        $stores->save();
+        return Redirect::to(route('clients.edit',$id).'#tab_stores');
     }
 
     /**

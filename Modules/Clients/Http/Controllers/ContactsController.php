@@ -2,6 +2,7 @@
 
 namespace Modules\Clients\Http\Controllers;
 
+use Redirect;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Clients\Http\Forms\AddClientForm;
@@ -150,7 +151,18 @@ class ContactsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $contact = Contact::find($id);
+        $contact->first_name = $request->first_name;
+        $contact->last_name = $request->last_name;
+        $contact->title = $request->title;
+        $contact->email = $request->email;
+        $contact->phone_no = $request->phone_no;
+        $contact->address1 = $request->address1;
+        $contact->address2 = $request->address2;
+        $contact->city = $request->city;
+        $contact->postcode = $request->postcode;
+        $contact->save();
+        return Redirect::to(route('contacts.edit',$id).'#tab_contacts');
     }
 
     /**

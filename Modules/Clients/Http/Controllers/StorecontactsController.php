@@ -144,7 +144,7 @@ class StorecontactsController extends Controller
         $subtitle = 'core.storecontact.update.subtitle';
         $form = $formBuilder->create(AddStoreForm::class, [
             'method' => 'PATCH',
-            'url' => route('store-contacts.update',$id),
+            'url' => route('store-contacts.update',$model),
             'id' => 'module_form',
             'model' => $model,
         ],['_id' => $id,'store_form' => false, 'store_edit_form' => true ]);
@@ -163,7 +163,13 @@ class StorecontactsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $storecontact = Storecontact::find($id);
+        $storecontact->name = $request->name;
+        $storecontact->title = $request->title;
+        $storecontact->email = $request->email;
+        $storecontact->phone_no = $request->phone_no;
+        $storecontact->save();
+        return Redirect::to(route('stores.edit',$storecontact->store_id).'#tab_contacts');
     }
 
     /**

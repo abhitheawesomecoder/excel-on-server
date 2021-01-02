@@ -303,7 +303,13 @@ class ClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $client = Client::find($id);
+        $client->account_number = $request->account_number;
+        $client->client_name= $request->client_name;
+        $client->assigned_to = $request->assigned_to;
+        $client->save();
+        //return Redirect::to(route('clients.index'));
+        return redirect()->route('clients.index');
     }
 
     /**
