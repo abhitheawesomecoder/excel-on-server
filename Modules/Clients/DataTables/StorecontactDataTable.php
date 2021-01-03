@@ -27,7 +27,7 @@ class StorecontactDataTable extends DataTable
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a href="'.$editUrl.'/{{$id}}/edit">Edit</a></li>
-                                        <li><a href="{{$id}}">Delete</a></li>
+                                        <li><a href="'.$editUrl.'/{{$id}}/delete">Delete</a></li>
                                     </ul>
                                 </div>');
     }

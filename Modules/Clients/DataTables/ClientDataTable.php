@@ -29,7 +29,7 @@ class ClientDataTable extends DataTable
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a href="'.$editUrl.'/{{$id}}/edit">Edit</a></li>
-                                        <li><a href="javascript:void(0);">Delete</a></li>
+                                        <li><a href="'.$editUrl.'/{{$id}}/delete">Delete</a></li>
                                     </ul>
                                 </div>');
     }

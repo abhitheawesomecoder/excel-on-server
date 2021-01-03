@@ -24,6 +24,14 @@ Route::resource('contacts', 'ContactsController');
 
 Route::resource('store-contacts', 'StorecontactsController');
 
+Route::get('/clients/{id}/delete', 'CommonController@clients_destroy');
+
+Route::get('/stores/{id}/delete', 'CommonController@stores_destroy');
+
+Route::get('/contacts/{id}/delete', 'CommonController@contacts_destroy');
+
+Route::get('/store-contacts/{id}/delete', 'CommonController@store_contacts_destroy');
+
 Route::prefix('clients')->group(function() {
 
 
