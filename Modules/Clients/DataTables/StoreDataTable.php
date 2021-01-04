@@ -23,7 +23,7 @@ class StoreDataTable extends DataTable
     {   $editUrl = route('stores.index');
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', '<div class="btn-group">
+            /*->addColumn('action', '<div class="btn-group">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Action <span class="caret"></span>
                                     </button>
@@ -31,7 +31,8 @@ class StoreDataTable extends DataTable
                                         <li><a href="'.$editUrl.'/{{$id}}/edit">Edit</a></li>
                                         <li><a href="'.$editUrl.'/{{$id}}/delete">Delete</a></li>
                                     </ul>
-                                </div>');
+                                </div>');*/
+            ->addColumn('action', '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/edit">Edit</a>');
     }
 
     /**
@@ -42,7 +43,21 @@ class StoreDataTable extends DataTable
      */
     public function query(Store $model)
     {
-        return $model->newQuery();
+        $query = $model->newQuery();
+        $newQuery = $query->select([
+                'stores.id as id',
+                'stores.store_name as store_name',
+                'stores.address1 as address1',
+                'stores.city as city',
+                'stores.postcode as postcode',
+                'storecontacts.phone_no as phone_no',
+                'storecontacts.email as email',
+                'stores.store_id as store_id',
+                'storecontacts.store_id as storeid'
+            ])
+            ->leftjoin('storecontacts', 'storecontacts.store_id', '=', 'stores.id');
+            
+        return $query;
     }
 
     /**
@@ -77,7 +92,12 @@ class StoreDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('store_id'),
-            Column::make('store_name')
+            Column::make('store_name'),
+            Column::make('address1'),
+            Column::make('city'),
+            Column::make('postcode'),
+            Column::make('phone_no'),
+            Column::make('email')
         ];
     }
 

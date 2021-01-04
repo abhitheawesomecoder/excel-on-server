@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Clients\Http\Forms\AddStoreForm;
+use Modules\Clients\Http\Forms\ViewStoreForm;
 use Modules\Clients\Entities\Storecontact;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -128,9 +129,22 @@ class StorecontactsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show($id, FormBuilder $formBuilder)
     {
-        return view('clients::show');
+        $model = Storecontact::find($id);
+        $title  = 'core.storecontact.update.title';
+        $subtitle = 'core.storecontact.update.subtitle';
+        $form = $formBuilder->create(ViewStoreForm::class, [
+            'method' => 'PATCH',
+            'url' => route('store-contacts.update',$model),
+            'id' => 'module_form',
+            'model' => $model,
+        ],['_id' => $id,'store_form' => false, 'store_edit_form' => true ]);
+        unset($this->showFields['basic_information']);
+        unset($this->showFields['address']);
+        return view('clients::create', compact('form'))
+               ->with('show_fields', $this->showFields)
+               ->with(compact('title','subtitle'));
     }
 
     /**

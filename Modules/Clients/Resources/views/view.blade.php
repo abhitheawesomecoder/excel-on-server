@@ -30,7 +30,7 @@
         <ul class="nav nav-tabs tab-nav-right tabs-left" role="tablist">
             <li role="presentation" class="active"><a href="#tab_details" data-toggle="tab"><i class="material-icons">folder</i>Details</a></li>
             <li role="presentation"><a href="#tab_contacts" data-toggle="tab"><i class="material-icons">contacts</i>Contacts</a></li>
-            <li role="presentation"><a href="#tab_notes" data-toggle="tab"><i class="material-icons">notes</i>Notes</a></li>
+            <li role="presentation"><a href="#tab_comments" data-toggle="tab"><i class="material-icons">chat</i>Comments</a></li>
             <li role="presentation"><a href="#profile" data-toggle="tab"><i class="material-icons">attach_file</i>Attachments</a></li>
             <li role="presentation"><a href="#tab_stores" data-toggle="tab"><i class="material-icons">store</i>Stores</a></li>
             
@@ -71,7 +71,7 @@
                                      </div>
                                 </div>
 
-                                <div role="tabpanel" class="tab-pane fade" id="tab_notes">
+                                <div role="tabpanel" class="tab-pane fade" id="tab_comments">
                                      <div class="col-lg-12 col-md-12">
                                             @include('core::comments')
                                      </div>

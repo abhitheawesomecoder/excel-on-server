@@ -5,6 +5,7 @@ namespace Modules\Clients\Http\Controllers;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Clients\Http\Forms\AddStoreForm;
+use Modules\Clients\Http\Forms\ViewStoreForm;
 use Modules\Clients\DataTables\StorecontactDataTable;
 use Redirect;
 use Illuminate\Http\Request;
@@ -199,9 +200,40 @@ class StoresController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show($id, FormBuilder $formBuilder, StorecontactDataTable $tableObj)
     {
-        return view('clients::show');
+        //$editUrl = route('store-contacts.index');
+        ///echo $id;
+        //exit();
+        
+        if (request()->ajax()) {
+            return $tableObj->render('core::datatable');
+        }
+
+        //$model = Store::find($id);
+
+        $title  = 'core.store.update.title';
+        $subtitle = 'core.store.update.subtitle';
+        //$store = Store::find($id);
+        $store = DB::table('stores')
+            ->leftjoin('storecontacts', 'storecontacts.store_id', '=', 'stores.id')
+        ->first();
+
+        $form = $formBuilder->create(ViewStoreForm::class, [
+            'method' => 'PATCH',
+            'url' => route('stores.update',$store->id),
+            'id' => 'module_form',
+            'model' => $store
+        ],['address_same_fill' => false, 'store_form' => true, 'store_edit_form' => true ]);
+        
+        unset($this->showFields['basic_information']['address_same_as_client']);
+        //unset($this->showFields['contact_information']);
+        $dataTable = $tableObj->html();
+        
+        return view('clients::storeview', compact('form'))
+               ->with('show_fields', $this->showFields)
+               ->with(compact('dataTable'))
+               ->with(compact('title','subtitle'));
     }
 
     /**
@@ -235,6 +267,7 @@ class StoresController extends Controller
         
         return view('clients::storeedit', compact('form'))
                ->with('show_fields', $this->showFields)
+               ->with('entity', $model)
                ->with(compact('dataTable'))
                ->with(compact('title','subtitle'));
     }

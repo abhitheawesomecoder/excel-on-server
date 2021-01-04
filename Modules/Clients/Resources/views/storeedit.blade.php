@@ -29,6 +29,8 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs tab-nav-right tabs-left" role="tablist">
             <li role="presentation" class="active"><a href="#tab_details" data-toggle="tab"><i class="material-icons">folder</i>Details</a></li>
+            <li role="presentation"><a href="#tab_notes" data-toggle="tab"><i class="material-icons">notes</i>Notes</a></li>
+            <li role="presentation"><a href="#profile" data-toggle="tab"><i class="material-icons">attach_file</i>Attachments</a></li>
             <li role="presentation"><a href="#tab_contacts" data-toggle="tab"><i class="material-icons">contacts</i>Store Contacts</a></li>
             
         </ul>
@@ -61,6 +63,16 @@
 @endforeach
 {!! form_end($form, $renderRest = true) !!}
                                         
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="tab_notes">
+                                     <div class="col-lg-12 col-md-12">
+                                            @include('core::comments')
+                                     </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="profile">
+                                     <div class="col-lg-12 col-md-12">
+                                            @include('attachments')
+                                     </div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="tab_contacts">
                                      <div class="col-lg-12 col-md-12">

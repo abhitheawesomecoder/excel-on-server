@@ -23,7 +23,7 @@ class ClientDataTable extends DataTable
     {   $editUrl = route('clients.index');
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', '<div class="btn-group">
+            /*->addColumn('action', '<div class="btn-group">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Action <span class="caret"></span>
                                     </button>
@@ -31,7 +31,8 @@ class ClientDataTable extends DataTable
                                         <li><a href="'.$editUrl.'/{{$id}}/edit">Edit</a></li>
                                         <li><a href="'.$editUrl.'/{{$id}}/delete">Delete</a></li>
                                     </ul>
-                                </div>');
+                                </div>');*/
+            ->addColumn('action', '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/edit">Edit</a>');
     }
 
     /**
@@ -93,9 +94,9 @@ class ClientDataTable extends DataTable
                   ->addClass('text-center'),
             Column::make('account_number'),
             Column::make('client_name'),
-            Column::make('assigned_to'),
             Column::make('email'),
-            Column::make('phone_no')
+            Column::make('phone_no'),
+            Column::make('assigned_to')
         ];
     }
 

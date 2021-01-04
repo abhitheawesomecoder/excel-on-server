@@ -29,10 +29,7 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs tab-nav-right tabs-left" role="tablist">
             <li role="presentation" class="active"><a href="#tab_details" data-toggle="tab"><i class="material-icons">folder</i>Details</a></li>
-            <li role="presentation"><a href="#tab_contacts" data-toggle="tab"><i class="material-icons">contacts</i>Contacts</a></li>
-            <li role="presentation"><a href="#tab_notes" data-toggle="tab"><i class="material-icons">notes</i>Notes</a></li>
-            <li role="presentation"><a href="#profile" data-toggle="tab"><i class="material-icons">attach_file</i>Attachments</a></li>
-            <li role="presentation"><a href="#tab_stores" data-toggle="tab"><i class="material-icons">store</i>Stores</a></li>
+            <li role="presentation"><a href="#tab_contacts" data-toggle="tab"><i class="material-icons">contacts</i>Store Contacts</a></li>
             
         </ul>
     </div>
@@ -67,23 +64,7 @@
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="tab_contacts">
                                      <div class="col-lg-12 col-md-12">
-                                            @include('core::datatable',['datatable' => $contactTable,'view' => 'contact'])
-                                     </div>
-                                </div>
-
-                                <div role="tabpanel" class="tab-pane fade" id="tab_notes">
-                                     <div class="col-lg-12 col-md-12">
-                                            @include('core::comments')
-                                     </div>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="profile">
-                                     <div class="col-lg-12 col-md-12">
-                                            @include('attachments')
-                                     </div>
-                                </div>
-                                <div role="tabpanel" class="tab-pane fade" id="tab_stores">
-                                    <div class="col-lg-12 col-md-12">
-                                            @include('core::datatable',['datatable' => $dataTable,'view' => 'store'])
+                                            @include('core::datatable',['datatable' => $dataTable])
                                      </div>
                                 </div>
                                 
@@ -94,3 +75,22 @@
 </div>     
 </div>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        (function ($, DataTable) {
+            DataTable.ext.buttons.create = {
+                className: 'buttons-create',
+
+                text: function (dt) {
+                    return '<i class="fa fa-plus"></i> ' + dt.i18n('buttons.create', 'Create');
+                },
+
+                action: function (e, dt, button, config) {
+                    window.location = '{{ route("storecontacts.create",1) }}';
+                }
+            };
+        })(jQuery, jQuery.fn.dataTable);
+    </script>
+
+@endpush

@@ -22,7 +22,7 @@ class ContactDataTable extends DataTable
     {   $editUrl = route('contacts.index');
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', '<div class="btn-group">
+            /*->addColumn('action', '<div class="btn-group">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Action <span class="caret"></span>
                                     </button>
@@ -30,7 +30,8 @@ class ContactDataTable extends DataTable
                                         <li><a href="'.$editUrl.'/{{$id}}/edit">Edit</a></li>
                                         <li><a href="'.$editUrl.'/{{$id}}/delete">Delete</a></li>
                                     </ul>
-                                </div>');
+                                </div>');*/
+            ->addColumn('action', '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/edit">Edit</a>');
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Modules\Clients\Http\Controllers;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Clients\Http\Forms\AddClientForm;
+use Modules\Clients\Http\Forms\ViewClientForm;
 use Modules\Clients\DataTables\ClientDataTable;
 use Modules\Clients\DataTables\StoreDataTable;
 use Modules\Clients\DataTables\ContactDataTable;
@@ -240,9 +241,53 @@ class ClientsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
-    {
-        return view('clients::show');
+    public function show($id, FormBuilder $formBuilder, StoreDataTable $tableObj,ContactDataTable $contactTableObj){
+        if (request()->ajax()) {
+    
+          switch (request()->columns[1]['data']) {
+              case 'store_id':
+                  return $tableObj->render('core::datatable');
+              default:
+                  return $contactTableObj->render('core::datatable');
+          }
+        }
+        //$client = Client::find($id);
+
+        $client = DB::table('clients')
+            ->leftjoin('contacts', 'contacts.client_id', '=', 'clients.id')
+        ->first();
+// add where clause
+        $title  = 'core.client.update.title';
+        $subtitle = 'core.client.update.subtitle';
+        $users = DB::table('users')
+            ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->where('model_has_roles.role_id', 2)
+            ->select('users.id', 'users.first_name', 'users.last_name')
+            ->get();
+        $staff = array();
+        foreach($users as $user) {
+            $staff[$user->id] = $user->first_name." ".$user->last_name;
+        }
+
+        $form = $formBuilder->create(ViewClientForm::class, [
+            'method' => 'PATCH',
+            'url' => route('clients.update',$client->id),
+            'id' => 'module_form',
+            'model' => $client
+        ],['staff' => $staff,'client_form' => true, 'client_edit_form' => true ]);
+
+        //unset($this->showFields['contact_information']);
+
+        $dataTable = $tableObj->html();
+
+        $contactTable = $contactTableObj->html();
+        
+        return view('clients::view', compact('form'))
+               ->with('show_fields', $this->showFields)
+               ->with('entity', $client)
+               ->with(compact('dataTable'))
+               ->with(compact('contactTable'))
+               ->with(compact('title','subtitle'));
     }
 
     /**

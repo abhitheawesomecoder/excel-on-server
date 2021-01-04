@@ -39,6 +39,8 @@ Route::prefix('clients')->group(function() {
 
 	Route::get('/{id}/contacts/create', 'ClientsController@contactcreate')->name('contactscreate');
 
+	//Route::get('/{id}/view', 'ClientsController@contactview')->name('contactsview');
+
 	//Route::get('/{id}/stores/create', 'StoresController@create',['as' => 'stores.create']);
 
 	Route::post('/api/getaddress', 'ClientsController@getaddress');
@@ -47,5 +49,6 @@ Route::prefix('clients')->group(function() {
 
 Route::prefix('stores')->group(function() {
    Route::get('/{id}/contacts/create', 'StoresController@contactcreate')->name('storecontacts.create');
+
    /*Route::get('/{store_id}/contacts/{contact_id}/edit', 'StoresController@contactedit')->name('storecontacts.edit');*/
 });

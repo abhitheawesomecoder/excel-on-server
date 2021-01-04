@@ -6,6 +6,7 @@ use Redirect;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Clients\Http\Forms\AddClientForm;
+use Modules\Clients\Http\Forms\ViewClientForm;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -113,9 +114,24 @@ class ContactsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show($id, FormBuilder $formBuilder)
     {
-        return view('clients::show');
+        $contact = Contact::find($id);
+        $title  = 'core.contact.update.title';
+        $subtitle = 'core.contact.update.subtitle';
+
+        $form = $formBuilder->create(ViewClientForm::class, [
+            'method' => 'PATCH',
+            'url' => route('contacts.update',$contact),
+            'id' => 'module_form',
+            'model' => $contact
+        ],['client_form' => false, 'client_edit_form' => true ]);
+        
+        unset($this->showFields['basic_information']);
+
+        return view('clients::contactedit', compact('form'))
+               ->with('show_fields', $this->showFields)
+               ->with(compact('title','subtitle'));
     }
 
     /**
