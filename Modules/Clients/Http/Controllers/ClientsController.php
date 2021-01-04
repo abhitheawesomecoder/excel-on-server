@@ -231,7 +231,8 @@ class ClientsController extends Controller
         $newContact->postcode = $request->postcode;
         $newContact->client_id = $newClient->id;
         $newContact->save();
-        
+        //return redirect()->route('clients.index');
+        return redirect()->route('contactscreate',$newClient->id);
     }
 
     /**

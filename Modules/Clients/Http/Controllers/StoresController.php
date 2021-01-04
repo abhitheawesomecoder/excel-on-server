@@ -104,6 +104,7 @@ class StoresController extends Controller
 //https://datatables.net/reference/option/buttons.buttons.action
         // in all datatable view attach a url for hidden field
         // buttonserverjs change to pickup value of above hidden field
+        $store = Store::find($id);
         $title  = 'core.storecontact.create.title';
         $subtitle = 'core.storecontact.create.subtitle';
         $form = $formBuilder->create(AddStoreForm::class, [
@@ -115,7 +116,8 @@ class StoresController extends Controller
         unset($this->showFields['address']);
         return view('clients::create', compact('form'))
                ->with('show_fields', $this->showFields)
-               ->with(compact('title','subtitle'));
+               ->with(compact('title','subtitle'))
+               ->with('id',$store->client_id);
         //return redirect()->route('login');
         //return Redirect::to(route('stores.edit',$id).'#tab_contacts');
     }
@@ -180,6 +182,7 @@ class StoresController extends Controller
         $newContact->phone_no = $request->phone_no;
         $newContact->store_id = $newStore->id;
         $newContact->save();
+        return redirect()->route('storecontacts.create');
 
         // list store - partially done
         // list client contact - partially done
