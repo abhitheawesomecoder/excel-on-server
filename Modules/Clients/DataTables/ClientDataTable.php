@@ -94,9 +94,9 @@ class ClientDataTable extends DataTable
                   ->addClass('text-center'),
             Column::make('account_number'),
             Column::make('client_name'),
-            Column::make('email'),
-            Column::make('phone_no'),
-            Column::make('assigned_to')
+            Column::make('email','contacts.email'),
+            Column::make('phone_no','contacts.phone_no'),
+            Column::make('assigned_to','users.name')
         ];
     }
 

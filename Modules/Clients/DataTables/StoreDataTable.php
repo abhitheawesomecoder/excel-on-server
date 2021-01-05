@@ -23,15 +23,6 @@ class StoreDataTable extends DataTable
     {   $editUrl = route('stores.index');
         return datatables()
             ->eloquent($query)
-            /*->addColumn('action', '<div class="btn-group">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Action <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="'.$editUrl.'/{{$id}}/edit">Edit</a></li>
-                                        <li><a href="'.$editUrl.'/{{$id}}/delete">Delete</a></li>
-                                    </ul>
-                                </div>');*/
             ->addColumn('action', '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/edit">Edit</a>');
     }
 
@@ -96,8 +87,8 @@ class StoreDataTable extends DataTable
             Column::make('address1'),
             Column::make('city'),
             Column::make('postcode'),
-            Column::make('phone_no'),
-            Column::make('email')
+            Column::make('phone_no','storecontacts.phone_no'),
+            Column::make('email','storecontacts.email')
         ];
     }
 
