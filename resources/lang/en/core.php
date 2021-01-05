@@ -8,6 +8,9 @@ return [
          ],
          'update' => ['title' => 'Store Contact', 
                      'subtitle' => 'Update Store Contact'
+         ],
+         'view' => ['title' => 'Store Contact', 
+                     'subtitle' => 'View Store Contact'
          ]
     ],
     'store' => [
@@ -16,6 +19,9 @@ return [
          ],
          'update' => ['title' => 'Store', 
                      'subtitle' => 'Update Store'
+         ],
+         'view' => ['title' => 'Store', 
+                     'subtitle' => 'View Store'
          ]
     ],
     'client' => [
@@ -24,6 +30,9 @@ return [
          ],
          'update' => ['title' => 'Client', 
                      'subtitle' => 'Update Client'
+         ],
+         'view' => ['title' => 'Client', 
+                     'subtitle' => 'View Client'
          ]
     ],
     'clientcontact' => [
@@ -32,6 +41,9 @@ return [
          ],
          'update' => ['title' => 'Client Contact', 
                      'subtitle' => 'Update Client Contact'
+         ],
+         'view' => ['title' => 'Client Contact', 
+                     'subtitle' => 'View Client Contact'
          ]
     ],
     'contact' => [
@@ -40,6 +52,9 @@ return [
          ],
          'update' => ['title' => 'Contact', 
                      'subtitle' => 'Update Contact'
+         ],
+         'view' => ['title' => 'Contact', 
+                     'subtitle' => 'View Contact'
          ]
     ],
 

@@ -117,8 +117,8 @@ class ContactsController extends Controller
     public function show($id, FormBuilder $formBuilder)
     {
         $contact = Contact::find($id);
-        $title  = 'core.contact.update.title';
-        $subtitle = 'core.contact.update.subtitle';
+        $title  = 'core.contact.view.title';
+        $subtitle = 'core.contact.view.subtitle';
 
         $form = $formBuilder->create(ViewClientForm::class, [
             'method' => 'PATCH',

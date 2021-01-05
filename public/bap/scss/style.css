@@ -2816,7 +2816,7 @@ section.content {
   border: none;
   font-size: 15px;
   outline: none;
-  font-weight: bold; }
+/*font-weight: bold;*/ }
   .btn:not(.btn-link):not(.btn-circle):hover {
     outline: none; }
   .btn:not(.btn-link):not(.btn-circle) i {
@@ -8966,7 +8966,7 @@ Colors: Use the following - https://www.google.com/design/spec/style/color.html#
   font-weight: bold; }
 
 .dataTable a {
-  color: #555; }
+/*color: #555;*/ }
 .dataTable .checkbox {
   height: 18px !important;
   line-height: 18px !important; }

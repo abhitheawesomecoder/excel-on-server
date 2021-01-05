@@ -251,14 +251,14 @@ class ClientsController extends Controller
                   return $contactTableObj->render('core::datatable');
           }
         }
-        //$client = Client::find($id);
+        $entity = Client::find($id);
 
         $client = DB::table('clients')
             ->leftjoin('contacts', 'contacts.client_id', '=', 'clients.id')
         ->first();
 // add where clause
-        $title  = 'core.client.update.title';
-        $subtitle = 'core.client.update.subtitle';
+        $title  = 'core.client.view.title';
+        $subtitle = 'core.client.view.subtitle';
         $users = DB::table('users')
             ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
             ->where('model_has_roles.role_id', 2)
@@ -284,7 +284,7 @@ class ClientsController extends Controller
         
         return view('clients::view', compact('form'))
                ->with('show_fields', $this->showFields)
-               ->with('entity', $client)
+               ->with('entity', $entity)
                ->with(compact('dataTable'))
                ->with(compact('contactTable'))
                ->with(compact('title','subtitle'));

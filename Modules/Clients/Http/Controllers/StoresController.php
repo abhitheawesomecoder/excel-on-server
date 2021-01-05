@@ -210,7 +210,7 @@ class StoresController extends Controller
             return $tableObj->render('core::datatable');
         }
 
-        //$model = Store::find($id);
+        $model = Store::find($id);
 
         $title  = 'core.store.update.title';
         $subtitle = 'core.store.update.subtitle';
@@ -232,6 +232,7 @@ class StoresController extends Controller
         
         return view('clients::storeview', compact('form'))
                ->with('show_fields', $this->showFields)
+               ->with('entity', $model)
                ->with(compact('dataTable'))
                ->with(compact('title','subtitle'));
     }
