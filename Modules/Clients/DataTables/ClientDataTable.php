@@ -10,6 +10,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Html\Editor\Editor;
+use Illuminate\Support\Facades\Auth;
 
 class ClientDataTable extends DataTable
 {
@@ -21,6 +22,11 @@ class ClientDataTable extends DataTable
      */
     public function dataTable($query)
     {   $editUrl = route('clients.index');
+        $optionstr = '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/edit">Edit</a>';
+        
+        if(Auth::user()->hasRole('Super Admin'))
+            $optionstr = '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/edit">Edit</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/delete">Delete</a>';
+
         return datatables()
             ->eloquent($query)
             /*->addColumn('action', '<div class="btn-group">
@@ -32,7 +38,7 @@ class ClientDataTable extends DataTable
                                         <li><a href="'.$editUrl.'/{{$id}}/delete">Delete</a></li>
                                     </ul>
                                 </div>');*/
-            ->addColumn('action', '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/edit">Edit</a>');
+            ->addColumn('action', $optionstr);
     }
 
     /**
