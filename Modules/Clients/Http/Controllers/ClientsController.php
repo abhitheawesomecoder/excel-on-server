@@ -255,7 +255,7 @@ class ClientsController extends Controller
 
         $client = DB::table('clients')
             ->leftjoin('contacts', 'contacts.client_id', '=', 'clients.id')
-        ->first();
+            ->where('clients.id',$id)->first();
 // add where clause
         $title  = 'core.client.view.title';
         $subtitle = 'core.client.view.subtitle';

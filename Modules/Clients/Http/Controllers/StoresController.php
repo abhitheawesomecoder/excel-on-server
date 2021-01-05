@@ -217,7 +217,7 @@ class StoresController extends Controller
         //$store = Store::find($id);
         $store = DB::table('stores')
             ->leftjoin('storecontacts', 'storecontacts.store_id', '=', 'stores.id')
-        ->first();
+            ->where('stores.id',$id)->first();
 
         $form = $formBuilder->create(ViewStoreForm::class, [
             'method' => 'PATCH',
