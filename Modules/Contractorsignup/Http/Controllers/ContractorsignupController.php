@@ -2,16 +2,18 @@
 
 namespace Modules\Contractorsignup\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
-use Modules\Contractorsignup\Http\Forms\AddContractorsignupForm;
-use Modules\Signup\Emails\UserSignupEmail;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Modules\Signup\Emails\UserSignupEmail;
+use Modules\Contractors\Entities\Contractor;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Modules\Contractorsignup\Entities\Contractorsignup;
 use Modules\Contractors\Http\Forms\AddContractorForm;
+use Modules\Contractorsignup\Entities\Contractorsignup;
+use Modules\Contractorsignup\Http\Forms\AddContractorsignupForm;
 
 class ContractorsignupController extends Controller
 {   
@@ -20,6 +22,53 @@ class ContractorsignupController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
+    public function save(Request $request)
+    {
+        $form = $this->form(AddContractorForm::class);
+
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        $contractor = Contractorsignup::where('token',$request->signup_token)->first();
+
+        $newUser = new User;
+        $newUser->name = $request->contact_name;
+        $newUser->first_name = $request->contact_name;
+        $newUser->password = Hash::make($request->password);
+        $newUser->email = $signup->email;
+        $newUser->save();
+
+        $newContractor = new Contractor;
+        $newContractor->company_name = $request->company_name;
+        $newContractor->contact_name = $request->contact_name;
+        $newContractor->mobile_tel_no = $request->mobile_tel_no;
+        $newContractor->main_office_tel_no = $request->main_office_tel_no;
+        $newContractor->position = $request->position;
+        $newContractor->company_address1 = $request->company_address1;
+        $newContractor->company_address2 = $request->company_address2;
+        $newContractor->company_city = $request->company_city;
+        $newContractor->company_postcode = $request->company_postcode;
+        $newContractor->company_email = $request->company_email;
+        $newContractor->company_fax_no = $request->company_fax_no;
+        $newContractor->company_vat_no = $request->company_vat_no;
+        $newContractor->billing_address1 = $request->billing_address1;
+        $newContractor->billing_address2 = $request->billing_address2;
+        $newContractor->billing_city = $request->billing_city;
+        $newContractor->billing_postcode = $request->billing_postcode;
+        $newContractor->bank_ac_name = $request->bank_ac_name;
+        $newContractor->ac_number = $request->ac_number;
+        $newContractor->sort_code = $request->sort_code;
+        $newContractor->company_reg_no = $request->company_reg_no;
+        $newContractor->user_id = $newUser->id;
+        $newContractor->save();
+
+
+
+
+
+
+    }
     public function signup($token, FormBuilder $formBuilder){
       $link = url()->full();
       $link_array = explode('/',$link);

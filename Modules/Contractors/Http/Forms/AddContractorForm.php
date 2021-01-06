@@ -20,8 +20,6 @@ class AddContractorForm extends Form
 
     	$this->add('position', 'text', ['rules' => 'required']);
 
-    	$this->add('email', 'text', ['rules' => 'required']);
-
     	$this->add('password', 'text', ['rules' => 'required']);
 
     	$this->add('password_confirmation', 'text', ['rules' => 'required']);
