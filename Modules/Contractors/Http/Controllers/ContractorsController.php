@@ -12,6 +12,11 @@ use Modules\Contractors\Http\Forms\AddContractorForm;
 class ContractorsController extends Controller
 {
     use FormBuilderTrait;
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['create']]);
+    }
     
     /**
      * Display a listing of the resource.
@@ -35,14 +40,14 @@ class ContractorsController extends Controller
             'url' => route('contractors.store'),
             'id' => 'module_form'
         ]);
-        unset($this->showFields['company_address']);
-        unset($this->showFields['billing_address']);
-        unset($this->showFields['bank_details']);
+
         return view('contractors::create', compact('form'))
                ->with('show_fields', $this->showFields)
                ->with(compact('title','subtitle'));
     }
+    public function signup($token){
 
+    }
     /**
      * Store a newly created resource in storage.
      * @param Request $request

@@ -11,9 +11,7 @@
 |
 */
 /*
-Route::prefix('contractors')->group(function() {
-    Route::get('/', 'ContractorsController@index');
+Route::prefix('contractorsignup')->group(function() {
+    Route::get('/', 'ContractorsignupController@index');
 });*/
-
-Route::resource('contractors', 'ContractorsController');
-
+Route::get('/contractorsignup/signup/{token}', 'ContractorsignupController@signup')->name('contractors.signup');

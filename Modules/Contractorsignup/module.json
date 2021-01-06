@@ -1,0 +1,14 @@
+{
+    "name": "Contractorsignup",
+    "alias": "contractorsignup",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Contractorsignup\\Providers\\ContractorsignupServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
