@@ -14,4 +14,6 @@
 Route::prefix('contractorsignup')->group(function() {
     Route::get('/', 'ContractorsignupController@index');
 });*/
+Route::resource('contractorsignup', 'ContractorsignupController');
+
 Route::get('/contractorsignup/signup/{token}', 'ContractorsignupController@signup')->name('contractors.signup');

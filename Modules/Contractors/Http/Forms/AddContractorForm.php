@@ -8,6 +8,8 @@ class AddContractorForm extends Form
 {
     public function buildForm()
     {   
+        $this->add('signup_token', 'hidden', ['default_value' => $this->getData('token')]);
+
     	$this->add('company_name', 'text', ['rules' => 'required']);
 
     	$this->add('contact_name', 'text', ['rules' => 'required']);

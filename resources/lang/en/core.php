@@ -67,6 +67,17 @@ return [
          'view' => ['title' => 'Contractor', 
                      'subtitle' => 'View Contractor'
          ]
+    ],
+    'contractorsignup' => [
+        'create' => ['title' => 'Contractor Signup', 
+                     'subtitle' => 'Send signup request to Contractor'
+         ],
+         'update' => ['title' => 'Contractor', 
+                     'subtitle' => 'Update Contractor'
+         ],
+         'view' => ['title' => 'Contractor', 
+                     'subtitle' => 'View Contractor'
+         ]
     ]
 
 ];
