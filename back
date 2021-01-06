@@ -1,0 +1,37 @@
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+#RewriteCond %{HTTPS} off
+#RewriteCond %{HTTP:X-Forwarded-SSL} !on
+#RewriteCond %{HTTP_HOST} ^msjcontracts\.co\.uk$ [OR]
+#RewriteCond %{HTTP_HOST} ^www\.msjcontracts\.co\.uk$
+#RewriteRule ^/?$ "https\:\/\/msjcontracts\.co\.uk\/" [R=301,L]
+
+RewriteCond %{HTTP_REFERER} !^http://msjcontracts.co.uk/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^http://msjcontracts.co.uk$      [NC]
+RewriteCond %{HTTP_REFERER} !^http://www.msjcontracts.co.uk/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^http://www.msjcontracts.co.uk$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://msjcontracts.co.uk/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://msjcontracts.co.uk$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://www.msjcontracts.co.uk/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://www.msjcontracts.co.uk$      [NC]
+RewriteRule .*\.(jpg|jpeg|gif|png|bmp)$ - [F,NC]
+
+
+
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php71” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php71 .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

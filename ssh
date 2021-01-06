@@ -1,0 +1,19 @@
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/msjcontractsco/.ssh/id_rsa.
+Your public key has been saved in /home/msjcontractsco/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:vrdjaYyl7tI3G5XMHhPnoVbasjQ1KJBUkF5oOecX8J0 
+The key's randomart image is:
++---[RSA 2048]----+
+|       .+Bo.     |
+|        B.o..o . |
+|       o =. +.E  |
+|        . .+.@ o |
+|        S  .# o  |
+|       .  .= *   |
+|       ..=..o    |
+|      . +.X.     |
+|       ++=o=     |
++----[SHA256]-----+

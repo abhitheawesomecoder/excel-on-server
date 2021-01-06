@@ -57,6 +57,16 @@ return [
                      'subtitle' => 'View Contact'
          ]
     ],
-
+    'contractor' => [
+        'create' => ['title' => 'Contractor', 
+                     'subtitle' => 'Add Contractor'
+         ],
+         'update' => ['title' => 'Contractor', 
+                     'subtitle' => 'Update Contractor'
+         ],
+         'view' => ['title' => 'Contractor', 
+                     'subtitle' => 'View Contractor'
+         ]
+    ]
 
 ];

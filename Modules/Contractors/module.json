@@ -1,0 +1,14 @@
+{
+    "name": "Contractors",
+    "alias": "contractors",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Contractors\\Providers\\ContractorsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
