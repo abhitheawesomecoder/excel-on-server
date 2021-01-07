@@ -8,6 +8,7 @@ class AddContractorForm extends Form
 {
     public function buildForm()
     {   
+        if($this->getData('create_form'))
         $this->add('signup_token', 'hidden', ['default_value' => $this->getData('token')]);
 
     	$this->add('company_name', 'text', ['rules' => 'required']);
@@ -19,11 +20,11 @@ class AddContractorForm extends Form
     	$this->add('main_office_tel_no', 'text', ['rules' => 'required']);
 
     	$this->add('position', 'text', ['rules' => 'required']);
-
+        if($this->getData('create_form')){
     	$this->add('password', 'password', ['rules' => 'required|confirmed|min:8']);
 
     	$this->add('password_confirmation', 'password', ['rules' => 'required']);
-
+        }
     	$this->add('company_address1', 'text', ['rules' => 'required']);
 
     	$this->add('company_address2', 'text', ['rules' => 'required']);
@@ -37,7 +38,7 @@ class AddContractorForm extends Form
     	$this->add('company_fax_no', 'text', ['rules' => 'required']);
 
     	$this->add('company_vat_no', 'text', ['rules' => 'required']);
-
+        if($this->getData('create_form'))
         $this->add('billing_address_same_as_company_address', 'checkbox', [
             'value' => 0,
             'checked' => false
@@ -58,7 +59,7 @@ class AddContractorForm extends Form
     	$this->add('sort_code', 'text', ['rules' => 'required']);
 
     	$this->add('company_reg_no', 'text', ['rules' => 'required']);
-
+        if($this->getData('create_form')||$this->getData('edit_form'))
         $this->add('submit', 'submit', ['label' => 'Submit','attr' => ['class' => 'btn btn-primary m-t-15 waves-effect']]);
 
     }

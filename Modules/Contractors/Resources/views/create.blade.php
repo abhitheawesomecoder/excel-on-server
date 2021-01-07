@@ -1,14 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="header">
                     <h2>
                         <div class="header-buttons">
-                           @if($title == 'core.clientcontact.create.title')
-                            <a href="{{route('clients.index')}}" title="Skip" class="btn btn-primary btn-back btn-crud">Skip</a>
-                           @elseif($title == 'core.storecontact.create.title')
-                            <a href="{{route('clients.edit',$id).'#tab_stores'}}" title="Skip" class="btn btn-primary btn-back btn-crud">Skip</a>
+                           @if($title == 'core.contractor.view.title')
+                            <a href="{{route('contractors.index').'/'.$id.'/delete'}}" title="Delete" class="btn btn-primary btn-back btn-crud">Delete</a>
+                            <a href="{{route('contractors.edit',$id)}}" title="Edit" class="btn btn-primary btn-back btn-crud">Edit</a>
                            @endif
                         </div>
 

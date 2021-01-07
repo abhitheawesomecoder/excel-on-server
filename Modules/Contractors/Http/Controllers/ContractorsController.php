@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Modules\Contractors\Entities\Contractor;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Contractors\Http\Forms\AddContractorForm;
 use Modules\Contractors\DataTables\ContractorDataTable;
@@ -66,9 +67,24 @@ class ContractorsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
-    {
-        return view('contractors::show');
+    public function show($id, FormBuilder $formBuilder)
+    {//http://localhost/excel/public/contractors/1
+        $contractor = Contractor::find($id);
+        $title  = 'core.contractor.view.title';
+        $subtitle = 'core.contractor.view.subtitle';
+        $form = $formBuilder->create(AddContractorForm::class, [
+            'method' => 'PATCH',
+            'url' => route('contractors.update',$contractor->id),
+            'id' => 'module_form',
+            'model' => $contractor,
+        ],['create_form' => false]);
+        unset($this->showFields['basic_information']['password']);
+        unset($this->showFields['basic_information']['password_confirmation']);
+        unset($this->showFields['company_address']['billing_address_same_as_company_address']);
+        
+        return view('contractors::create', compact('form'))
+        ->with('show_fields', $this->showFields)
+               ->with(compact('title','subtitle','id'));
     }
 
     /**
@@ -76,9 +92,24 @@ class ContractorsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($id, FormBuilder $formBuilder)
     {
-        return view('contractors::edit');
+        $contractor = Contractor::find($id);
+        $title  = 'core.contractor.edit.title';
+        $subtitle = 'core.contractor.edit.subtitle';
+        $form = $formBuilder->create(AddContractorForm::class, [
+            'method' => 'PATCH',
+            'url' => route('contractors.update',$contractor->id),
+            'id' => 'module_form',
+            'model' => $contractor,
+        ],['create_form' => false,'edit_form' => true]);
+        unset($this->showFields['basic_information']['password']);
+        unset($this->showFields['basic_information']['password_confirmation']);
+        unset($this->showFields['company_address']['billing_address_same_as_company_address']);
+        
+        return view('contractors::create', compact('form'))
+        ->with('show_fields', $this->showFields)
+               ->with(compact('title','subtitle','id'));
     }
 
     /**
@@ -131,7 +162,7 @@ class ContractorsController extends Controller
 
             'position' => [
                 'type' => 'text',
-            ]
+            ],   
 
         ],
         'company_address' => [
@@ -160,7 +191,7 @@ class ContractorsController extends Controller
                 'type' => 'text'
             ],
 
-            'address_same_as_client' => [
+            'billing_address_same_as_company_address' => [
                 'type' => 'select'
             ],
 
