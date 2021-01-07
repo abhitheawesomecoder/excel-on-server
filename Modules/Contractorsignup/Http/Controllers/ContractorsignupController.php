@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\Signup\Emails\UserSignupEmail;
 use Modules\Contractors\Entities\Contractor;
@@ -14,6 +16,8 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Contractors\Http\Forms\AddContractorForm;
 use Modules\Contractorsignup\Entities\Contractorsignup;
 use Modules\Contractorsignup\Http\Forms\AddContractorsignupForm;
+
+
 
 class ContractorsignupController extends Controller
 {   
@@ -36,7 +40,7 @@ class ContractorsignupController extends Controller
         $newUser->name = $request->contact_name;
         $newUser->first_name = $request->contact_name;
         $newUser->password = Hash::make($request->password);
-        $newUser->email = $signup->email;
+        $newUser->email = $contractor->email;
         $newUser->save();
 
         $newContractor = new Contractor;
@@ -63,10 +67,11 @@ class ContractorsignupController extends Controller
         $newContractor->user_id = $newUser->id;
         $newContractor->save();
 
+        Auth::login($newUser);
 
+        Contractorsignup::where('token', $request->signup_token)->delete();
 
-
-
+        return redirect()->route('home');
 
     }
     public function signup($token, FormBuilder $formBuilder){
@@ -82,13 +87,14 @@ class ContractorsignupController extends Controller
         $subtitle = 'core.contractor.create.subtitle';
         $form = $formBuilder->create(AddContractorForm::class, [
             'method' => 'POST',
-            'url' => route('contractors.store'),
+            'url' => route('contractorsignup.save'),
             'id' => 'module_form'
         ],['token' => $signup->token ]);
 
         return view('contractors::create', compact('form'))
                ->with('show_fields', $this->showFields)
-               ->with(compact('title','subtitle'));
+               ->with(compact('title','subtitle'))
+               ->with('appjs',true);
         }
        else
         return redirect()->back()->withInput();
@@ -211,21 +217,17 @@ class ContractorsignupController extends Controller
                 'type' => 'text',
             ],
 
-            'position' => [
-                'type' => 'text',
-            ],
-
-            'email' => [
-                'type' => 'email'
-            ],
-
             'password' => [
                 'type' => 'password'
             ],
 
             'password_confirmation' => [
                 'type' => 'password'
-            ]
+            ],
+
+            'position' => [
+                'type' => 'text',
+            ],   
 
         ],
         'company_address' => [
@@ -252,6 +254,10 @@ class ContractorsignupController extends Controller
 
             'company_fax_no' => [
                 'type' => 'text'
+            ],
+
+            'billing_address_same_as_company_address' => [
+                'type' => 'select'
             ],
 
             'company_vat_no' => [

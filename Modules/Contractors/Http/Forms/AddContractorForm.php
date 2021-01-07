@@ -20,9 +20,9 @@ class AddContractorForm extends Form
 
     	$this->add('position', 'text', ['rules' => 'required']);
 
-    	$this->add('password', 'text', ['rules' => 'required']);
+    	$this->add('password', 'password', ['rules' => 'required|confirmed|min:8']);
 
-    	$this->add('password_confirmation', 'text', ['rules' => 'required']);
+    	$this->add('password_confirmation', 'password', ['rules' => 'required']);
 
     	$this->add('company_address1', 'text', ['rules' => 'required']);
 
@@ -37,6 +37,11 @@ class AddContractorForm extends Form
     	$this->add('company_fax_no', 'text', ['rules' => 'required']);
 
     	$this->add('company_vat_no', 'text', ['rules' => 'required']);
+
+        $this->add('billing_address_same_as_company_address', 'checkbox', [
+            'value' => 0,
+            'checked' => false
+        ]);
 
     	$this->add('billing_address1', 'text', ['rules' => 'required']);
 

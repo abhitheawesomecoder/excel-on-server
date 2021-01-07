@@ -55,3 +55,33 @@
 </div>   
 </div>
 @endsection
+
+@push('scripts')
+   @if(isset($appjs))
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            $('#billing_address_same_as_company_address').change(function() {
+
+            if($(this).is(":checked")) {
+                
+                $('#billing_address1').val($('#company_address1').val());
+                $('#billing_address2').val($('#company_address2').val());
+                $('#billing_city').val($('#company_city').val());
+                $('#billing_postcode').val($('#company_postcode').val());
+                
+            }else{
+
+                $('#billing_address1').val('');
+                $('#billing_address2').val('');
+                $('#billing_city').val('');
+                $('#billing_postcode').val('');
+
+            }
+                    
+        });
+
+        });
+    </script>
+   @endif
+@endpush

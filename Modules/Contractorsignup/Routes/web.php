@@ -18,4 +18,4 @@ Route::resource('contractorsignup', 'ContractorsignupController');
 
 Route::get('/contractorsignup/signup/{token}', 'ContractorsignupController@signup')->name('contractors.signup');
 
-Route::post('/contractorsignup/save', 'ContractorsignupController@save')->name('contractors.save');
+Route::post('/contractorsignup/save', 'ContractorsignupController@save')->name('contractorsignup.save');

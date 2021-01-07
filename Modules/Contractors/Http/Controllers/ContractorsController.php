@@ -15,7 +15,7 @@ class ContractorsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['create']]);
+        $this->middleware('auth');
     }
     
     /**
@@ -43,7 +43,8 @@ class ContractorsController extends Controller
 
         return view('contractors::create', compact('form'))
                ->with('show_fields', $this->showFields)
-               ->with(compact('title','subtitle'));
+               ->with(compact('title','subtitle'))
+               ->with('appjs',true);
     }
     public function signup($token){
 
@@ -118,20 +119,16 @@ class ContractorsController extends Controller
                 'type' => 'text',
             ],
 
-            'position' => [
-                'type' => 'text',
-            ],
-
-            'email' => [
-                'type' => 'email'
-            ],
-
             'password' => [
                 'type' => 'password'
             ],
 
             'password_confirmation' => [
                 'type' => 'password'
+            ],
+
+            'position' => [
+                'type' => 'text',
             ]
 
         ],
@@ -159,6 +156,10 @@ class ContractorsController extends Controller
 
             'company_fax_no' => [
                 'type' => 'text'
+            ],
+
+            'address_same_as_client' => [
+                'type' => 'select'
             ],
 
             'company_vat_no' => [
