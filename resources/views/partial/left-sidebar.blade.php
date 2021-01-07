@@ -59,6 +59,16 @@
             <span>Clients</span>
         </a>
     </li>
+    <li><a href="{{ route('contractorsignup.index') }}" title="Contractor Signups" class="">
+            <i class="material-icons">apps</i>
+            <span>Contractor Signups</span>
+        </a>
+    </li>
+    <li><a href="{{ route('contractors.index') }}" title="Contractors" class="">
+            <i class="material-icons">apps</i>
+            <span>Contractors</span>
+        </a>
+    </li>
 
     </ul>
         
