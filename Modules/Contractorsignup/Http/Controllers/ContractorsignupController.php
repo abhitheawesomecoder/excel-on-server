@@ -15,6 +15,7 @@ use Modules\Contractors\Entities\Contractor;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Contractors\Http\Forms\AddContractorForm;
 use Modules\Contractorsignup\Entities\Contractorsignup;
+use Modules\Contractorsignup\DataTables\ContractorsignupDataTable;
 use Modules\Contractorsignup\Http\Forms\AddContractorsignupForm;
 
 
@@ -41,6 +42,7 @@ class ContractorsignupController extends Controller
         $newUser->first_name = $request->contact_name;
         $newUser->password = Hash::make($request->password);
         $newUser->email = $contractor->email;
+        $newUser->type = 'contractor';
         $newUser->save();
 
         $newContractor = new Contractor;
@@ -99,9 +101,10 @@ class ContractorsignupController extends Controller
        else
         return redirect()->back()->withInput();
     }
-    public function index()
+    public function index(ContractorsignupDataTable $dataTable)
     {
-        return view('contractorsignup::index');
+        //return view('contractorsignup::index');
+        return $dataTable->render('signup::index');
     }
 
     /**

@@ -1,17 +1,16 @@
 <?php
 
-namespace Modules\Users\DataTables;
+namespace Modules\Contractorsignup\DataTables;
 
 
-use App\User;
+use Modules\Contractorsignup\Entities\Contractorsignup;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Html\Editor\Editor;
-use Illuminate\Support\Facades\Auth;
 
-class UsersDataTable extends DataTable
+class ContractorsignupDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -20,31 +19,18 @@ class UsersDataTable extends DataTable
      * @return \Yajra\DataTables\DataTableAbstract
      */
     public function dataTable($query)
-    {
-
-        $optionstr = '<div class="btn-group">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Action <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0);">Edit</a></li>
-                                    </ul>
-                                </div>';
-
-       if(Auth::user()->hasRole('Super Admin'))
-        $optionstr = '<div class="btn-group">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Action <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="javascript:void(0);">Edit</a></li>
-                                        <li><a href="users/delete/{{$id}}">Delete</a></li>
-                                    </ul>
-                                </div>';
-
+    {   
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', $optionstr);
+            ->addColumn('action', '<div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Action <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="javascript:void(0);">Edit</a></li>
+                                        <li><a href="javascript:void(0);">Delete</a></li>
+                                    </ul>
+                                </div>');
     }
 
     /**
@@ -53,9 +39,9 @@ class UsersDataTable extends DataTable
      * @param \App\App\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(User $model)
+    public function query(Contractorsignup $model)
     {
-        return $model->newQuery()->where('type','normal');
+        return $model->newQuery();
     }
 
     /**
@@ -66,17 +52,13 @@ class UsersDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('users-table')
+                    ->setTableId('contractorsignup-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
                     ->orderBy(1)
                     ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('create')
                     );
     }
 
@@ -93,11 +75,8 @@ class UsersDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('name'),
             Column::make('email'),
             Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 
@@ -108,6 +87,6 @@ class UsersDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Users_' . date('YmdHis');
+        return 'Contractorsignup_' . date('YmdHis');
     }
 }

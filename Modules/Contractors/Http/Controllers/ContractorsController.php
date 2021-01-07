@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Contractors\Http\Forms\AddContractorForm;
+use Modules\Contractors\DataTables\ContractorDataTable;
 
 class ContractorsController extends Controller
 {
@@ -22,9 +23,10 @@ class ContractorsController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(ContractorDataTable $dataTable)
     {
-        return view('contractors::index');
+        //return view('contractors::index');
+        return $dataTable->render('signup::index');
     }
 
     /**
