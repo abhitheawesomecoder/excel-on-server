@@ -5,7 +5,9 @@
                     <h2>
                         <div class="header-buttons">
                            @if($title == 'core.contractor.view.title')
+                            @if(Auth::user()->hasRole('Super Admin'))
                             <a href="{{route('contractors.index').'/'.$id.'/delete'}}" title="Delete" class="btn btn-primary btn-back btn-crud">Delete</a>
+                            @endif
                             <a href="{{route('contractors.edit',$id)}}" title="Edit" class="btn btn-primary btn-back btn-crud">Edit</a>
                            @endif
                         </div>
