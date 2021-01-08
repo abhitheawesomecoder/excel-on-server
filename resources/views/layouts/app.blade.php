@@ -53,6 +53,14 @@
 
     @include('partial.header_js')
 
+    <script type="text/javascript">
+        window.APPLICATION_USER_DATE_FORMAT = "YYYY-MM-DD";
+        window.APPLICATION_USER_TIME_FORMAT = "HH:mm";
+        window.APPLICATION_USER_LANGUAGE = "en";
+        window.UID = '{{ Auth::user()->id }}';
+        window.APPLICATION_USER_TIME_FORMAT_24 = true;
+    </script>
+
 </head>
 
 <body class="theme-blue">

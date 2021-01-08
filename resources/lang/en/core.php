@@ -81,6 +81,20 @@ return [
          'view' => ['title' => 'Contractor', 
                      'subtitle' => 'View Contractor'
          ]
-    ]
+    ],
+    'jobs' => [
+        'create' => ['title' => 'Jobs', 
+                     'subtitle' => 'Add Job'
+         ],
+         'update' => ['title' => 'Jobs', 
+                     'subtitle' => 'Update Job'
+         ],
+         'view' => ['title' => 'Jobs', 
+                     'subtitle' => 'View Job'
+         ],
+         'edit' => ['title' => 'Jobs', 
+                     'subtitle' => 'Edit Job'
+         ]
+    ],
 
 ];

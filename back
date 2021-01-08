@@ -35,3 +35,41 @@ RewriteRule .*\.(jpg|jpeg|gif|png|bmp)$ - [F,NC]
   AddHandler application/x-httpd-ea-php71 .php .php7 .phtml
 </IfModule>
 # php -- END cPanel-generated handler, do not edit
+
+<div class="col-lg-6 col-md-6 col-sm-6 clear-left">
+                                
+                                <div class="form-group form-float"  >
+        
+    <div class="form-line">
+
+            <label for="expected_close_date" class="form-label">Expected close date</label>
+            <input class="form-control datepicker" name="expected_close_date" type="text" id="expected_close_date">
+     
+            
+    </div>
+        </div>
+
+                            </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="form-group"  >
+    
+    <div class="form-line">
+
+    <label for="due_date" class="control-label required">Due date</label>
+    <input class="form-control datepicker" required="required" name="due_date" type="text" id="due_date">
+    
+    
+
+    </div>
+
+        </div>
+    
+            </div>   
+
+
+window.APPLICATION_USER_DATE_FORMAT YYYY-MM-DD dashboard:60:17
+window.APPLICATION_USER_TIME_FORMAT HH:mm dashboard:62:17
+window.APPLICATION_USER_LANGUAGE en dashboard:64:17
+window.UID 1 dashboard:66:17
+window.APPLICATION_USER_TIME_FORMAT_24 true

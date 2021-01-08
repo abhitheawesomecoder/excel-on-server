@@ -4,10 +4,43 @@ namespace Modules\Jobs\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\Clients\Entities\Store;
 use Illuminate\Routing\Controller;
+use Modules\Clients\Entities\Client;
+use Modules\Jobs\Http\Forms\AddJobForm;
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class JobsController extends Controller
-{
+{   
+    use FormBuilderTrait;
+
+    protected $showFields = [
+
+        'basic_information' => [
+
+            'excel_job_number' => [
+                'type' => 'text'
+            ],
+
+            'client_id' => [
+                'type' => 'select'
+            ],
+
+            'store_id' => [
+                'type' => 'select'
+            ],
+
+            'due_date' => [
+                'type' => 'text'
+            ]
+        ]
+    ];
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      * @return Response
@@ -21,9 +54,32 @@ class JobsController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
-    {
-        return view('jobs::create');
+    public function create(FormBuilder $formBuilder)
+    {   
+        $title  = 'core.jobs.create.title';
+        $subtitle = 'core.jobs.create.subtitle';
+        $clients = Client::all();
+        $client_arr = array();
+        foreach($clients as $client) {
+            $client_arr[$client->id] = $client->client_name;
+        }
+
+        $stores = Store::all();
+        $store_arr = array();
+        foreach($stores as $store) {
+            $store_arr[$store->id] = $store->store_name;
+        }
+        $form = $formBuilder->create(AddJobForm::class, [
+            'method' => 'POST',
+            'url' => route('jobs.store'),
+            'id' => 'module_form'
+        ],['clients' => $client_arr, 'stores' => $store_arr]);
+
+        return view('jobs::create', compact('form'))
+               ->with('show_fields', $this->showFields)
+               ->with(compact('title','subtitle'))
+               ->with('appjs',true);
+        //return view('jobs::create');
     }
 
     /**
