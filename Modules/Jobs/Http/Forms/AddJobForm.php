@@ -24,7 +24,39 @@ class AddJobForm extends Form
 
         $this->add('due_date', 'text', ['attr' => ['class' => 'form-control datepicker']]);
 
-        //https://github.com/kristijanhusak/laravel-form-builder/issues/41 also check bapcrm
+        $this->add('assigned_to', 'select', [
+                'choices' => $this->getData('staff'),
+                'attr' => ['class' => 'select2 pmd-select2 form-control'],
+                'selected' => '1'
+            ]);
+
+        $this->add('priority', 'select', [
+            'choices' => ['1' => 'Low', '2' => 'Normal', '3' => 'High', '4' => 'Urgent'],
+            'attr' => ['class' => 'select2 pmd-select2 form-control'],
+            'selected' => '4'
+        ]);
+
+        $this->add('status', 'select', [
+            'choices' => ['1' => 'New', '2' => 'Confirmed by contractor', '3' => 'In progress', '4' => 'Waiting for response', '5' => 'Closed'],
+            'attr' => ['class' => 'select2 pmd-select2 form-control'],
+            'selected' => '4'
+        ]);
+
+        $this->add('contractor_id', 'select', [
+                'choices' => $this->getData('contractors'),
+                'attr' => ['class' => 'select2 pmd-select2 form-control'],
+                'selected' => '1'
+            ]);
+
+        $this->add('job_type', 'select', [
+            'choices' => ['1' => 'maintenance', '2' => 'minor issue', '3' => 'major issue'],
+            'attr' => ['class' => 'select2 pmd-select2 form-control'],
+            'selected' => '1'
+        ]);
+
+        $this->add('description', 'text');
+
+        //https://stackoverflow.com/questions/17083229/how-to-change-an-input-element-to-textarea-using-jquery
         
         $this->add('submit', 'submit', ['label' => 'Submit','attr' => ['class' => 'btn btn-primary m-t-15 waves-effect']]);
 
