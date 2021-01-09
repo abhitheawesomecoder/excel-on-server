@@ -37,7 +37,8 @@ class JobDataTable extends DataTable
                                         <li><a href="'.$editUrl.'/{{$id}}/delete">Delete</a></li>
                                     </ul>
                                 </div>');*/
-            ->addColumn('action', $optionstr);
+            ->addColumn('action', $optionstr)
+            ->editColumn('priority', function($item) { if($item->priority == 4) return "high"; });
     }
 
     /**
@@ -83,7 +84,8 @@ class JobDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('excel_job_number'),
-            Column::make('due_date')
+            Column::make('due_date'),
+            Column::make('priority')
         ];
     }
 

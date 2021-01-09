@@ -40,6 +40,17 @@ class JobsController extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {   
+ /*       $newQuery = new Job;
+        $query = $newQuery->newQuery();
+        //$query->get();
+        $result = $query->get()->map(function($q){
+           if($q->priority == 4)
+             $q->priority = 'high';
+         return $q;
+        });
+        print_r($result);
+        exit();
+*/
         $title  = 'core.jobs.create.title';
         $subtitle = 'core.jobs.create.subtitle';
         $clients = Client::all();
