@@ -8,7 +8,9 @@ class AddJobForm extends Form
 {
     public function buildForm()
     {   
-    	$this->add('excel_job_number', 'text', ['rules' => 'required']);
+        $this->add('_todo', 'hidden', ['default_value' => '']);
+
+    	$this->add('excel_job_number', 'text');
 
         $this->add('client_id', 'select', [
                 'choices' => $this->getData('clients'),
@@ -54,7 +56,7 @@ class AddJobForm extends Form
             'selected' => '1'
         ]);
 
-        $this->add('description', 'text');
+        $this->add('description', 'text', ['label' => ' ']);
 
         //https://stackoverflow.com/questions/17083229/how-to-change-an-input-element-to-textarea-using-jquery
         

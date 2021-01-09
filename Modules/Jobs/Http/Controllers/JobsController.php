@@ -4,64 +4,21 @@ namespace Modules\Jobs\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
+use Modules\Jobs\Entities\Job;
+use Modules\Jobs\Entities\Task;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controller;
 use Modules\Clients\Entities\Store;
 use Modules\Clients\Entities\Client;
 use Modules\Jobs\Http\Forms\AddJobForm;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Modules\Jobs\DataTables\JobDataTable;
 use Modules\Contractors\Entities\Contractor;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class JobsController extends Controller
 {   
     use FormBuilderTrait;
-
-    protected $showFields = [
-
-        'basic_information' => [
-
-            'excel_job_number' => [
-                'type' => 'text'
-            ],
-
-            'client_id' => [
-                'type' => 'select'
-            ],
-
-            'store_id' => [
-                'type' => 'select'
-            ],
-
-            'due_date' => [
-                'type' => 'text'
-            ],
-
-            'assigned_to' => [
-                'type' => 'select'
-            ],
-
-            'priority' => [
-                'type' => 'select'
-            ],
-
-            'status' => [
-                'type' => 'select'
-            ],
-            'contractor_id' => [
-                'type' => 'select'
-            ],
-            'job_type' => [
-                'type' => 'select'
-            ]
-        ],
-        'description' => [
-
-            'description' => [
-                'type' => 'text'
-            ]
-          ]
-    ];
 
     public function __construct()
     {
@@ -71,9 +28,10 @@ class JobsController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(JobDataTable $dataTable)
     {
-        return view('jobs::index');
+        //return view('jobs::index');
+        return $dataTable->render('signup::index');
     }
 
     /**
@@ -121,7 +79,6 @@ class JobsController extends Controller
                ->with('show_fields', $this->showFields)
                ->with(compact('title','subtitle'))
                ->with('appjs',true);
-        //return view('jobs::create');
     }
 
     /**
@@ -131,7 +88,37 @@ class JobsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form = $this->form(AddJobForm::class);
+
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        $newJob = new Job;
+        $newJob->excel_job_number = $request->excel_job_number;
+        $newJob->client_id = $request->client_id;
+        $newJob->store_id = $request->store_id;
+        $newJob->due_date = $request->due_date;
+        $newJob->assigned_to = $request->assigned_to;
+        $newJob->priority = $request->priority;
+        $newJob->status = $request->status;
+        $newJob->contractor_id = $request->contractor_id;
+        $newJob->job_type = $request->job_type;
+        $newJob->save();
+
+        $taskArr = json_decode($request->_todo);
+        //Array ( [0] => stdClass Object ( [done] => 1 [title] => kkk ) [1] => stdClass Object ( [done] => [title] => iii ) ) 
+
+            foreach($taskArr as $task) {
+                $newTask = new Task;
+                $newTask->task = $task->title;
+                $newTask->status = $task->done ? 1 : 0;
+                $newTask->job_id = $newJob->id;
+                $newTask->save();
+            }
+
+        return redirect()->route('jobs.index');
+        
     }
 
     /**
@@ -174,4 +161,50 @@ class JobsController extends Controller
     {
         //
     }
+
+        protected $showFields = [
+
+        'basic_information' => [
+
+            'excel_job_number' => [
+                'type' => 'text'
+            ],
+
+            'client_id' => [
+                'type' => 'select'
+            ],
+
+            'store_id' => [
+                'type' => 'select'
+            ],
+
+            'due_date' => [
+                'type' => 'text'
+            ],
+
+            'assigned_to' => [
+                'type' => 'select'
+            ],
+
+            'priority' => [
+                'type' => 'select'
+            ],
+
+            'status' => [
+                'type' => 'select'
+            ],
+            'contractor_id' => [
+                'type' => 'select'
+            ],
+            'job_type' => [
+                'type' => 'select'
+            ]
+        ],
+        'description' => [
+
+            'description' => [
+                'type' => 'text'
+            ]
+          ]
+    ];
 }

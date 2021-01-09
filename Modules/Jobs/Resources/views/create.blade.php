@@ -60,25 +60,28 @@
    @if(isset($appjs))
     <script type="text/javascript">
         $(document).ready(function () {
+           
+        $('#description').replaceWith("<div id='description'></div>");
+           
+        $("#description").todoList({title: ""});
+        $("#module_form").on("submit", function(event){
             
-            $('#billing_address_same_as_company_address').change(function() {
 
-            if($(this).is(":checked")) {
-                
-                $('#billing_address1').val($('#company_address1').val());
-                $('#billing_address2').val($('#company_address2').val());
-                $('#billing_city').val($('#company_city').val());
-                $('#billing_postcode').val($('#company_postcode').val());
-                
-            }else{
+        if($('#excel_job_number').val() == '')
+            alert("excel job number is required");
+        else{
+        $('input[name ="_todo"]').val(JSON.stringify($("#description").todoList("getSetup").items));
+        $("#module_form").submit();  
+        } 
+              
+        });
 
-                $('#billing_address1').val('');
-                $('#billing_address2').val('');
-                $('#billing_city').val('');
-                $('#billing_postcode').val('');
+        $("#module_form").on("keypress", function(event){
 
-            }
-                    
+          if(event.key == "Enter"){
+            $(".jquery-todolist-add-action").first().click();
+            event.preventDefault();
+          }
         });
 
         });

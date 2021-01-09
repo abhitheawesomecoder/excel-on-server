@@ -40,7 +40,9 @@
     asset('/bap/js/admin.js'),
     asset('/bap/js/Common.js'),
 
-    asset('/modules/notifications/js/BAP_Notifications.js')
+    asset('/modules/notifications/js/BAP_Notifications.js'),
+
+    asset('/vendor/todo/jquery.todoList.js')
     ],
     asset('/storage/cache/js/')
 ) !!}
