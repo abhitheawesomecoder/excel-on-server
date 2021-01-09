@@ -69,6 +69,16 @@
             <span>Contractors</span>
         </a>
     </li>
+    <li><a href="{{ route('jobs.index') }}" title="Jobs" class="">
+            <i class="material-icons">apps</i>
+            <span>Jobs</span>
+        </a>
+    </li>
+    <li><a href="{{ route('jobs.calendar') }}" title="Jobs" class="">
+            <i class="material-icons">apps</i>
+            <span>Calendar</span>
+        </a>
+    </li>
 
     </ul>
         

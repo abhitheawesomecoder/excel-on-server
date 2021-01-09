@@ -2,6 +2,7 @@
 
 namespace Modules\Jobs\Http\Controllers;
 
+use Calendar;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Jobs\Entities\Job;
@@ -28,6 +29,29 @@ class JobsController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
+    public function calendar()
+    {
+        $events = [];
+        $data = Job::all();
+        if($data->count()) {
+                    foreach ($data as $key => $value) {
+                    $events[] = Calendar::event(
+                    $value->excel_job_number,
+                    true,
+                    new \DateTime($value->due_date),
+                    new \DateTime($value->due_date.' +1 day'),
+                    null,
+                    // Add color and link on event
+                    [
+                        'color' => '#f05050',
+                        'url' => 'https://www.google.com',
+                    ]
+                );
+            }
+        }
+        $calendar = Calendar::addEvents($events);
+        return view('jobs::calendar', compact('calendar'));
+    }
     public function index(JobDataTable $dataTable)
     {
         //return view('jobs::index');

@@ -20,7 +20,7 @@
           type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
-
+    @stack('css-up')
 
     <script type="text/javascript" src="{{ asset('bap/plugins/jquery/jquery.min.js')}}"></script>
 

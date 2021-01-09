@@ -17,3 +17,5 @@ Route::prefix('jobs')->group(function() {
 */
 
 Route::resource('jobs', 'JobsController');
+
+Route::get('calendar', 'JobsController@calendar')->name('jobs.calendar');
