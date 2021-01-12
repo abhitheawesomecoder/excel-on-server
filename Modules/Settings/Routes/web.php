@@ -10,14 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*
-Route::prefix('jobs')->group(function() {
-    Route::get('/', 'JobsController@index');
+
+Route::prefix('settings')->group(function() {
+    Route::get('/', 'SettingsController@index');
 });
-*/
-
-Route::resource('jobs', 'JobsController');
-
-Route::get('calendar', 'JobsController@calendar')->name('jobs.calendar');
-
-Route::get('signcontract', 'JobsController@signcontract')->name('sign.contract');

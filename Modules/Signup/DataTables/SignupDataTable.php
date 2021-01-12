@@ -2,13 +2,13 @@
 
 namespace Modules\Signup\DataTables;
 
-
 use Modules\Signup\Entities\Signup;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Html\Editor\Editor;
+use Illuminate\Support\Facades\Auth;
 
 class SignupDataTable extends DataTable
 {
@@ -20,7 +20,16 @@ class SignupDataTable extends DataTable
      */
     public function dataTable($query)
     {   
-        return datatables()
+        $editUrl = route('index');
+
+        if(Auth::user()->hasRole('Super Admin'))
+            return datatables()
+                ->eloquent($query)
+                ->addColumn('action', '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/delete">Delete</a>');
+        else
+            return datatables()
+                ->eloquent($query);
+        /*return datatables()
             ->eloquent($query)
             ->addColumn('action', '<div class="btn-group">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -30,7 +39,7 @@ class SignupDataTable extends DataTable
                                         <li><a href="javascript:void(0);">Edit</a></li>
                                         <li><a href="javascript:void(0);">Delete</a></li>
                                     </ul>
-                                </div>');
+                                </div>');*/
     }
 
     /**
@@ -58,11 +67,7 @@ class SignupDataTable extends DataTable
                     ->dom('Bfrtip')
                     ->orderBy(1)
                     ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('create')
                     );
     }
 
@@ -73,6 +78,7 @@ class SignupDataTable extends DataTable
      */
     protected function getColumns()
     {
+        if(Auth::user()->hasRole('Super Admin'))
         return [
             Column::computed('action')
                   ->exportable(false)
@@ -83,6 +89,13 @@ class SignupDataTable extends DataTable
             Column::make('role_id'),
             Column::make('created_at'),
         ];
+       else
+        return [
+            Column::make('email'),
+            Column::make('role_id'),
+            Column::make('created_at'),
+        ];
+
     }
 
     /**

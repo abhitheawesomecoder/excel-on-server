@@ -180,6 +180,7 @@ return [
         Bnb\Laravel\Attachments\AttachmentsServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         Cog\Laravel\Ownership\Providers\OwnershipServiceProvider::class,
+        Krucas\Settings\Providers\SettingsServiceProvider::class,
     ],
 
     /*
@@ -232,6 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
         'Packer'    => Eusonlito\LaravelPacker\Facade::class,
+        'Settings' => Krucas\Settings\Facades\Settings::class,
     ],
 
 ];
