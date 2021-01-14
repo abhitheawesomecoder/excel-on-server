@@ -11,9 +11,10 @@
 |
 */
 
+Route::resource('users', 'UsersController');
+
 Route::prefix('users')->group(function() {
     //Route::get('/', 'UsersController@index');
-    Route::resource('/', 'UsersController',['as' => 'users']);
-    
+
     Route::get('/delete/{id}', 'UsersController@destroy');
 });

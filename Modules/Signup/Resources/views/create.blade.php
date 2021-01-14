@@ -9,7 +9,7 @@
                         </div>
 
                         <div class="header-text">
-                            Signup - Mail                            <small>Send Mail for user signup</small>
+                            @lang($title)<small>@lang($subtitle)</small>
                         </div>
 
                     </h2>

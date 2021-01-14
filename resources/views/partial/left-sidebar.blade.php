@@ -29,61 +29,16 @@
     </div>
     <!-- #User Info -->
     <!-- Menu -->
+
+
     <div class="menu">
 
         <a href="javascript:void(0);" class="bars"></a>
-
-    <ul class="list">
-
-    <li class="header">MAIN NAVIGATION</li>
-
-    <li><a href="{{ route('home') }}" title="Home" class="">
-            <i class="material-icons">apps</i>
-            <span>Home</span>
-        </a>
-    </li>
-@role('Super Admin')
-    <li><a href="{{ route('index') }}" title="Signups" class="">
-            <i class="material-icons">apps</i>
-            <span>Signups</span>
-        </a>
-    </li>
-@endrole
-    <li><a href="{{ route('users..index') }}" title="Users" class="">
-            <i class="material-icons">apps</i>
-            <span>Users</span>
-        </a>
-    </li>
-    <li><a href="{{ route('clients.index') }}" title="Clients" class="">
-            <i class="material-icons">apps</i>
-            <span>Clients</span>
-        </a>
-    </li>
-    <li><a href="{{ route('contractorsignup.index') }}" title="Contractor Signups" class="">
-            <i class="material-icons">apps</i>
-            <span>Contractor Signups</span>
-        </a>
-    </li>
-    <li><a href="{{ route('contractors.index') }}" title="Contractors" class="">
-            <i class="material-icons">apps</i>
-            <span>Contractors</span>
-        </a>
-    </li>
-    <li><a href="{{ route('jobs.index') }}" title="Jobs" class="">
-            <i class="material-icons">apps</i>
-            <span>Jobs</span>
-        </a>
-    </li>
-    <li><a href="{{ route('jobs.calendar') }}" title="Jobs" class="">
-            <i class="material-icons">apps</i>
-            <span>Calendar</span>
-        </a>
-    </li>
-
-    </ul>
-        
+        {!! $mainMenu->render() !!}
 
     </div>
+    
+    
     <!-- #Menu -->
     <!-- Footer -->
     <div class="legal">

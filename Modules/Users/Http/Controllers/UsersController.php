@@ -6,6 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Users\DataTables\UsersDataTable;
+use Illuminate\Contracts\Support\Renderable;
+use Kris\LaravelFormBuilder\FormBuilder;
+use Modules\Signup\Http\Forms\AddUserForm;
+use Modules\Signup\Http\Forms\UserSignupForm;
+use Modules\Signup\Emails\UserSignupEmail;
+use Illuminate\Support\Facades\Mail;
+use Modules\Signup\Entities\Signup;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Modules\Signup\DataTables\SignupDataTable;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use App\User;
 
 class UsersController extends Controller
 {   
@@ -28,9 +42,20 @@ class UsersController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
+    public function create(FormBuilder $formBuilder)
     {
-        return view('users::create');
+      // add email field to UserSignupForm
+      $title  = 'core.user.create.title';
+      $subtitle = 'core.user.create.subtitle';
+      $form = $formBuilder->create(UserSignupForm::class, [
+                'method' => 'POST',
+                'url' => route('user.save')
+            ],['token' => null ]);
+
+      return view('signup::create',compact('form'))
+                ->with(compact('title','subtitle'));
+       
+        //return view('users::create');
     }
 
     /**
@@ -40,7 +65,31 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*$form = $this->form(UserSignupForm::class);
+
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        $signup = Signup::where('token',$request->signup_token)->first();
+
+        $newUser = new User;
+        $newUser->name = $request->first_name;
+        $newUser->first_name = $request->first_name;
+        $newUser->last_name = $request->last_name;
+        $newUser->password = Hash::make($request->password);
+        $newUser->email = $signup->email;
+        $newUser->save();
+
+        $role = Role::find($signup->role_id);
+
+        $newUser->assignRole($role->name);
+
+        Auth::login($newUser);
+
+        DB::table('signups')->where('token', $request->signup_token)->delete();
+
+        return redirect()->route('home');*/
     }
 
     /**

@@ -11,6 +11,8 @@
 |
 */
 //Route::group(['prefix'=>'signup','as'=>'signup.', 'namespace' => 'Modules\Signup\Http\Controllers'], function()
+
+Route::resource('signup', 'SignupController');
 //{
 Route::prefix('signup')->group(function() {
 	
@@ -18,7 +20,7 @@ Route::prefix('signup')->group(function() {
     //Route::post('store', 'SignupController@store');
   //  Route::get('create', 'SignupController@create');
 
-    Route::resource('/', 'SignupController');
+    //Route::resource('/', 'SignupController');
 
     Route::get('/signin/{token}', 'SignupController@signin')->name('signin');
 

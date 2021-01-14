@@ -42,13 +42,16 @@ class SignupController extends Controller
       $signup = Signup::where('token',$token)->first();
 
       if($signup)
-      {
+      {   
+          $title  = 'core.signups.signin.title';
+          $subtitle = 'core.signups.signin.subtitle';
           $form = $formBuilder->create(UserSignupForm::class, [
                 'method' => 'POST',
                 'url' => route('user.save')
             ],['token' => $signup->token ]);
 
-            return view('signup::create',compact('form'));
+            return view('signup::create',compact('form'))
+            ->with(compact('title','subtitle'));
        }
        else
         return redirect()->back()->withInput();
@@ -59,54 +62,26 @@ class SignupController extends Controller
      */
     public function index(SignupDataTable $dataTable)
     {
-        //print_r($dataTable);
-        //exit();
         return $dataTable->render('signup::index');
     }
-    public function index_(Request $request)
-    {
-            if ($request->ajax()) {
-
-            $data = User::latest()->get();
-
-            return Datatables::of($data)
-
-                    ->addIndexColumn()
-
-                    ->addColumn('action', function($row){
-
-
-
-                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-
-
-
-                            return $btn;
-
-                    })
-
-                    ->rawColumns(['action'])
-
-                    ->make(true);
-
-        }
-
-        //return view('users');
-        return view('signup::index');
-    }
+    /*public function index_(Request $request)
+    {if ($request->ajax()) {$data = User::latest()->get();return Datatables::of($data)->addIndexColumn()->addColumn('action', function($row){$btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';return $btn;})->rawColumns(['action'])->make(true);}//return view('users');return view('signup::index');}*/
 
     /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
     public function create(FormBuilder $formBuilder)
-    {
+    {   
+        $title  = 'core.signups.create.title';
+        $subtitle = 'core.signups.create.subtitle';
         $form = $formBuilder->create(AddUserForm::class, [
             'method' => 'POST',
-            'url' => route('store')
+            'url' => route('signup.store')
         ]);
 
-        return view('signup::create', compact('form'));
+        return view('signup::create', compact('form'))
+        ->with(compact('title','subtitle'));
     }
     public function save(Request $request)
     {
@@ -170,7 +145,7 @@ class SignupController extends Controller
         // crud for all all users with role and permission
         //print_r($timestamp);
 
-        return redirect()->route('index');
+        return redirect()->route('signup.index');
     }
 
     /**

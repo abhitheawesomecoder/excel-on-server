@@ -19,8 +19,8 @@ class SignupDataTable extends DataTable
      * @return \Yajra\DataTables\DataTableAbstract
      */
     public function dataTable($query)
-    {   
-        $editUrl = route('index');
+    {
+        $editUrl = route('signup.index');
 
         if(Auth::user()->hasRole('Super Admin'))
             return datatables()

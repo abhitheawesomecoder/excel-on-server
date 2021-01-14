@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\Core\ViewComposers\MenuComposer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //Schema::defaultStringLength(191);
+
+        \View::composer(
+            'partial.left-sidebar',
+            MenuComposer::class
+        );
     }
 }

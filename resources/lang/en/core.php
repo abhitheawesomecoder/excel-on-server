@@ -2,6 +2,8 @@
 
 return [
 
+    'main_navigation' => 'MAIN NAVIGATION',
+
 	'storecontact' => [
         'create' => ['title' => 'Store Contact', 
                      'subtitle' => 'Add Store Contact'
@@ -11,6 +13,31 @@ return [
          ],
          'view' => ['title' => 'Store Contact', 
                      'subtitle' => 'View Store Contact'
+         ]
+    ],
+    'user' => [
+        'create' => ['title' => 'User', 
+                     'subtitle' => 'Add User'
+         ],
+         'update' => ['title' => 'User', 
+                     'subtitle' => 'Update User'
+         ],
+         'view' => ['title' => 'User', 
+                     'subtitle' => 'View User'
+         ]
+    ],
+    'signups' => [
+        'create' => ['title' => 'Signup', 
+                     'subtitle' => 'Add Signup'
+         ],
+         'signin' => ['title' => 'Signin', 
+                     'subtitle' => 'User Signin'
+         ],
+         'update' => ['title' => 'Signup', 
+                     'subtitle' => 'Update Signup'
+         ],
+         'view' => ['title' => 'Signup', 
+                     'subtitle' => 'View Signup'
          ]
     ],
     'store' => [

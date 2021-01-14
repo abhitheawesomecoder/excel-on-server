@@ -14,7 +14,7 @@
 
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
 
@@ -28,7 +28,7 @@
 
 <body>
 
-    
+
 
 <div class="container">
 
@@ -60,17 +60,17 @@
 
 </div>
 
-   
+
 
 </body>
 
-   
+
 
 <script type="text/javascript">
 
   $(function () {
 
-    
+
 
     var table = $('.data-table').DataTable({
 
@@ -78,7 +78,7 @@
 
         serverSide: true,
 
-        ajax: "{{ route('index') }}",
+        ajax: "{{ route('signup.index') }}",
 
         columns: [
 
@@ -94,7 +94,7 @@
 
     });
 
-    
+
 
   });
 
