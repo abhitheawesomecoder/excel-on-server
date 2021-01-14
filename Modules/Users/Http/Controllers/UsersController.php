@@ -23,7 +23,7 @@ use App\User;
 
 class UsersController extends Controller
 {   
-    //use FormBuilderTrait;
+    use FormBuilderTrait;
     
     public function __construct()
     {
@@ -49,7 +49,7 @@ class UsersController extends Controller
       $subtitle = 'core.user.create.subtitle';
       $form = $formBuilder->create(UserSignupForm::class, [
                 'method' => 'POST',
-                'url' => route('user.save')
+                'url' => route('users.store')
             ],['token' => null ]);
 
       return view('signup::create',compact('form'))
@@ -65,31 +65,27 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        /*$form = $this->form(UserSignupForm::class);
+        $form = $this->form(UserSignupForm::class);
 
         if (!$form->isValid()) {
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
-
-        $signup = Signup::where('token',$request->signup_token)->first();
 
         $newUser = new User;
         $newUser->name = $request->first_name;
         $newUser->first_name = $request->first_name;
         $newUser->last_name = $request->last_name;
         $newUser->password = Hash::make($request->password);
-        $newUser->email = $signup->email;
+        $newUser->email = $request->email;
         $newUser->save();
 
-        $role = Role::find($signup->role_id);
+        $role = Role::find($request->Type);
 
         $newUser->assignRole($role->name);
 
         Auth::login($newUser);
 
-        DB::table('signups')->where('token', $request->signup_token)->delete();
-
-        return redirect()->route('home');*/
+        return redirect()->route('home');
     }
 
     /**
