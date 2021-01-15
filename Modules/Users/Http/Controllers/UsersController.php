@@ -50,7 +50,7 @@ class UsersController extends Controller
       $form = $formBuilder->create(UserSignupForm::class, [
                 'method' => 'POST',
                 'url' => route('users.store')
-            ],['token' => null ]);
+            ],['token' => 'notoken' ]);
 
       return view('signup::create',compact('form'))
                 ->with(compact('title','subtitle'));
@@ -93,9 +93,20 @@ class UsersController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
-    {
-        return view('users::show');
+    public function show($id, FormBuilder $formBuilder)
+    { 
+      $user = User::find($id);
+      $title  = 'core.user.view.title';
+      $subtitle = 'core.user.view.subtitle';
+      $form = $formBuilder->create(UserSignupForm::class, [
+                'method' => 'GET',
+                'id' => 'module_form',
+                'model' => $user,
+            ],['token' => 'notoken' ,'create_form' => false]);
+
+      return view('signup::create',compact('form'))
+                ->with(compact('title','subtitle','id'));
+        //return view('users::show');
     }
 
     /**
@@ -103,9 +114,20 @@ class UsersController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($id, FormBuilder $formBuilder)
     {
-        return view('users::edit');
+      $user = User::find($id);
+      $title  = 'core.user.update.title';
+      $subtitle = 'core.user.update.subtitle';
+      $form = $formBuilder->create(UserSignupForm::class, [
+                'method' => 'PATCH',
+                'url' => route('users.update',$id),
+                'id' => 'module_form',
+                'model' => $user,
+            ],['token' => 'notoken' ,'create_form' => false,'edit_form' => true]);
+
+      return view('signup::create',compact('form'))
+                ->with(compact('title','subtitle','id'));
     }
 
     /**
@@ -116,7 +138,24 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $form = $this->form(UserSignupForm::class);
+
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        $oldUser = User::find($id);
+        $oldUser->name = $request->first_name;
+        $oldUser->first_name = $request->first_name;
+        $oldUser->last_name = $request->last_name;
+        $oldUser->email = $request->email;
+        $oldUser->save();
+
+        $role = Role::find($request->Type);
+
+        $oldUser->assignRole($role->name);
+
+        return redirect()->route('users.index');
     }
 
     /**

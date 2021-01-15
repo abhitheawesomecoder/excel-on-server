@@ -21,8 +21,13 @@ class UsersDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $editUrl = route('users.index');
 
-        $optionstr = '<div class="btn-group">
+        return datatables()
+            ->eloquent($query)
+            ->addColumn('action', '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a>');
+
+        /*$optionstr = '<div class="btn-group">
                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Action <span class="caret"></span>
                                     </button>
@@ -40,7 +45,7 @@ class UsersDataTable extends DataTable
                                         <li><a href="javascript:void(0);">Edit</a></li>
                                         <li><a href="users/delete/{{$id}}">Delete</a></li>
                                     </ul>
-                                </div>';
+                                </div>';*/
 
         return datatables()
             ->eloquent($query)
@@ -89,7 +94,6 @@ class UsersDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
             Column::make('name'),
             Column::make('email'),
             Column::make('created_at'),

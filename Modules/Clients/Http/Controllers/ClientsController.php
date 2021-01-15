@@ -287,9 +287,9 @@ class ClientsController extends Controller
                ->with('entity', $entity)
                ->with(compact('dataTable'))
                ->with(compact('contactTable'))
-               ->with(compact('title','subtitle'));
+               ->with(compact('title','subtitle','id'));
     }
-
+//localhost/excel/public/clients/2
     /**
      * Show the form for editing the specified resource.
      * @param int $id

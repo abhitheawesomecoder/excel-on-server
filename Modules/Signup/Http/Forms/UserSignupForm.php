@@ -14,7 +14,7 @@ class UserSignupForm extends Form
 
         $this->add('last_name', 'text', ['rules' => 'required']);
 
-        if(1){
+        if($this->getData('token') == 'notoken'){
 
         $this->add('Type', 'select', [
             'choices' => ['1' => 'Super Admin', '2' => 'Staff'],
@@ -22,13 +22,19 @@ class UserSignupForm extends Form
         ]);
 
         $this->add('email', 'email', ['rules' => 'required']);
-    }
+
+        }
+
+        if($this->getData('create_form')){
 
         $this->add('password', 'password', ['rules' => 'required|confirmed|min:8']);
 
         $this->add('password_confirmation', 'password');
+        }
 
+        if($this->getData('create_form')||$this->getData('edit_form')){
         $this->add('submit', 'submit', ['label' => 'Submit','attr' => ['class' => 'btn btn-primary m-t-15 waves-effect']]);
+        }
 
     }
 }

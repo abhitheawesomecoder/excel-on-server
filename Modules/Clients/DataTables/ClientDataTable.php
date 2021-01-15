@@ -21,11 +21,9 @@ class ClientDataTable extends DataTable
      * @return \Yajra\DataTables\DataTableAbstract
      */
     public function dataTable($query)
-    {   $editUrl = route('clients.index');
-        $optionstr = '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/edit">Edit</a>';
-        
-        if(Auth::user()->hasRole('Super Admin'))
-            $optionstr = '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/edit">Edit</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/delete">Delete</a>';
+    {  $editUrl = route('clients.index');
+    
+    $optionstr = '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a>';
 
         return datatables()
             ->eloquent($query)
