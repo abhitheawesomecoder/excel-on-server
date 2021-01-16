@@ -59,7 +59,7 @@ class AddJobForm extends Form
         $this->add('description', 'text', ['label' => ' ']);
 
         //https://stackoverflow.com/questions/17083229/how-to-change-an-input-element-to-textarea-using-jquery
-        
+        if($this->getData('create_form'))
         $this->add('submit', 'submit', ['label' => 'Submit','attr' => ['class' => 'btn btn-primary m-t-15 waves-effect']]);
 
     }

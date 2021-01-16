@@ -5,7 +5,12 @@
 <div class="header">
                     <h2>
                         <div class="header-buttons">
-                            
+                            @if($title == 'core.store.view.title')
+                            @if(Auth::user()->hasRole('Super Admin'))
+                            <a href="{{route('stores.index').'/'.$id.'/delete'}}" title="Delete" class="btn btn-primary btn-back btn-crud">Delete</a>
+                            @endif
+                            <a href="{{route('stores.edit',$id)}}" title="Edit" class="btn btn-primary btn-back btn-crud">Edit</a>
+                           @endif
                         </div>
 
                         <div class="header-text">

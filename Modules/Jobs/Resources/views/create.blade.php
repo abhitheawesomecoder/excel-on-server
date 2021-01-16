@@ -57,6 +57,17 @@
 @endsection
 
 @push('scripts')
+   @if(isset($appviewjs))
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+        $('#description').replaceWith("<div id='description'></div>");
+           
+        $("#description").todoList({ title: "",items: JSON.parse('{!! $appviewjs !!}') });
+            
+        });
+    </script>
+   @endif
    @if(isset($appjs))
     <script type="text/javascript">
         $(document).ready(function () {

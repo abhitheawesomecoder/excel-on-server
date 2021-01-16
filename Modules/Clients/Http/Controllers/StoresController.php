@@ -212,8 +212,8 @@ class StoresController extends Controller
 
         $model = Store::find($id);
 
-        $title  = 'core.store.update.title';
-        $subtitle = 'core.store.update.subtitle';
+        $title  = 'core.store.view.title';
+        $subtitle = 'core.store.view.subtitle';
         //$store = Store::find($id);
         $store = DB::table('stores')
             ->leftjoin('storecontacts', 'storecontacts.store_id', '=', 'stores.id')
@@ -234,7 +234,7 @@ class StoresController extends Controller
                ->with('show_fields', $this->showFields)
                ->with('entity', $model)
                ->with(compact('dataTable'))
-               ->with(compact('title','subtitle'));
+               ->with(compact('title','subtitle','id'));
     }
 
     /**

@@ -9,6 +9,11 @@
                             <a href="{{route('clients.index')}}" title="Skip" class="btn btn-primary btn-back btn-crud">Skip</a>
                            @elseif($title == 'core.storecontact.create.title')
                             <a href="{{route('clients.edit',$id).'#tab_stores'}}" title="Skip" class="btn btn-primary btn-back btn-crud">Skip</a>
+                           @elseif($title == 'core.storecontact.view.title')
+                            @if(Auth::user()->hasRole('Super Admin'))
+                            <a href="{{route('stores.index').'/'.$id.'/delete'}}" title="Delete" class="btn btn-primary btn-back btn-crud">Delete</a>
+                            @endif
+                            <a href="{{route('stores.edit',$id)}}" title="Edit" class="btn btn-primary btn-back btn-crud">Edit</a>
                            @endif
                         </div>
 

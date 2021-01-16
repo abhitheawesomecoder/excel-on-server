@@ -131,7 +131,7 @@ class ContactsController extends Controller
 
         return view('clients::contactedit', compact('form'))
                ->with('show_fields', $this->showFields)
-               ->with(compact('title','subtitle'));
+               ->with(compact('title','subtitle','id'));
     }
 
     /**

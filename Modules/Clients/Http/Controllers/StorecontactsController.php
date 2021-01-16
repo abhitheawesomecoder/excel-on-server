@@ -132,8 +132,8 @@ class StorecontactsController extends Controller
     public function show($id, FormBuilder $formBuilder)
     {
         $model = Storecontact::find($id);
-        $title  = 'core.storecontact.update.title';
-        $subtitle = 'core.storecontact.update.subtitle';
+        $title  = 'core.storecontact.view.title';
+        $subtitle = 'core.storecontact.view.subtitle';
         $form = $formBuilder->create(ViewStoreForm::class, [
             'method' => 'PATCH',
             'url' => route('store-contacts.update',$model),
@@ -144,7 +144,7 @@ class StorecontactsController extends Controller
         unset($this->showFields['address']);
         return view('clients::create', compact('form'))
                ->with('show_fields', $this->showFields)
-               ->with(compact('title','subtitle'));
+               ->with(compact('title','subtitle','id'));
     }
 
     /**
