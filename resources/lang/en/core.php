@@ -2,6 +2,8 @@
 
 return [
 
+    'contractor_navigation' => 'NAVIGATION',
+
     'main_navigation' => 'MAIN NAVIGATION',
 
 	'storecontact' => [
