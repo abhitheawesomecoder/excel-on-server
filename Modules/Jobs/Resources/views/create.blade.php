@@ -68,6 +68,36 @@
         });
     </script>
    @endif
+   @if(isset($appeditjs))
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+        $('#description').replaceWith("<div id='description'></div>");
+           
+        $("#description").todoList({ title: "",items: JSON.parse('{!! $appeditjs !!}') });
+        $("#module_form").on("submit", function(event){
+            
+
+        if($('#excel_job_number').val() == '')
+            alert("excel job number is required");
+        else{
+        $('input[name ="_todo"]').val(JSON.stringify($("#description").todoList("getSetup").items));
+        $("#module_form").submit();  
+        } 
+              
+        });
+
+        $("#module_form").on("keypress", function(event){
+
+          if(event.key == "Enter"){
+            $(".jquery-todolist-add-action").first().click();
+            event.preventDefault();
+          }
+        });
+            
+        });
+    </script>
+   @endif
    @if(isset($appjs))
     <script type="text/javascript">
         $(document).ready(function () {

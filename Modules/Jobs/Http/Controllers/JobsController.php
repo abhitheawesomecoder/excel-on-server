@@ -66,17 +66,7 @@ class JobsController extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {
- /*       $newQuery = new Job;
-        $query = $newQuery->newQuery();
-        //$query->get();
-        $result = $query->get()->map(function($q){
-           if($q->priority == 4)
-             $q->priority = 'high';
-         return $q;
-        });
-        print_r($result);
-        exit();
-*/
+
         $title  = 'core.jobs.create.title';
         $subtitle = 'core.jobs.create.subtitle';
         $clients = Client::all();
@@ -225,9 +215,60 @@ class JobsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id)
-    {
-        return view('jobs::edit');
+    public function edit($id, FormBuilder $formBuilder)
+    {	
+        $title  = 'core.jobs.update.title';
+        $subtitle = 'core.jobs.update.subtitle';
+        $clients = Client::all();
+        $client_arr = array();
+        foreach($clients as $client) {
+            $client_arr[$client->id] = $client->client_name;
+        }
+
+        $stores = Store::all();
+        $store_arr = array();
+        foreach($stores as $store) {
+            $store_arr[$store->id] = $store->store_name;
+        }
+        $users = DB::table('users')
+            ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->where('model_has_roles.role_id', 2)
+            ->select('users.id', 'users.first_name', 'users.last_name')
+            ->get();
+        $staff = array();
+        foreach($users as $user) {
+            $staff[$user->id] = $user->first_name." ".$user->last_name;
+        }
+
+        $contractors = Contractor::all();
+        $contractor_arr = array();
+        foreach($contractors as $contractor) {
+            $contractor_arr[$contractor->id] = $contractor->company_name;
+        }
+        $job = Job::find($id);
+
+        $form = $formBuilder->create(AddJobForm::class, [
+            'method' => 'PATCH',
+            'url' => route('jobs.update',$id),
+            'model' => $job,
+            'id' => 'module_form'
+        ],['clients' => $client_arr, 'stores' => $store_arr, 'staff' => $staff, 'contractors' => $contractor_arr, 'create_form' => true]);
+
+        $tasks = Task::where('job_id',$id)->get();
+        $taskArr = array();
+        foreach ($tasks as $task) {
+        	//$taskJson = { 'title': $task->task, 'done': $task->status};
+        	$taskJson = new \stdClass();
+        	$taskJson->title = $task->task;
+        	$taskJson->done = $task->status ? true : false;
+        	array_push($taskArr,$taskJson);
+        }
+		
+        return view('jobs::create', compact('form'))
+               ->with('show_fields', $this->showFields)
+               ->with(compact('title','subtitle','id'))
+               ->with('appeditjs',json_encode($taskArr));
+      //return view('jobs::edit');
     }
 
     /**
@@ -238,7 +279,36 @@ class JobsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $form = $this->form(AddJobForm::class);
+
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        $newJob = Job::find($id);
+        $newJob->excel_job_number = $request->excel_job_number;
+        $newJob->client_id = $request->client_id;
+        $newJob->store_id = $request->store_id;
+        $newJob->due_date = $request->due_date;
+        $newJob->assigned_to = $request->assigned_to;
+        $newJob->priority = $request->priority;
+        $newJob->status = $request->status;
+        $newJob->contractor_id = $request->contractor_id;
+        $newJob->job_type = $request->job_type;
+        $newJob->save();
+
+        $taskArr = json_decode($request->_todo);
+        //Array ( [0] => stdClass Object ( [done] => 1 [title] => kkk ) [1] => stdClass Object ( [done] => [title] => iii ) )
+        Task::where('job_id',$id)->delete();
+            foreach($taskArr as $task) {
+                $newTask = new Task;
+                $newTask->task = $task->title;
+                $newTask->status = $task->done ? 1 : 0;
+                $newTask->job_id = $newJob->id;
+                $newTask->save();
+            }
+
+        return redirect()->route('jobs.index');
     }
 
     /**

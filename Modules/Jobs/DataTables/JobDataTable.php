@@ -21,22 +21,10 @@ class JobDataTable extends DataTable
     public function dataTable($query)
     {   $editUrl = route('jobs.index');
 
-        $optionstr = '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/edit">Edit</a>';
-
-        if(Auth::user()->hasRole('Super Admin'))
-            $optionstr = '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/edit">Edit</a> <a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}/delete">Delete</a>';
+    $optionstr = '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a>';
 
         return datatables()
             ->eloquent($query)
-            /*->addColumn('action', '<div class="btn-group">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Action <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="'.$editUrl.'/{{$id}}/edit">Edit</a></li>
-                                        <li><a href="'.$editUrl.'/{{$id}}/delete">Delete</a></li>
-                                    </ul>
-                                </div>');*/
             ->addColumn('action', $optionstr)
             ->editColumn('priority', function($item) { 
             	switch ($item->priority) {
