@@ -203,6 +203,7 @@ class JobsController extends Controller
         }
 		//print_r($taskArr);
 		//exit();
+
         return view('jobs::create', compact('form'))
                ->with('show_fields', $this->showFields)
                ->with(compact('title','subtitle','id'))

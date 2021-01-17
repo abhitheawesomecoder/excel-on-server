@@ -17,3 +17,5 @@ Route::prefix('contractorprofile')->group(function() {
 //Route::resource('jobrequested', 'JobRequestedController');
 
 Route::get('/job/{status}', 'ContractorprofileController@index')->name('job.status');
+
+Route::get('/job/requested/{id}', 'ContractorprofileController@show')->name('job.requested');

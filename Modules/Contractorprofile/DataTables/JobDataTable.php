@@ -21,7 +21,9 @@ class JobDataTable extends DataTable
      */
     public function dataTable($query)
     {
-        $editUrl = route('users.index');
+        $editUrl = route('job.requested',0);
+
+        $editUrl = rtrim($editUrl,'/0');
 
         return datatables()
             ->eloquent($query)
@@ -60,7 +62,7 @@ class JobDataTable extends DataTable
                 if($this->status == 'requested')
                   $q->where('jobs.status', 1);
                 elseif($this->status == 'confirmed')
-                  $q->whereBetween('jobs.status', [1,5]);
+                  $q->whereBetween('jobs.status', [2,4]);
                 elseif($this->status == 'completed')
                   $q->where('jobs.status', 5);
             });

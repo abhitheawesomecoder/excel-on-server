@@ -6,6 +6,12 @@ return [
 
     'main_navigation' => 'MAIN NAVIGATION',
 
+    'job' => [
+        'requested' => ['title' => 'Job', 
+                     'subtitle' => 'Job Requested'
+         ]
+    ],
+
 	'storecontact' => [
         'create' => ['title' => 'Store Contact', 
                      'subtitle' => 'Add Store Contact'
