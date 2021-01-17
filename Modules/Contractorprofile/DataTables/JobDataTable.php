@@ -21,7 +21,7 @@ class JobDataTable extends DataTable
      */
     public function dataTable($query)
     {
-        $editUrl = route('job.requested',0);
+        $editUrl = route('job.detail',['requested' => $this->status, 'id' => 0]);
 
         $editUrl = rtrim($editUrl,'/0');
 

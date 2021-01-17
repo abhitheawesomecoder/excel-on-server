@@ -66,7 +66,6 @@ class JobsController extends Controller
      */
     public function create(FormBuilder $formBuilder)
     {
-
         $title  = 'core.jobs.create.title';
         $subtitle = 'core.jobs.create.subtitle';
         $clients = Client::all();

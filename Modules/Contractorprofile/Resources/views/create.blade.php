@@ -6,7 +6,7 @@
                         <div class="header-buttons">
                            @if($title == 'core.job.requested.title')
 <a id="accept" href="" title="Accept" class="btn btn-primary btn-back btn-crud">Accept</a>
-<a id="confirm" href="" title="Confirm" class="btn btn-primary btn-back btn-crud">Confirm</a>
+<a id="confirm" href="{{route('job.requested.confirmed',$id)}}" title="Confirm" class="btn btn-primary btn-back btn-crud">Confirm</a>
                            @endif
                         </div>
 
@@ -84,13 +84,13 @@
            
         $("#description").todoList({ title: "",items: JSON.parse('{!! $appviewjs !!}') });
 
-        $("#confirm").click(function(e) {
+        /*$("#confirm").click(function(e) {
             e.preventDefault();
 
             //$("#due_date").datetimepicker('show');
             
             //alert("confirm")
-        });
+        });*/
         $("#accept").click(function(e) {
             e.preventDefault();
 

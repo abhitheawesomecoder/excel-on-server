@@ -58,10 +58,21 @@ class ContractorprofileController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id, FormBuilder $formBuilder)
+    public function requested_confirmed($id, FormBuilder $formBuilder){
+        echo $id;
+        exit();
+        // change status of job to confirmed
+    }
+    public function completed($id, FormBuilder $formBuilder)
+    {
+    }
+    public function confirmed($id, FormBuilder $formBuilder)
+    {
+    }
+    public function requested($requested, $id, FormBuilder $formBuilder)
     {   
-        $title  = 'core.job.requested.title';
-        $subtitle = 'core.job.requested.subtitle';
+        $title  = 'core.job.'.$requested.'.title';
+        $subtitle = 'core.job.'.$requested.'.subtitle';
         $clients = Client::all();
         $client_arr = array();
         foreach($clients as $client) {

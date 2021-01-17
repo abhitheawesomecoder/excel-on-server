@@ -18,4 +18,12 @@ Route::prefix('contractorprofile')->group(function() {
 
 Route::get('/job/{status}', 'ContractorprofileController@index')->name('job.status');
 
-Route::get('/job/requested/{id}', 'ContractorprofileController@show')->name('job.requested');
+Route::get('/job/detail/{requested}/{id}', 'ContractorprofileController@requested')->name('job.detail');
+
+//Route::get('/job/requested/{id}', 'ContractorprofileController@requested')->name('job.requested');
+
+//Route::get('/job/confirmed/{id}', 'ContractorprofileController@confirmed')->name('job.confirmed');
+
+//Route::get('/job/completed/{id}', 'ContractorprofileController@completed')->name('job.completed');
+
+Route::get('/job/requested/confirmed/{id}', 'ContractorprofileController@requested_confirmed')->name('job.requested.confirmed');
