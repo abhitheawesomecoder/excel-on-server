@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\Controller;
 use Modules\Clients\Entities\Store;
 use Modules\Clients\Entities\Client;
+use Modules\Clients\Entities\Contact;
+use Illuminate\Support\Facades\Auth;
 use Modules\Jobs\Http\Forms\AddJobForm;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\Contractors\Entities\Contractor;
@@ -67,12 +69,21 @@ class ContractorprofileController extends Controller
         // change status of job to confirmed
     }
     public function save(Request $request)
-    {  
-       $content = view('contractorprofile::test',['path' => $request->_signature])->render();
+    {  $userId = Auth::user()->id;
+       $contractor = Contractor::where('user_id',8)->first();
+       $job = Job::find($request->_id);
+       $client = Client::find($job->client_id);
+       $store = Store::find($job->store_id);
+       $contact = Contact::where('client_id', $client->id)->first();
+
+       $content = view('contractorprofile::test',['path' => $request->_signature, 'contractor' => $contractor, 'job' => $job, 'client' => $client, 'store' => $store, 'contact' => $contact])->render();
+
+       $content2 = view('contractorprofile::test2',['path' => $request->_signature])->render();
        //$content = ob_get_clean(); 
        $html2pdf = new Html2Pdf('P', 'A4', 'en');
        $html2pdf->pdf->SetDisplayMode('fullpage');
        $html2pdf->writeHTML($content);
+       $html2pdf->writeHTML($content2);
       //$html2pdf->pdf->AddPage();
       /*$job = Job::find($request->_id);
       $html2pdf->writeHTML("<h5>Job Number : ".$job->excel_job_number."</h5>");
