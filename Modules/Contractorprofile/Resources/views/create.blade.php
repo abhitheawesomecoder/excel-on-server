@@ -7,6 +7,8 @@
                            @if($title == 'core.job.requested.title')
 <a id="accept" href="" title="Accept" class="btn btn-primary btn-back btn-crud">Accept</a>
 <a id="confirm" href="{{route('job.requested.confirmed',$id)}}" title="Confirm" class="btn btn-primary btn-back btn-crud">Confirm</a>
+                           @elseif($title == 'core.job.confirmed.title')
+<a id="sign" href="{{route('job.signature',$id)}}" title="Sign" class="btn btn-primary btn-back btn-crud">Sign</a>                    
                            @endif
                         </div>
 
@@ -55,50 +57,39 @@
 @endsection
 
 @push('scripts')
-   @if(isset($appviewjs))
+
+
+    @if(isset($appconfirmedjs))
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        $('#description').replaceWith("<div id='description'></div>");   
+        $("#description").todoList({ title: "",items: JSON.parse('{!! $appconfirmedjs !!}') });
+
+        });
+    </script>
+   @endif
+
+   @if(isset($apprequestedjs))
     <script type="text/javascript">
         $(document).ready(function () {
         $('#confirm').hide();
-        $('#due_date').on("dp.change", function (e) {
-
-            console.log("change");
-            //$('#confirm').show();
-            //$('#accept').hide();
-        });
+        $('#due_date').on("dp.change", function (e) {console.log("change");});
         $('#due_date').on("dp.show", function (e) {
             console.log("show");
             $('#due_date').data("DateTimePicker").minDate(e.date);
-
-            //console.log(e);
-            //console.log("e");
-            //console.log(e.date);
         });
         $('#due_date').on("dp.hide", function (e) {
             console.log("hide");
             $('#confirm').show();
             $('#accept').hide();
-
         });
-            
-        $('#description').replaceWith("<div id='description'></div>");
-           
-        $("#description").todoList({ title: "",items: JSON.parse('{!! $appviewjs !!}') });
-
-        /*$("#confirm").click(function(e) {
-            e.preventDefault();
-
-            //$("#due_date").datetimepicker('show');
-            
-            //alert("confirm")
-        });*/
+        $('#description').replaceWith("<div id='description'></div>");   
+        $("#description").todoList({ title: "",items: JSON.parse('{!! $apprequestedjs !!}') });
         $("#accept").click(function(e) {
             e.preventDefault();
-
             $("#due_date").datetimepicker('show');
-            
-            //alert("confirm")
         });
-            
         });
     </script>
    @endif

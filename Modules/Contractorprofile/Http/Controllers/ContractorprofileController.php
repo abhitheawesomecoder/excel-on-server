@@ -2,6 +2,8 @@
 
 namespace Modules\Contractorprofile\Http\Controllers;
 
+use Spipu\Html2Pdf\Html2Pdf;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Jobs\Entities\Job;
 use Modules\Jobs\Entities\Task;
@@ -14,6 +16,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Modules\Contractors\Entities\Contractor;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Contractorprofile\DataTables\JobDataTable;
+use Modules\Contractorprofile\Http\Forms\AddSignatureForm;
 
 class ContractorprofileController extends Controller
 {
@@ -63,11 +66,39 @@ class ContractorprofileController extends Controller
         exit();
         // change status of job to confirmed
     }
-    public function completed($id, FormBuilder $formBuilder)
-    {
+    public function save(Request $request)
+    {  
+       $content = view('contractorprofile::test',['path' => $request->_signature])->render();
+       //$content = ob_get_clean(); 
+       $html2pdf = new Html2Pdf('P', 'A4', 'en');
+       $html2pdf->pdf->SetDisplayMode('fullpage');
+       $html2pdf->writeHTML($content);
+      //$html2pdf->pdf->AddPage();
+      /*$job = Job::find($request->_id);
+      $html2pdf->writeHTML("<h5>Job Number : ".$job->excel_job_number."</h5>");
+      $html2pdf->writeHTML("<h5>Task</h5>");
+      $tasks = Task::where('job_id',$request->_id)->get();
+      $count = 25;
+      $html2pdf->pdf->Line(5,$count, 40, $count);
+      $count = $count+5;
+      foreach ($tasks as $task) {
+          //$html2pdf->writeHTML($task->task);
+          //$html2pdf->writeHTML('<br>');
+          $html2pdf->pdf->Text(5, $count, $task->task);
+          $count = $count+5;
+      }
+      $html2pdf->writeHTML('<page_footer> <img src="'.$request->_signature.'" alt="signature" width="130" height="130"> </page_footer>');*/
+      //$html2pdf->pdf->Image($image,150,40,40,40);
+      //$html2pdf->writeHTML('<page_footer>'..'</page_footer>');
+      $html2pdf->output();
     }
-    public function confirmed($id, FormBuilder $formBuilder)
-    {
+    public function signature($id, FormBuilder $formBuilder)
+    {   $form = $formBuilder->create(AddSignatureForm::class, [
+            'method' => 'POST',
+            'url' => route('signature.save'),
+            'id' => 'module_form'
+        ],['job_id' => $id]);
+        return view('jobs::sign',compact('form'));
     }
     public function requested($requested, $id, FormBuilder $formBuilder)
     {   
@@ -117,11 +148,16 @@ class ContractorprofileController extends Controller
             $taskJson->done = $task->status ? true : false;
             array_push($taskArr,$taskJson);
         }
-
+        if ($requested == "confirmed") {
+            return view('contractorprofile::create', compact('form'))
+               ->with('show_fields', $this->showFields)
+               ->with(compact('title','subtitle','id'))
+               ->with('appconfirmedjs',json_encode($taskArr));
+        }
         return view('contractorprofile::create', compact('form'))
                ->with('show_fields', $this->showFields)
                ->with(compact('title','subtitle','id'))
-               ->with('appviewjs',json_encode($taskArr));
+               ->with('apprequestedjs',json_encode($taskArr));
         //return view('contractorprofile::show');
     }
 

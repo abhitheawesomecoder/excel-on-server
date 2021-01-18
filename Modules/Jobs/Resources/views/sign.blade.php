@@ -22,6 +22,7 @@
     <div class="signature-pad--body">
       <canvas></canvas>
     </div>
+    {!! form($form) !!}
     <div class="signature-pad--footer">
       <div class="description">Sign above</div>
 
@@ -33,7 +34,7 @@
 
         </div>
         <div>
-          <button type="button" class="button save" data-action="save-png">Save as PNG</button>
+          <button type="button" class="button save" data-action="save-png">Save</button>
           <button type="button" class="button save" data-action="save-jpg">Save as JPG</button>
           <button type="button" class="button save" data-action="save-svg">Save as SVG</button>
         </div>
@@ -46,3 +47,5 @@
 
 </body>
 </html>
+
+

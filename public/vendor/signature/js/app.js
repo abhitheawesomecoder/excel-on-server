@@ -11,7 +11,8 @@ var signaturePad = new SignaturePad(canvas, {
   // this option can be omitted if only saving as PNG or SVG
   backgroundColor: 'rgb(255, 255, 255)'
 });
-
+saveJPGButton.style.display = "none";
+saveSVGButton.style.display = "none";
 // Adjust canvas coordinate space taking into account pixel ratio,
 // to make it look crisp on mobile devices.
 // This also causes canvas to be cleared.
@@ -102,8 +103,12 @@ savePNGButton.addEventListener("click", function (event) {
     alert("Please provide a signature first.");
   } else {
     var dataURL = signaturePad.toDataURL();
-    console.log(dataURL);
-    download(dataURL, "signature.png");
+    //console.log(document.getElementsByName("_id")[0].value);
+    //document.getElementsByName("_id")[0].value = 3;
+    document.getElementsByName("_signature")[0].value = dataURL;
+    //console.log(document.getElementsByName("_signature").value);
+    document.getElementById("module_form").submit();
+    //download(dataURL, "signature.png");
   }
 });
 

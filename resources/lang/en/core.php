@@ -9,6 +9,12 @@ return [
     'job' => [
         'requested' => ['title' => 'Job', 
                      'subtitle' => 'Job Requested'
+         ],
+         'confirmed' => ['title' => 'Job', 
+                     'subtitle' => 'Job Confirmed'
+         ],
+         'completed' => ['title' => 'Job', 
+                     'subtitle' => 'Job Completed'
          ]
     ],
 
