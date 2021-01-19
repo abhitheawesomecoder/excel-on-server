@@ -26,10 +26,10 @@ Route::get('/job/detail/{requested}/{id}', 'ContractorprofileController@requeste
 
 //Route::get('/job/completed/{id}', 'ContractorprofileController@completed')->name('job.completed');
 
-Route::get('/job/detail/{requested}/{id}', 'ContractorprofileController@requested')->name('job.detail');
+//Route::get('/job/detail/{requested}/{id}', 'ContractorprofileController@requested')->name('job.detail');
 
 Route::get('/job/confirmed/signature/{id}', 'ContractorprofileController@signature')->name('job.signature');
 
 Route::post('/job/confirmed/signature', 'ContractorprofileController@save')->name('signature.save');
 
-Route::get('/job/requested/confirmed/{id}', 'ContractorprofileController@requested_confirmed')->name('job.requested.confirmed');
+Route::patch('/job/requested/confirmed/{id}', 'ContractorprofileController@requested_confirmed')->name('job.requested.confirmed');

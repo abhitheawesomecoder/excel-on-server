@@ -42,9 +42,7 @@ class JobDataTable extends DataTable
      */
     public function query(Job $model)
     {   $id = Auth::user()->id;
-        //$cid = Contractor::where('user_id',$id)->first();
-
-
+        
         $query = $model->newQuery();
         $newQuery = $query->select([
                 'jobs.id as id',
@@ -65,8 +63,8 @@ class JobDataTable extends DataTable
                   $q->whereBetween('jobs.status', [2,4]);
                 elseif($this->status == 'completed')
                   $q->where('jobs.status', 5);
-            });
-            //->where('jobs.status',$this->status)
+            })
+            ->where('contractors.user_id',$id);
             
             
         return $query;

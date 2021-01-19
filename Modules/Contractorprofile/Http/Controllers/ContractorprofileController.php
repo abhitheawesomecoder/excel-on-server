@@ -63,14 +63,20 @@ class ContractorprofileController extends Controller
      * @param int $id
      * @return Response
      */
-    public function requested_confirmed($id, FormBuilder $formBuilder){
-        echo $id;
-        exit();
+    public function requested_confirmed(Request $request, $id){
+        //echo $id;
+        //echo $request->due_date;
+        $job = Job::find($request->_todo);
+        $job->status = 2;
+        $job->due_date = $request->due_date;
+        $job->save();
+
+        return redirect()->route('job.status','confirmed');
         // change status of job to confirmed
     }
     public function save(Request $request)
     {  $userId = Auth::user()->id;
-       $contractor = Contractor::where('user_id',8)->first();
+       $contractor = Contractor::where('user_id',$userId)->first();
        $job = Job::find($request->_id);
        $client = Client::find($job->client_id);
        $store = Store::find($job->store_id);
@@ -144,8 +150,8 @@ class ContractorprofileController extends Controller
         $job = Job::find($id);
 
         $form = $formBuilder->create(AddJobForm::class, [
-            'method' => 'POST',
-            'url' => route('jobs.store'),
+            'method' => 'PATCH',
+            'url' => route('job.requested.confirmed',$id),
             'model' => $job,
             'id' => 'module_form'
         ],['clients' => $client_arr, 'stores' => $store_arr, 'staff' => $staff, 'contractors' => $contractor_arr, 'create_form' => false]);

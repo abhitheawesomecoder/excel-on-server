@@ -41,11 +41,12 @@ class AddJobForm extends Form
         $this->add('status', 'select', [
             'choices' => ['1' => 'New', '2' => 'Confirmed by contractor', '3' => 'In progress', '4' => 'Waiting for response', '5' => 'Closed'],
             'attr' => ['class' => 'select2 pmd-select2 form-control'],
-            'selected' => '4'
+            'selected' => '1'
         ]);
 
         $this->add('contractor_id', 'select', [
                 'choices' => $this->getData('contractors'),
+                'label' => 'Contractor',
                 'attr' => ['class' => 'select2 pmd-select2 form-control'],
                 'selected' => '1'
             ]);

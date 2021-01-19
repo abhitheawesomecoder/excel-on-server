@@ -6,7 +6,7 @@
                         <div class="header-buttons">
                            @if($title == 'core.job.requested.title')
 <a id="accept" href="" title="Accept" class="btn btn-primary btn-back btn-crud">Accept</a>
-<a id="confirm" href="{{route('job.requested.confirmed',$id)}}" title="Confirm" class="btn btn-primary btn-back btn-crud">Confirm</a>
+<a id="confirm" href="" title="Confirm" class="btn btn-primary btn-back btn-crud">Confirm</a>
                            @elseif($title == 'core.job.confirmed.title')
 <a id="sign" href="{{route('job.signature',$id)}}" title="Sign" class="btn btn-primary btn-back btn-crud">Sign</a>                    
                            @endif
@@ -66,6 +66,13 @@
         $('#description').replaceWith("<div id='description'></div>");   
         $("#description").todoList({ title: "",items: JSON.parse('{!! $appconfirmedjs !!}') });
 
+
+
+        /*$("#accept").click(function(e) {
+            e.preventDefault();
+            console.log($("#due_date").datetimepicker());
+        });*/
+
         });
     </script>
    @endif
@@ -73,6 +80,7 @@
    @if(isset($apprequestedjs))
     <script type="text/javascript">
         $(document).ready(function () {
+        //$("input[name=_todo]").val("{{$id}}");
         $('#confirm').hide();
         $('#due_date').on("dp.change", function (e) {console.log("change");});
         $('#due_date').on("dp.show", function (e) {
@@ -89,6 +97,10 @@
         $("#accept").click(function(e) {
             e.preventDefault();
             $("#due_date").datetimepicker('show');
+        });
+        $("#confirm").click(function(e) {
+            e.preventDefault();
+            $("#module_form").submit();
         });
         });
     </script>

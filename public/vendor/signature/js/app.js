@@ -13,6 +13,7 @@ var signaturePad = new SignaturePad(canvas, {
 });
 saveJPGButton.style.display = "none";
 saveSVGButton.style.display = "none";
+changeColorButton.style.display = "none";
 // Adjust canvas coordinate space taking into account pixel ratio,
 // to make it look crisp on mobile devices.
 // This also causes canvas to be cleared.

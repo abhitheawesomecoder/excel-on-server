@@ -18,8 +18,6 @@ use Modules\Contractorsignup\Entities\Contractorsignup;
 use Modules\Contractorsignup\DataTables\ContractorsignupDataTable;
 use Modules\Contractorsignup\Http\Forms\AddContractorsignupForm;
 
-
-
 class ContractorsignupController extends Controller
 {   
     use FormBuilderTrait;
@@ -91,7 +89,7 @@ class ContractorsignupController extends Controller
             'method' => 'POST',
             'url' => route('contractorsignup.save'),
             'id' => 'module_form'
-        ],['token' => $signup->token ]);
+        ],['token' => $signup->token, 'create_form' => true]);
 
         return view('contractors::create', compact('form'))
                ->with('show_fields', $this->showFields)
@@ -157,7 +155,7 @@ class ContractorsignupController extends Controller
         // crud for all all users with role and permission
         //print_r($timestamp);
 
-        return redirect()->route('contractors.index');
+        return redirect()->route('contractorsignup.index');
     }
 
     /**

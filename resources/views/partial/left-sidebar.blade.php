@@ -34,7 +34,7 @@
     <div class="menu">
 
         <a href="javascript:void(0);" class="bars"></a>
-        @if(!Auth::user()->type == 'normal')
+        @if(Auth::user()->type == 'normal')
         {!! $mainMenu->render() !!}
         @else
         {!! $contractorMainMenu->render() !!}

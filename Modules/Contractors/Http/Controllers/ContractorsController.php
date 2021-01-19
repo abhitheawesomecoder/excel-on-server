@@ -42,7 +42,7 @@ class ContractorsController extends Controller
             'method' => 'POST',
             'url' => route('contractors.store'),
             'id' => 'module_form'
-        ]);
+        ],['create_form' => true]);
 
         return view('contractors::create', compact('form'))
                ->with('show_fields', $this->showFields)

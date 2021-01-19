@@ -99,7 +99,7 @@ class JobsController extends Controller
             'method' => 'POST',
             'url' => route('jobs.store'),
             'id' => 'module_form'
-        ],['clients' => $client_arr, 'stores' => $store_arr, 'staff' => $staff, 'contractors' => $contractor_arr]);
+        ],['create_form' => true, 'clients' => $client_arr, 'stores' => $store_arr, 'staff' => $staff, 'contractors' => $contractor_arr]);
 
         return view('jobs::create', compact('form'))
                ->with('show_fields', $this->showFields)
