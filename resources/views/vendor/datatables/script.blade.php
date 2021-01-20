@@ -6,7 +6,7 @@
         var dataTableParams = %2$s;
 
          dataTableParams['language'] = {
-            url : 'http://localhost/excel/public/bap/js/trans/datatable/{{ app()->getLocale() }}.json'
+            url : 'http://calsob.cf/bap/js/trans/datatable/{{ app()->getLocale() }}.json'
         };
 
         window.LaravelDataTables = window.LaravelDataTables || {};

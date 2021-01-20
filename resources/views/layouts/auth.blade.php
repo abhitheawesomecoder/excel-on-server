@@ -25,7 +25,7 @@
         asset('/bap/plugins/animate-css/animate.css'),
         asset('/bap/scss/style.css'),
         asset('/bap/scss/auth.css'),
-        ],asset('/storage/cache/css/main.css')
+        ],asset('/store/cache/css/main.css')
     ) !!}
 
 
@@ -43,7 +43,7 @@
         asset('/bap/plugins/bootstrap/js/bootstrap.js'),
         asset('/bap/plugins/node-waves/waves.js'),
         asset('/bap/js/admin.js')],
-        asset('/storage/cache/js/main.js')
+        asset('/store/cache/js/main.js')
     )  !!}
 
 

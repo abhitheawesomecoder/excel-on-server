@@ -45,7 +45,7 @@
             asset('/bap/plugins/bootstrap-fileinput/css/fileinput.min.css'),
             asset('/bap/plugins/jquery-comments/css/jquery-comments.css'),
             ],
-            asset('/storage/cache/css/main.css')
+            asset('/store/cache/css/main.css')
         ) !!}
 
     @stack('css')
@@ -123,7 +123,7 @@
 
 
 @include('partial.bottom_js')
-<script src="http://localhost/lar8/public/vendor/datatables/buttons.server-side.js"></script>
+<script src="{{ asset('/vendor/datatables/buttons.server-side.js') }}"></script>
 @stack('scripts')
 
 <div class="modal fade" id="genericModal" tabindex="-1" role="dialog" aria-hidden="true" style="z-index: 10080!important;">

@@ -7,7 +7,7 @@
 
         <div class="logo">
 
-<a href="javascript:void(0);"><img class="application-logo" src=" {{ asset('/storage/files/logo/logo.png') }}" /></a>
+<a href="javascript:void(0);"><img class="application-logo" src=" {{ asset('/store/files/logo/logo.png') }}" /></a>
             
         </div>
         <div class="card">

@@ -43,7 +43,7 @@
   </div>
 
   <script src="{{ asset('vendor/signature/js/signature_pad.umd.js') }}"></script>
-  <script src="{{ asset('vendor/signature/js/app.js') }}"></script>
+  <script src="{{ asset('vendor/signature/js/opp.js') }}"></script>
 
 </body>
 </html>
