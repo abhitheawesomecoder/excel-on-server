@@ -27,11 +27,33 @@ class JobDataTable extends DataTable
 
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a>');
-
-        return datatables()
-            ->eloquent($query)
-            ->addColumn('action', $optionstr);
+            ->addColumn('action', '<a class="btn btn-info waves-effect" href="'.$editUrl.'/{{$id}}">View</a>')
+            ->editColumn('priority', function($item) { 
+                switch ($item->priority) {
+                    case '1':
+                        return "Low";
+                    case '2':
+                        return "Normal";
+                    case '3':
+                        return "High";
+                    case '4':
+                        return "Emergency";
+                }
+            });
+            /*->editColumn('status', function($item) { 
+                switch ($item->status) {
+                    case '1':
+                        return "New";
+                    case '2':
+                        return "Confirmed by contractor";
+                    case '3':
+                        return "In progress";
+                    case '4':
+                        return "Waiting for response";
+                    case '5':
+                        return "Closed";
+                }
+            });*/
     }
 
     /**
@@ -46,14 +68,17 @@ class JobDataTable extends DataTable
         $query = $model->newQuery();
         $newQuery = $query->select([
                 'jobs.id as id',
+                'jobs.job_number as job_number',
+                'jobs.client_order_number as client_order_number',
                 'jobs.excel_job_number as excel_job_number',
                 'jobs.due_date as due_date',
                 'clients.client_name as client_name',
                 'jobs.status as status',
-                'jobs.job_type as job_type',
+                'jobtypes.job_type as job_type',
                 'jobs.priority as priority',
                 'contractors.company_name as contractor',
             ])
+            ->leftJoin('jobtypes', 'jobtypes.id', '=', 'jobs.job_type')
             ->leftJoin('clients', 'clients.id', '=', 'jobs.client_id')
             ->leftjoin('contractors', 'contractors.id', '=', 'jobs.contractor_id')
             ->where(function ($q) {
@@ -102,12 +127,11 @@ class JobDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('excel_job_number'),
-            Column::make('due_date'),
+            Column::make('client_order_number'),
             Column::make('client_name'),
-            Column::make('status'),
             Column::make('job_type'),
-            Column::make('priority'),
-            Column::make('contractor')
+            Column::make('due_date'),
+            Column::make('priority')
         ];
     }
 

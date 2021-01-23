@@ -1,0 +1,186 @@
+$table->bigIncrements('id');
+            $table->string('excel_job_number');
+            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('store_id');
+            $table->date('due_date');
+            $table->unsignedBigInteger('assigned_to');
+            $table->unsignedBigInteger('priority');
+            $table->unsignedBigInteger('status');
+            $table->unsignedBigInteger('contractor_id');
+            $table->unsignedBigInteger('job_type');
+            $table->timestamps();
+
+            $table->foreign('client_id')
+                ->references('id')
+                ->on('clients')
+                ->onDelete('cascade');
+
+            $table->foreign('store_id')
+                ->references('id')
+                ->on('stores')
+                ->onDelete('cascade');
+
+            $table->foreign('assigned_to')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('contractor_id')
+                ->references('id')
+                ->on('contractors')
+                ->onDelete('cascade');
+
+
+
+                $table->bigIncrements('id');
+            $table->string('task');
+            $table->unsignedBigInteger('status');
+            $table->unsignedBigInteger('job_id');
+            $table->timestamps();
+
+            $table->foreign('job_id')
+                ->references('id')
+                ->on('jobs')
+                ->onDelete('cascade');
+
+
+<!-- Scripts -->
+{!! Packer::js([
+    asset('/bap/plugins/jquery/jquery.min.js'),
+    asset('/bap/plugins/jquery.i18n.js'),
+    asset('/bap/js/trans/'.app()->getLocale().'.js'),
+
+    asset('/bap/plugins/bootstrap/js/bootstrap.js'),
+    asset('/bap/plugins/bootstrap-select/js/bootstrap-select.js'),
+    asset('/bap/plugins/jquery-slimscroll/jquery.slimscroll.js'),
+    asset('/bap/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js'),
+    asset('/bap/plugins/node-waves/waves.js'),
+    asset('/bap/plugins/bootstrap-notify/bootstrap-notify.js'),
+    asset('/bap/plugins/jquery.number.min.js'),
+    asset('/bap/plugins/jquery-datatable/jquery.dataTables.js'),
+    asset('/bap/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js'),
+    asset('/bap/plugins/jquery-datatable/extensions/responsive/js/dataTables.responsive.js'),
+    asset('/bap/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js'),
+    asset('/bap/plugins/jquery-datatable/extensions/export/buttons.html5.min.js'),
+    asset('/bap/plugins/jquery-datatable/extensions/export/buttons.print.min.js'),
+    asset('/bap/plugins/jquery-datatable/extensions/export/jszip.min.js'),
+    asset('/bap/plugins/jquery-datatable/extensions/export/pdfmake.min.js'),
+    asset('/bap/plugins/jquery-datatable/extensions/export/vfs_fonts.js'),
+    asset('/bap/plugins/offlinejs/offline.min.js'),
+    asset('/bap/plugins/select2-4.0.3/dist/js/select2.full.min.js'),
+    asset('/bap/plugins/bootstrap-fileinput/js/fileinput.min.js'),
+    asset('/bap/plugins/momentjs/moment.js'),
+    asset('/bap/plugins/momentjs/locale/'.app()->getLocale().'.js'),
+    asset('/bap/plugins/bootstrap-daterangepicker/daterangepicker.js'),
+    asset('/bap/plugins/bootstrap-datetimepicker/dist/js/bootstrap-datetimepicker.min.js'),
+    asset('/bap/plugins/jquery-comments/js/jquery.textcomplete.min.js'),
+    asset('/bap/plugins/jquery-comments/js/jquery-comments.min.js'),
+    asset('/bap/plugins/js.cookie.js'),
+    asset('/bap/js/BapConfig.js'),
+    asset('/bap/js/BapDatatable.js'),
+    asset('/bap/js/BapPlatform.js'),
+    asset('/bap/plugins/jquery-datatable/yadcf/jquery.dataTables.yadcf.js'),
+    asset('/bap/plugins/jquery-jscroll/jquery.jscroll.min.js'),
+
+    asset('/bap/js/admin.js'),
+    asset('/bap/js/Common.js'),
+
+    asset('/modules/notifications/js/BAP_Notifications.js'),
+
+    asset('/vendor/todo/jquery.todoList.js')
+    ],
+    asset('/storage/cache/js/')
+) !!}
+
+ <div class="menu">
+
+        <a href="javascript:void(0);" class="bars"></a>
+
+        <ul class="list">
+
+        <li><a href="/">Home</a></li>
+
+        <li><a href="/about">About</a></li>
+
+        <li><a href="/contact">Contact</a></li>
+
+        </ul>
+
+    </div>
+
+<div class="menu">
+
+        <a href="javascript:void(0);" class="bars"></a>
+        
+        <ul class="list">
+
+        <li class="header">MAIN NAVIGATION</li>
+
+        <li><a href="/" title="Home" class="">
+        <i class="material-icons">material-icons</i>
+        <span>Home</span>
+    
+</a></li><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li></ul>
+
+    </div>
+
+<div class="menu">
+
+        <a href="javascript:void(0);" class="bars"></a>
+
+    <ul class="list">
+
+    <li class="header">MAIN NAVIGATION</li>
+
+    <li><a href="{{ route('home') }}" title="Home" class="">
+            <i class="material-icons">apps</i>
+            <span>Home</span>
+        </a>
+    </li>
+@role('Super Admin')
+    <li><a href="{{ route('index') }}" title="Signups" class="">
+            <i class="material-icons">apps</i>
+            <span>Signups</span>
+        </a>
+    </li>
+@endrole
+    <li><a href="{{ route('users..index') }}" title="Users" class="">
+            <i class="material-icons">apps</i>
+            <span>Users</span>
+        </a>
+    </li>
+    <li><a href="{{ route('clients.index') }}" title="Clients" class="">
+            <i class="material-icons">apps</i>
+            <span>Clients</span>
+        </a>
+    </li>
+    <li><a href="{{ route('contractorsignup.index') }}" title="Contractor Signups" class="">
+            <i class="material-icons">apps</i>
+            <span>Contractor Signups</span>
+        </a>
+    </li>
+    <li><a href="{{ route('contractors.index') }}" title="Contractors" class="">
+            <i class="material-icons">apps</i>
+            <span>Contractors</span>
+        </a>
+    </li>
+    <li><a href="{{ route('jobs.index') }}" title="Jobs" class="">
+            <i class="material-icons">apps</i>
+            <span>Jobs</span>
+        </a>
+    </li>
+    <li><a href="{{ route('jobs.calendar') }}" title="Jobs" class="">
+            <i class="material-icons">apps</i>
+            <span>Calendar</span>
+        </a>
+    </li>
+
+    </ul>
+        
+
+    </div>
+
+
+
+
+

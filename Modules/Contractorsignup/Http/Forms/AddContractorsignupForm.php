@@ -10,6 +10,8 @@ class AddContractorsignupForm extends Form
     {   
     	$this->add('email', 'email',['rules' => 'required|email']);
 
+    	$this->add('contractor_identifier', 'text',['rules' => 'required|max:3']);
+
         $this->add('submit', 'submit', ['label' => 'Submit','attr' => ['class' => 'btn btn-primary m-t-15 waves-effect']]);
 
     }

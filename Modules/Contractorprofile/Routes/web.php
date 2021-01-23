@@ -32,4 +32,6 @@ Route::get('/job/confirmed/signature/{id}', 'ContractorprofileController@signatu
 
 Route::post('/job/confirmed/signature', 'ContractorprofileController@save')->name('signature.save');
 
+Route::post('/job/task/done', 'ContractorprofileController@task_done')->name('task.done');
+
 Route::patch('/job/requested/confirmed/{id}', 'ContractorprofileController@requested_confirmed')->name('job.requested.confirmed');

@@ -2,7 +2,7 @@
 
 namespace Modules\Clients\DataTables;
 
-
+use Illuminate\Support\Facades\DB;
 use Modules\Clients\Entities\Store;
 use Modules\Clients\Entities\Storecontact;
 use Yajra\DataTables\Html\Button;
@@ -37,7 +37,8 @@ class StoreDataTable extends DataTable
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Store $model)
-    {
+    {   
+        //$storecontacts = DB::table('storecontacts')->where('name', 'John')->first();
         $query = $model->newQuery();
         $newQuery = $query->select([
                 'stores.id as id',
@@ -50,7 +51,9 @@ class StoreDataTable extends DataTable
                 'stores.store_id as store_id',
                 'storecontacts.store_id as storeid'
             ])
-            ->leftjoin('storecontacts', 'storecontacts.store_id', '=', 'stores.id');
+            ->leftjoin('storecontacts', 'storecontacts.store_id', '=', 'stores.id')
+            ->where('client_id',$this->client_id)
+            ->where('storecontacts.id',DB::raw("(select min(`id`) from storecontacts)"));
             
         return $query;
     }

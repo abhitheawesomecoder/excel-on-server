@@ -44,7 +44,7 @@ class StorecontactDataTable extends DataTable
      */
     public function query(Storecontact $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('store_id',$this->store_id);
     }
 
     /**

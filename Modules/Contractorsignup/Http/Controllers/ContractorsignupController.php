@@ -44,6 +44,7 @@ class ContractorsignupController extends Controller
         $newUser->save();
 
         $newContractor = new Contractor;
+        $newContractor->next_job_number = $contractor->contractor_identifier.'1001';
         $newContractor->company_name = $request->company_name;
         $newContractor->contact_name = $request->contact_name;
         $newContractor->mobile_tel_no = $request->mobile_tel_no;
@@ -140,6 +141,7 @@ class ContractorsignupController extends Controller
 
         $newSignupRequest = new Contractorsignup;
         $newSignupRequest->email = $request->email;
+        $newSignupRequest->contractor_identifier = $request->contractor_identifier;
         $newSignupRequest->token = $token;
         $newSignupRequest->save();
 

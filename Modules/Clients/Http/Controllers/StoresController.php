@@ -19,72 +19,6 @@ class StoresController extends Controller
 {
     use FormBuilderTrait;
 
-        protected $showFields = [
-
-        'basic_information' => [
-
-            'store_id' => [
-                'type' => 'text',
-            ],
-
-            'store_name' => [
-                'type' => 'text'
-            ],
-
-            'address_same_as_client' => [
-                'type' => 'checkbox'
-            ]
-        ],
-
-        'address' => [
-
-            'address1' => [
-                'type' => 'text',
-            ],
-
-
-            'address2' => [
-                'type' => 'text',
-            ],
-
-
-            'city' => [
-                'type' => 'text',
-            ],
-
-
-            'postcode' => [
-                'type' => 'text',
-            ]
-
-        ],
-
-
-        'contact_information' => [
-
-            'name' => [
-                'type' => 'text',
-            ],
-
-
-            'title' => [
-                'type' => 'text',
-            ],
-
-
-            'email' => [
-                'type' => 'email',
-            ],
-
-
-            'phone_no' => [
-                'type' => 'text',
-            ]
-
-        ]
-
-    ];
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -207,7 +141,7 @@ class StoresController extends Controller
         //exit();
         
         if (request()->ajax()) {
-            return $tableObj->render('core::datatable');
+            return $tableObj->with('store_id', $id)->render('core::datatable');
         }
 
         $model = Store::find($id);
@@ -301,4 +235,70 @@ class StoresController extends Controller
     {
         //
     }
+
+            protected $showFields = [
+
+        'basic_information' => [
+
+            'store_id' => [
+                'type' => 'text',
+            ],
+
+            'store_name' => [
+                'type' => 'text'
+            ],
+
+            'address_same_as_client' => [
+                'type' => 'checkbox'
+            ]
+        ],
+
+        'address' => [
+
+            'address1' => [
+                'type' => 'text',
+            ],
+
+
+            'address2' => [
+                'type' => 'text',
+            ],
+
+
+            'city' => [
+                'type' => 'text',
+            ],
+
+
+            'postcode' => [
+                'type' => 'text',
+            ]
+
+        ],
+
+
+        'contact_information' => [
+
+            'name' => [
+                'type' => 'text',
+            ],
+
+
+            'title' => [
+                'type' => 'text',
+            ],
+
+
+            'email' => [
+                'type' => 'email',
+            ],
+
+
+            'phone_no' => [
+                'type' => 'text',
+            ]
+
+        ]
+
+    ];
 }

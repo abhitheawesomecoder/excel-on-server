@@ -35,10 +35,10 @@ class JobDataTable extends DataTable
             		case '3':
             			return "High";
             		case '4':
-            			return "Urgent";
+            			return "Emergency";
             	}
-            })
-            ->editColumn('status', function($item) { 
+            });
+            /*->editColumn('status', function($item) { 
             	switch ($item->status) {
             		case '1':
             			return "New";
@@ -51,17 +51,7 @@ class JobDataTable extends DataTable
             		case '5':
             			return "Closed";
             	}
-            })
-            ->editColumn('job_type', function($item) { 
-            	switch ($item->job_type) {
-            		case '1':
-            			return "Maintenance";
-            		case '2':
-            			return "Minor issue";
-            		case '3':
-            			return "Major issue";
-            	}
-            });
+            });*/
     }
 
     /**
@@ -77,16 +67,19 @@ class JobDataTable extends DataTable
         $query = $model->newQuery();
         $newQuery = $query->select([
                 'jobs.id as id',
+                'jobs.job_number as job_number',
+                'jobs.client_order_number as client_order_number',
                 'jobs.excel_job_number as excel_job_number',
                 'jobs.due_date as due_date',
                 'clients.client_name as client_name',
                 'jobs.status as status',
-                'jobs.job_type as job_type',
+                'jobtypes.job_type as job_type',
                 'jobs.priority as priority',
                 'contractors.company_name as contractor',
             ])
             //->leftJoin('contacts', 'contacts.client_id', '=', 'clients.id')
             //->leftjoin('contacts', 'contacts.assigned_to', '=', 'users.id')
+            ->leftJoin('jobtypes', 'jobtypes.id', '=', 'jobs.job_type')
             ->leftJoin('clients', 'clients.id', '=', 'jobs.client_id')
             ->leftjoin('contractors', 'contractors.id', '=', 'jobs.contractor_id');
             
@@ -125,12 +118,11 @@ class JobDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('excel_job_number'),
-            Column::make('due_date'),
+            Column::make('client_order_number'),
             Column::make('client_name'),
-            Column::make('status'),
             Column::make('job_type'),
-            Column::make('priority'),
-            Column::make('contractor')
+            Column::make('due_date'),
+            Column::make('priority')
         ];
     }
 

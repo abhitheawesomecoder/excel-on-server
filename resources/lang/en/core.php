@@ -6,6 +6,18 @@ return [
 
     'main_navigation' => 'MAIN NAVIGATION',
 
+    'jobtype' => [
+        'create' => ['title' => 'Job Type', 
+                     'subtitle' => 'Add Job Type'
+         ],
+         'update' => ['title' => 'Job Type', 
+                     'subtitle' => 'Update Job Type'
+         ],
+         'view' => ['title' => 'Job Type', 
+                     'subtitle' => 'View Job Type'
+         ]
+    ],
+
     'job' => [
         'requested' => ['title' => 'Job', 
                      'subtitle' => 'Job Requested'

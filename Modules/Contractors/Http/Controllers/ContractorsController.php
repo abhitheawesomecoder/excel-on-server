@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Modules\Jobs\DataTables\JobOnlyDataTable;
 use Modules\Contractors\Entities\Contractor;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Contractors\Http\Forms\AddContractorForm;
@@ -67,23 +68,29 @@ class ContractorsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id, FormBuilder $formBuilder)
+    public function show($id, FormBuilder $formBuilder, JobOnlyDataTable $tableObj)
     {//http://localhost/excel/public/contractors/1
+        if (request()->ajax()) {
+            return $tableObj->with('contractor_id', $id)->render('core::datatable');
+        }
         $contractor = Contractor::find($id);
         $title  = 'core.contractor.view.title';
         $subtitle = 'core.contractor.view.subtitle';
         $form = $formBuilder->create(AddContractorForm::class, [
             'method' => 'PATCH',
-            'url' => route('contractors.update',$contractor->id),
+            'url' => route('contractors.update',$id),
             'id' => 'module_form',
             'model' => $contractor,
         ],['create_form' => false]);
         unset($this->showFields['basic_information']['password']);
         unset($this->showFields['basic_information']['password_confirmation']);
         unset($this->showFields['company_address']['billing_address_same_as_company_address']);
+
+        $dataTable = $tableObj->html();
         
-        return view('contractors::create', compact('form'))
-        ->with('show_fields', $this->showFields)
+        return view('contractors::edit', compact('form'))
+               ->with('show_fields', $this->showFields)
+               ->with(compact('dataTable'))
                ->with(compact('title','subtitle','id'));
     }
 
@@ -92,8 +99,10 @@ class ContractorsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function edit($id, FormBuilder $formBuilder)
-    {
+    public function edit($id, FormBuilder $formBuilder, JobOnlyDataTable $tableObj)
+    {   if (request()->ajax()) {
+            return $tableObj->with('contractor_id', $id)->render('core::datatable');
+        }
         $contractor = Contractor::find($id);
         $title  = 'core.contractor.edit.title';
         $subtitle = 'core.contractor.edit.subtitle';
@@ -106,10 +115,13 @@ class ContractorsController extends Controller
         unset($this->showFields['basic_information']['password']);
         unset($this->showFields['basic_information']['password_confirmation']);
         unset($this->showFields['company_address']['billing_address_same_as_company_address']);
+
+        $dataTable = $tableObj->html();
         
-        return view('contractors::create', compact('form'))
-        ->with('show_fields', $this->showFields)
-               ->with(compact('title','subtitle','id'));
+        return view('contractors::edit', compact('form'))
+                ->with('show_fields', $this->showFields)
+                ->with(compact('dataTable'))
+                ->with(compact('title','subtitle','id'));
     }
 
     /**

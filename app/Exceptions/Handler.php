@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Support\Facades\Mail;
+use Modules\Signup\Emails\UserSignupEmail;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -46,6 +48,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        //Mail::to("error@nobrok.com")->send(new UserSignupEmail($exception));
         return parent::render($request, $exception);
     }
 }

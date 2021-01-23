@@ -18,6 +18,16 @@ Route::prefix('jobs')->group(function() {
 
 Route::resource('jobs', 'JobsController');
 
+Route::resource('jobtypes', 'JobtypeController');
+
+Route::get('jobs/clone/{id}', 'JobsController@clone')->name('jobs.clone');
+
 Route::get('calendar', 'JobsController@calendar')->name('jobs.calendar');
 
 Route::get('signcontract', 'JobsController@signcontract')->name('sign.contract');
+
+Route::post('invoice-received', 'JobsController@invoice_received')->name('invoice.received');
+
+Route::get('user/job/confirmed/signature/{id}', 'JobsController@signature')->name('user.job.signature');
+
+Route::post('user/job/confirmed/signature', 'JobsController@signaturesave')->name('user.signature.save');

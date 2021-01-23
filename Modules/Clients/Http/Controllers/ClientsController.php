@@ -2,6 +2,12 @@
 
 namespace Modules\Clients\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Modules\Clients\Entities\Client;
+use Modules\Clients\Entities\Contact;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Clients\Http\Forms\AddClientForm;
@@ -9,83 +15,10 @@ use Modules\Clients\Http\Forms\ViewClientForm;
 use Modules\Clients\DataTables\ClientDataTable;
 use Modules\Clients\DataTables\StoreDataTable;
 use Modules\Clients\DataTables\ContactDataTable;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
-use Modules\Clients\Entities\Client;
-use Modules\Clients\Entities\Contact;
 
 class ClientsController extends Controller
 {
     use FormBuilderTrait;
-
-        protected $showFields = [
-
-        'basic_information' => [
-
-            'account_number' => [
-                'type' => 'text',
-            ],
-
-            'client_name' => [
-                'type' => 'text'
-            ],
-
-            'assigned_to' => [
-                'type' => 'select',
-            ]
-        ],
-
-
-        'contact_information' => [
-
-            'first_name' => [
-                'type' => 'text',
-            ],
-
-
-            'last_name' => [
-                'type' => 'text',
-            ],
-
-
-            'title' => [
-                'type' => 'text',
-            ],
-
-
-            'email' => [
-                'type' => 'email',
-            ],
-
-
-            'phone_no' => [
-                'type' => 'text',
-            ],
-
-            'address1' => [
-                'type' => 'text',
-            ],
-
-
-            'address2' => [
-                'type' => 'text',
-            ],
-
-
-            'city' => [
-                'type' => 'text',
-            ],
-
-
-            'postcode' => [
-                'type' => 'text',
-            ]
-
-        ]
-
-    ];
 
     public function __construct()
     {
@@ -99,25 +32,6 @@ class ClientsController extends Controller
     public function index(ClientDataTable $dataTable)
     {   
         return $dataTable->render('signup::index');
-        //return view('clients::index');
-
-        //return $model->newQuery();
-        //$query = $model->newQuery();
-        //$newQuery = $query->select([
-        /*$query = Client::query()
-                ->select([
-                'clients.account_number as account_number',
-                'clients.client_name as client_name',
-                'users.name as assigned_to',
-                'contacts.email as email',
-                'contacts.phone_no as phone_no',
-            ])
-            ->leftJoin('users', 'clients.assigned_to', '=', 'users.id')
-            ->leftjoin('contacts', 'contacts.client_id', '=', 'clients.id')
-            ->get();
-
-        echo $query;
-        exit();*/
     }
     public function getaddress(Request $request)
     {
@@ -246,9 +160,9 @@ class ClientsController extends Controller
     
           switch (request()->columns[1]['data']) {
               case 'store_id':
-                  return $tableObj->render('core::datatable');
+                  return $tableObj->with('client_id', $id)->render('core::datatable');
               default:
-                  return $contactTableObj->render('core::datatable');
+                  return $contactTableObj->with('client_id', $id)->render('core::datatable');
           }
         }
         $entity = Client::find($id);
@@ -367,4 +281,70 @@ class ClientsController extends Controller
     {
         //
     }
+            protected $showFields = [
+
+        'basic_information' => [
+
+            'account_number' => [
+                'type' => 'text',
+            ],
+
+            'client_name' => [
+                'type' => 'text'
+            ],
+
+            'assigned_to' => [
+                'type' => 'select',
+            ]
+        ],
+
+
+        'contact_information' => [
+
+            'first_name' => [
+                'type' => 'text',
+            ],
+
+
+            'last_name' => [
+                'type' => 'text',
+            ],
+
+
+            'title' => [
+                'type' => 'text',
+            ],
+
+
+            'email' => [
+                'type' => 'email',
+            ],
+
+
+            'phone_no' => [
+                'type' => 'text',
+            ],
+
+            'address1' => [
+                'type' => 'text',
+            ],
+
+
+            'address2' => [
+                'type' => 'text',
+            ],
+
+
+            'city' => [
+                'type' => 'text',
+            ],
+
+
+            'postcode' => [
+                'type' => 'text',
+            ]
+
+        ]
+
+    ];
 }

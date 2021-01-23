@@ -49,13 +49,13 @@
 <table style="width: 100%;border: 1px solid black;margin-bottom: 10px">
        <tr>
        <td style="width: 70%;">
-               <table style="width: 100%;text-align: right;">
-                     <tr><td>Problem : </td><td>Task1</td></tr>
-                     <tr><td></td><td>Task2</td></tr>
-                     <tr><td></td><td>Task3</td></tr>
-                     <tr><td></td><td></td></tr>
-                     <tr><td></td><td></td></tr>
-                     <tr><td></td><td></td></tr>
+               <table style="width: 100%;">
+                     <tr><td>Problem : </td><td>{{ $tasks->first()->task }}</td><td>{{ $tasks->first()->status ? "Done" : "Not Done" }}</td></tr>
+                     @foreach ($tasks as $task)
+                       @if($tasks->first()->id != $task->id )
+                        <tr><td></td><td>{{$task->task}}</td><td>{{ $task->status ? "Done" : "Not Done" }}</td></tr>
+                       @endif
+                     @endforeach
                </table>
        </td>
     
@@ -65,6 +65,15 @@
                      <tr><td></td><td></td></tr>
                      <tr><td></td><td></td></tr>
                      <tr><td></td><td></td></tr>
+               </table>
+       </td>
+    </tr>
+</table>
+<table style="width: 100%;margin-bottom: 10px">
+       <tr>
+       <td style="width: 70%;">
+               <table style="width: 100%;text-align: right;">
+                     <tr><td>Note : </td><td>{{$job->note}}</td></tr>
                </table>
        </td>
     </tr>

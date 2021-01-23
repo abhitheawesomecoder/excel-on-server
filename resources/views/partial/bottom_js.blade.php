@@ -44,7 +44,7 @@
 
     asset('/vendor/todo/jquery.todoList.js')
     ],
-    asset('/store/cache/js/')
+    asset('/storage/cache/js/')
 ) !!}
 
 

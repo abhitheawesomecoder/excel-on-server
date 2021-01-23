@@ -58,6 +58,11 @@ class MenuComposer
                         'url' => route('contractors.index')
                     ]));
         $mainMenu->add(SpatieView::create('menu-element', [
+                        'icon' => 'work_outline',
+                        'name' => 'Jobtypes',
+                        'url' => route('jobtypes.index')
+                    ]));
+        $mainMenu->add(SpatieView::create('menu-element', [
                         'icon' => 'work',
                         'name' => 'Jobs',
                         'url' => route('jobs.index')

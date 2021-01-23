@@ -2,6 +2,8 @@
 
 namespace Modules\Contractorprofile\Http\Controllers;
 
+use App\User;
+use Carbon\Carbon;
 use Spipu\Html2Pdf\Html2Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -9,12 +11,16 @@ use Modules\Jobs\Entities\Job;
 use Modules\Jobs\Entities\Task;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\Controller;
+use Modules\Jobs\Entities\Jobtype;
 use Modules\Clients\Entities\Store;
-use Modules\Clients\Entities\Client;
-use Modules\Clients\Entities\Contact;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Modules\Clients\Entities\Client;
+use Modules\Jobs\Entities\Signature;
+use Modules\Clients\Entities\Contact;
 use Modules\Jobs\Http\Forms\AddJobForm;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Modules\Core\Emails\NotificationEmail;
 use Modules\Contractors\Entities\Contractor;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Contractorprofile\DataTables\JobDataTable;
@@ -57,7 +63,19 @@ class ContractorprofileController extends Controller
     {
         //
     }
+    public function task_done(Request $request)
+    {
+        $taskArr = json_decode($request->taskData);
 
+        foreach($taskArr as $task) {
+            $newTask = Task::find($task->id);
+            //$newTask->task = $task->title;
+            $newTask->status = $task->done ? 1 : 0;
+            $newTask->save();
+        }
+
+        return response()->json(array('success' => true), 200);
+    }
     /**
      * Show the specified resource.
      * @param int $id
@@ -66,25 +84,59 @@ class ContractorprofileController extends Controller
     public function requested_confirmed(Request $request, $id){
         //echo $id;
         //echo $request->due_date;
-        $job = Job::find($request->_todo);
+        $job = Job::find($id);
         $job->status = 2;
         $job->due_date = $request->due_date;
         $job->save();
+
+        $staff = User::find($job->assigned_to);
+
+        $link = route('jobs.show',$id);
+        //echo $link;
+        //exit();
+
+
+        Mail::to($staff->email)->send(new NotificationEmail("Job confirmed by contractor",$link));
 
         return redirect()->route('job.status','confirmed');
         // change status of job to confirmed
     }
     public function save(Request $request)
     {  $userId = Auth::user()->id;
-       $contractor = Contractor::where('user_id',$userId)->first();
        $job = Job::find($request->_id);
+       $user = User::find($job->assigned_to);
+
+       //$sign = Signature::where('job_id',$request->_id)->where('contractor_id',$userId)->first();
+       $sign = Signature::where('job_id',$request->_id)->first();
+       if(is_null($sign))
+           $sign = new Signature;
+
+       $sign->contractorcode = $request->_signature; 
+       $sign->contractor_date = Carbon::today()->toDateString();
+       $sign->contractor_id = $userId;
+       $sign->job_id =$request->_id;
+       $sign->save();
+       
+
+       // change job status
+       $job->status = 4;
+       $job->save();
+
+       // send notification
+       $link = route('jobs.show',$request->_id);
+       //Mail::to($user->email)->send(new NotificationEmail("Job done by contractor",$link));
+       
+       // 
+
+       $contractor = Contractor::where('user_id',$userId)->first();
        $client = Client::find($job->client_id);
        $store = Store::find($job->store_id);
        $contact = Contact::where('client_id', $client->id)->first();
+       $tasks = Task::where('job_id',$request->_id)->get();
 
-       $content = view('contractorprofile::test',['path' => $request->_signature, 'contractor' => $contractor, 'job' => $job, 'client' => $client, 'store' => $store, 'contact' => $contact])->render();
+       $content = view('contractorprofile::test',['path' => $request->_signature, 'contractor' => $contractor, 'job' => $job, 'client' => $client, 'store' => $store, 'contact' => $contact, 'tasks' => $tasks])->render();
 
-       $content2 = view('contractorprofile::test2',['path' => $request->_signature])->render();
+       $content2 = view('contractorprofile::test2',['sign' => $sign])->render();
        //$content = ob_get_clean(); 
        $html2pdf = new Html2Pdf('P', 'A4', 'en');
        $html2pdf->pdf->SetDisplayMode('fullpage');
@@ -127,6 +179,12 @@ class ContractorprofileController extends Controller
             $client_arr[$client->id] = $client->client_name;
         }
 
+        $jobtypes = Jobtype::all();
+        $jobtype_arr = array();
+        foreach($jobtypes as $jobtype) {
+            $jobtype_arr[$jobtype->id] = $jobtype->job_type;
+        }
+
         $stores = Store::all();
         $store_arr = array();
         foreach($stores as $store) {
@@ -154,13 +212,14 @@ class ContractorprofileController extends Controller
             'url' => route('job.requested.confirmed',$id),
             'model' => $job,
             'id' => 'module_form'
-        ],['clients' => $client_arr, 'stores' => $store_arr, 'staff' => $staff, 'contractors' => $contractor_arr, 'create_form' => false]);
+        ],['clients' => $client_arr, 'stores' => $store_arr, 'staff' => $staff, 'contractors' => $contractor_arr, 'create_form' => false, 'job_types' => $jobtype_arr]);
 
         $tasks = Task::where('job_id',$id)->get();
         $taskArr = array();
         foreach ($tasks as $task) {
             //$taskJson = { 'title': $task->task, 'done': $task->status};
             $taskJson = new \stdClass();
+            $taskJson->id = $task->id;
             $taskJson->title = $task->task;
             $taskJson->done = $task->status ? true : false;
             array_push($taskArr,$taskJson);
@@ -169,12 +228,14 @@ class ContractorprofileController extends Controller
             return view('contractorprofile::create', compact('form'))
                ->with('show_fields', $this->showFields)
                ->with(compact('title','subtitle','id'))
-               ->with('appconfirmedjs',json_encode($taskArr));
+               ->with('appconfirmedjs',json_encode($taskArr))
+               ->with('entity',$job);
         }
         return view('contractorprofile::create', compact('form'))
                ->with('show_fields', $this->showFields)
                ->with(compact('title','subtitle','id'))
-               ->with('apprequestedjs',json_encode($taskArr));
+               ->with('apprequestedjs',json_encode($taskArr))
+               ->with('entity',$job);
         //return view('contractorprofile::show');
     }
 
@@ -209,11 +270,17 @@ class ContractorprofileController extends Controller
         //
     }
 
-            protected $showFields = [
+    protected $showFields = [
 
         'basic_information' => [
 
+            'job_number' => [
+                'type' => 'static'
+            ],
             'excel_job_number' => [
+                'type' => 'text'
+            ],
+            'client_order_number' => [
                 'type' => 'text'
             ],
 
@@ -250,6 +317,12 @@ class ContractorprofileController extends Controller
         'description' => [
 
             'description' => [
+                'type' => 'text'
+            ]
+          ],
+        'note' => [
+
+            'note' => [
                 'type' => 'text'
             ]
           ]

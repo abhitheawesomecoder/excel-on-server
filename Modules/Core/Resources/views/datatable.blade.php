@@ -9,7 +9,35 @@
 @if(isset($view))
 @push('scripts')
     <script type="text/javascript">
-    	if('{{$view}}' == 'contact'){
+        if('{{$view}}' == 'jobs'){
+            $(document).ready(function () {
+                $(document).on('change', '.invoice_rec', function() {
+                status = '';
+                if($(this).is(":checked")) 
+                    status = 'checked';
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{route('invoice.received')}}",
+                        data: {status: status, job_id: $(this).val() },
+                        success: function (commentsArray) {
+                            //success(commentsArray)
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                
+                }); 
+           }); 
+        }
+    	else if('{{$view}}' == 'contact'){
         (function ($, DataTable,view) {
             DataTable.ext.buttons.create = {
                 className: 'buttons-create',

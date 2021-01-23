@@ -46,7 +46,7 @@ class ContactDataTable extends DataTable
      */
     public function query(Contact $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('client_id',$this->client_id);
     }
 
     /**
