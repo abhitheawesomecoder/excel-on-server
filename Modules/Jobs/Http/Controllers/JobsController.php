@@ -219,8 +219,8 @@ class JobsController extends Controller
         $newJob->job_type = $request->job_type;
         $newJob->note = $request->note;
         $newJob->save();
-         $job_number_prefix = "ASD";
-        //$job_number_prefix = substr($myStr, 0, 3);
+
+        $job_number_prefix = substr($contractor->next_job_number, 0, 3);
         $next_job_number = substr($contractor->next_job_number, 3);
         $next_job_number = intval($next_job_number) + 1;
         $contractor->next_job_number = $job_number_prefix.$next_job_number;
@@ -238,7 +238,7 @@ class JobsController extends Controller
             }
 
         // send notification to contractor
-        $link = route('job.detail','requested',$newJob->id);
+        $link = route('job.detail',['requested' => 'requested', 'id' => $newJob->id]);
         Mail::to($user->email)->send(new NotificationEmail("A job has been created for you.",$link));
 
         return redirect()->route('jobs.index');
