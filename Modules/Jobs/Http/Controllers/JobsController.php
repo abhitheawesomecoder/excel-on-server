@@ -219,8 +219,8 @@ class JobsController extends Controller
         $newJob->job_type = $request->job_type;
         $newJob->note = $request->note;
         $newJob->save();
-
-        $job_number_prefix = substr($myStr, 0, 3);
+         $job_number_prefix = "ASD";
+        //$job_number_prefix = substr($myStr, 0, 3);
         $next_job_number = substr($contractor->next_job_number, 3);
         $next_job_number = intval($next_job_number) + 1;
         $contractor->next_job_number = $job_number_prefix.$next_job_number;

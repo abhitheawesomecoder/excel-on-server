@@ -107,7 +107,7 @@ class StoresController extends Controller
         $newStore->address2 = $request->address2;
         $newStore->city = $request->city;
         $newStore->postcode = $request->postcode;
-        $newStore->client_id = $request->client_id;
+        $newStore->client_id = $request->_id;
         $newStore->save();
 
         $newContact = new Storecontact;
@@ -117,7 +117,7 @@ class StoresController extends Controller
         $newContact->phone_no = $request->phone_no;
         $newContact->store_id = $newStore->id;
         $newContact->save();
-        return redirect()->route('storecontacts.create');
+        return redirect()->route('storecontacts.create',$newStore->id);
 
         // list store - partially done
         // list client contact - partially done

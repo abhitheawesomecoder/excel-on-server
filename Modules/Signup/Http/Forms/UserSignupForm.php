@@ -17,8 +17,7 @@ class UserSignupForm extends Form
         if($this->getData('token') == 'notoken'){
 
         $this->add('Type', 'select', [
-            'choices' => ['1' => 'Super Admin', '2' => 'Staff'],
-            'selected' => '1'
+            'choices' => ['1' => 'Super Admin', '2' => 'Staff']
         ]);
 
         $this->add('email', 'email', ['rules' => 'required']);

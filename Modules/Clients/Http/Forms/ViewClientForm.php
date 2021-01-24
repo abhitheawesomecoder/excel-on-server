@@ -15,8 +15,7 @@ class ViewClientForm extends Form
 
         	$this->add('assigned_to', 'select', [
                 'choices' => $this->getData('staff'),
-                'attr' => ['class' => 'select2 pmd-select2 form-control'],
-                'selected' => '1'
+                'attr' => ['class' => 'select2 pmd-select2 form-control']
             ]);
         }
         if($this->getData('client_edit_form')){

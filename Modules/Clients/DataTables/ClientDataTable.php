@@ -2,7 +2,7 @@
 
 namespace Modules\Clients\DataTables;
 
-
+use Illuminate\Support\Facades\DB;
 use Modules\Clients\Entities\Client;
 use Modules\Clients\Entities\Contact;
 use Yajra\DataTables\Html\Button;
@@ -48,7 +48,7 @@ class ClientDataTable extends DataTable
     public function query(Client $model)
     {
         //return $model->newQuery();
-        $query = $model->newQuery();
+        /*$query = $model->newQuery();
         $newQuery = $query->select([
                 'clients.id as id',
                 'clients.account_number as account_number',
@@ -60,9 +60,26 @@ class ClientDataTable extends DataTable
             //->leftJoin('contacts', 'contacts.client_id', '=', 'clients.id')
             //->leftjoin('contacts', 'contacts.assigned_to', '=', 'users.id')
             ->leftJoin('users', 'clients.assigned_to', '=', 'users.id')
-            ->leftjoin('contacts', 'contacts.client_id', '=', 'clients.id');
+            ->leftjoin('contacts', 'contacts.client_id', '=', 'clients.id');*/
+
+        $contact = DB::table('contacts')
+                   ->select('client_id',DB::raw('MIN(id) as id'),'email','phone_no')
+                   ->groupBy('client_id');
+
+        $query = $model->newQuery();
+        $newQuery = $query->join('users', 'clients.assigned_to', '=', 'users.id')
+            ->joinSub($contact, 'clients_contact', function ($join) {
+                $join->on('clients.id', '=', 'clients_contact.client_id');
+            })->select([
+                'clients.id as id',
+                'clients.account_number as account_number',
+                'clients.client_name as client_name',
+                'users.name as assigned_to',
+                'clients_contact.email as email',
+                'clients_contact.phone_no as phone_no',
+            ]);
             
-        return $query;
+        return $newQuery;
     }
 
     /**

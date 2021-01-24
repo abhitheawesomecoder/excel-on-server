@@ -47,7 +47,7 @@
                 },
 
                 action: function (e, dt, button, config) {
-                    window.location = '{{ route("contactscreate",1) }}';
+                    window.location = '{{ route("contactscreate",$id) }}';
                 }
             };
         })(jQuery, jQuery.fn.dataTable);
@@ -61,7 +61,7 @@
                 },
 
                 action: function (e, dt, button, config) {
-                    window.location = '{{ route("storescreate",1) }}';
+                    window.location = '{{ route("storescreate",$id) }}';
                 }
             };
         })(jQuery, jQuery.fn.dataTable);

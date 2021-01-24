@@ -39,7 +39,7 @@ class StoreDataTable extends DataTable
     public function query(Store $model)
     {   
         //$storecontacts = DB::table('storecontacts')->where('name', 'John')->first();
-        $query = $model->newQuery();
+        /*$query = $model->newQuery();
         $newQuery = $query->select([
                 'stores.id as id',
                 'stores.store_name as store_name',
@@ -55,6 +55,26 @@ class StoreDataTable extends DataTable
             ->where('client_id',$this->client_id)
             ->where('storecontacts.id',DB::raw("(select min(`id`) from storecontacts)"));
             
+        return $query;*/
+        $storecontact = DB::table('storecontacts')
+                   ->select('store_id',DB::raw('MIN(id) as id'),'email','phone_no')
+                   ->groupBy('store_id');
+
+        //$storecontacts = DB::table('storecontacts')->where('name', 'John')->first();
+        $query = $model->newQuery();
+        $newQuery = $query->joinSub($storecontact, 'stores_contact', function ($join) {
+                    $join->on('stores.id', '=', 'stores_contact.store_id');
+                    })->where('stores.client_id',$this->client_id)
+                    ->select([
+                'stores.id as id',
+                'stores.store_name as store_name',
+                'stores.address1 as address1',
+                'stores.city as city',
+                'stores.postcode as postcode',
+                'stores_contact.phone_no as phone_no',
+                'stores_contact.email as email',
+                'stores.store_id as store_id'
+            ]);
         return $query;
     }
 

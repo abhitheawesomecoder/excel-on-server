@@ -11,8 +11,7 @@ class AddUserForm extends Form
         $this->add('email', 'email',['rules' => 'required|email']);
 
         $this->add('Type', 'select', [
-            'choices' => ['1' => 'Super Admin', '2' => 'Staff'],
-            'selected' => '1'
+            'choices' => ['1' => 'Super Admin', '2' => 'Staff']
         ]);
 
         $this->add('submit', 'submit', ['label' => 'Send','attr' => ['class' => 'btn btn-primary m-t-15 waves-effect']]);

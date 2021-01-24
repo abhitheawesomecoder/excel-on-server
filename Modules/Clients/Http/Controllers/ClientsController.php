@@ -11,6 +11,7 @@ use Modules\Clients\Entities\Contact;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Modules\Clients\Http\Forms\AddClientForm;
+use Modules\Clients\Http\Forms\AddContactForm;
 use Modules\Clients\Http\Forms\ViewClientForm;
 use Modules\Clients\DataTables\ClientDataTable;
 use Modules\Clients\DataTables\StoreDataTable;
@@ -30,7 +31,7 @@ class ClientsController extends Controller
      * @return Response
      */
     public function index(ClientDataTable $dataTable)
-    {   
+    {  
         return $dataTable->render('signup::index');
     }
     public function getaddress(Request $request)
@@ -41,37 +42,15 @@ class ClientsController extends Controller
 
         $contact = Contact::where('client_id',$clientId)->first();
 
-
-
-        /*$entityClass = $request->get('entityClass');
-        $entityId = $request->get('entityId');
-
-        $entityClass = str_replace('&quot;', '', $entityClass);
-
-
-        $entity = app($entityClass)->find($entityId);
-
-
-        $comments = $this->commentsRepository->findWhere([
-            'commentable_type' => $entityClass,
-            'commentable_id' => $entity->id
-        ]);
-
-        $resultComments = [];
-
-        foreach ($comments as $comment) {
-            $resultComments[] = $this->commentsRepository->convertCommentToPluginResult($comment);
-        }*/
-
         return \Response::json($contact);
     }
     public function contactcreate($id, FormBuilder $formBuilder){
 //http://localhost/excel/public/clients/1/contacts/create
-        $form = $formBuilder->create(AddClientForm::class, [
+        $form = $formBuilder->create(AddContactForm::class, [
             'method' => 'POST',
-            'url' => route('clients.store'),
+            'url' => route('contacts.store'),
             'id' => 'module_form'
-        ],['client_form' => false, 'client_edit_form' => true ]);
+        ],['_id' => $id]);
         $title  = 'core.clientcontact.create.title';
         $subtitle = 'core.clientcontact.create.subtitle';
         unset($this->showFields['basic_information']);
