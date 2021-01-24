@@ -57,7 +57,9 @@
         window.APPLICATION_USER_DATE_FORMAT = "YYYY-MM-DD";
         window.APPLICATION_USER_TIME_FORMAT = "HH:mm";
         window.APPLICATION_USER_LANGUAGE = "en";
-        
+        @if(Auth::check())
+        window.UID = '{{ Auth::user()->id }}';
+        @endif
         window.APPLICATION_USER_TIME_FORMAT_24 = true;
     </script>
 

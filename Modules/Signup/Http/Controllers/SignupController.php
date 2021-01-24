@@ -48,7 +48,7 @@ class SignupController extends Controller
           $form = $formBuilder->create(UserSignupForm::class, [
                 'method' => 'POST',
                 'url' => route('user.save')
-            ],['token' => $signup->token ]);
+            ],['token' => $signup->token,'create_form' => true ]);
 
             return view('signup::create',compact('form'))
             ->with(compact('title','subtitle'));
